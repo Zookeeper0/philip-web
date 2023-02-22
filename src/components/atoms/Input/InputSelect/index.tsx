@@ -1,14 +1,16 @@
 import * as S from "../Input.style";
 
 interface SelectProps {
+  width?: string;
   size: string;
   themeType: string;
-  options: any;
   label?: string;
   placeholder?: string;
+  options: any;
 }
 
 export const InputSelect: React.FC<SelectProps> = ({
+  width,
   themeType,
   size,
   options,
@@ -16,7 +18,7 @@ export const InputSelect: React.FC<SelectProps> = ({
   placeholder,
 }) => {
   return (
-    <S.InputCommon themeType={themeType} size={size}>
+    <S.InputCommon themeType={themeType} size={size} width={width}>
       <label>
         {label && label}
         <select>

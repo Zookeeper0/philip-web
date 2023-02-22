@@ -10,6 +10,7 @@ declare module "styled-components" {
       [func: string]: string;
       [funcHover: string]: string;
       dark: string;
+      darkHover: string;
 
       mainBg: string;
       kakaoBg: string;
@@ -22,6 +23,7 @@ declare module "styled-components" {
 
       subTxt: string;
       kakaoTxt: string;
+      categorySubTxt: string;
 
       black: string;
       white: string;

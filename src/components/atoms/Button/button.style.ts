@@ -67,7 +67,7 @@ export const Button = styled.button<ButtonProps>`
   &:hover {
     background: ${(props) =>
       props.color === "clear"
-        ? props.theme.colors.black + "66"
+        ? props.theme.colors.darkHover
         : props.theme.colors[props.color + "Hover"]};
 
     ${(props) =>

@@ -21,6 +21,13 @@ export const CounterNumSpan = styled.span`
   background: black;
   align-items: center;
   justify-content: center;
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    width: 28px;
+
+    font-size: 2.2rem;
+  }
 `;
 
 export const CounterTxtSpan = styled.span<TxtProps>`
@@ -28,4 +35,9 @@ export const CounterTxtSpan = styled.span<TxtProps>`
   font-size: 2rem;
   line-height: ${(props) =>
     props.lineHeight ? props.lineHeight + "px" : "initial"};
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    font-size: 1.7rem;
+  }
 `;

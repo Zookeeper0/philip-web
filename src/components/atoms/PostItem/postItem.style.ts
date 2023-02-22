@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const PostItem = styled.li`
   position: relative;
+  width: 220px;
+  height: 140px;
   color: white;
   cursor: pointer;
   z-index: 0;
@@ -26,6 +28,12 @@ export const PostItem = styled.li`
       opacity: 1;
     }
   }
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    width: calc(33% - 6px);
+    height: 70px;
+  }
 `;
 
 export const PostItemSpan = styled.span`
@@ -49,5 +57,16 @@ export const PostItemSpan = styled.span`
   span {
     color: ${(props) => props.theme.colors.subTxt};
     font-size: 1.4rem;
+  }
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    bottom: 8px;
+    left: 8px;
+    font-size: 1.6rem;
+
+    span {
+      font-size: 1.3rem;
+    }
   }
 `;

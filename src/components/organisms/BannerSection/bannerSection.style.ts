@@ -9,4 +9,11 @@ export const BannerSection = styled.section`
     "SM1 SM2 SM3";
   grid-template-rows: 120px 80px;
   grid-gap: 8px;
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    width: calc(100vw);
+    grid-template-rows: 120px 80px;
+    grid-gap: 2px;
+  }
 `;

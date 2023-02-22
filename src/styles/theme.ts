@@ -7,12 +7,13 @@ export const theme: DefaultTheme = {
   gradient: {
     primary:
       "linear-gradient(108.17deg, #4453FF 52.05%, #0028B4 163.25%, #4462FF 200.35%)",
-    dark: "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(24, 24, 24, 1) 100%)",
+    dark: "linear-gradient(180deg, rgba(0, 0, 0, 0) 20%, rgba(0,0,0, 0.9) 100%)",
   },
   colors: {
     primary: "#4462FF",
     primaryHover: "#3451E7",
     dark: "#171717",
+    darkHover: "#0C0C0C",
     func: "#646464",
     funcHover: "#585858",
 
@@ -28,6 +29,7 @@ export const theme: DefaultTheme = {
 
     subTxt: "#C0C0C0",
     kakaoTxt: "#181600",
+    categorySubTxt: "#BABABA",
 
     black: "#000000",
     white: "#ffffff",

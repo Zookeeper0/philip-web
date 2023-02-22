@@ -5,14 +5,17 @@ import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components";
 import Header from "@/components/organisms/Header";
+import MobileHeader from "@/components/organisms/MobileHeader";
 import { Footer } from "@/components/organisms/Footer";
 import { Nav } from "@/components/organisms/Nav";
+import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { GlobalStyle } from "@/styles/global-style";
 import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const isWindowWidth = useWindowWidth();
   const queryClient = new QueryClient();
 
   return (
@@ -26,14 +29,14 @@ export default function App({ Component, pageProps }: AppProps) {
           <ThemeProvider theme={theme}>
             {router.pathname.includes("main") ? (
               <>
-                <Header />
+                {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
                 <Nav />
                 <Component {...pageProps} />
                 <Footer />
               </>
             ) : (
               <>
-                <Header />
+                {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
                 <Component {...pageProps} />
               </>
             )}

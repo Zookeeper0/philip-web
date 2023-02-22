@@ -69,6 +69,10 @@ const Menu = [
     id: 16,
     name: "음식점",
   },
+  {
+    id: 17,
+    name: "레저",
+  },
 ];
 
 const Post = [

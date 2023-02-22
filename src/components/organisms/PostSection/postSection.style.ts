@@ -7,4 +7,11 @@ export const PostSection = styled.section`
   align-items: flex-start;
   flex-direction: column;
   gap: 60px;
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    & > button {
+      display: none;
+    }
+  }
 `;

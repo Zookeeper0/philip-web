@@ -14,6 +14,14 @@ export const FooterRow = styled.div`
   padding: 20px 0 80px;
   align-items: center;
   justify-content: space-between;
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    padding: 20px 16px 100px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 70px;
+  }
 `;
 
 export const FooterCopySpan = styled.span`

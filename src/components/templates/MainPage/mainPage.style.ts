@@ -10,4 +10,15 @@ export const MainLayout = styled.div`
   padding: 20px 0 60px;
   justify-content: center;
   gap: 20px;
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    grid-template-areas:
+      "BN"
+      "AS"
+      "CT";
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+    gap: 16px;
+  }
 `;

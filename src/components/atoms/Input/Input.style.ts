@@ -25,9 +25,20 @@ export const InputCommon = styled.div<InputProps>`
   select {
     width: ${(props) => (props.width ? props.width : "initial")};
     height: ${(props) =>
-      props.size === "sm" ? "24px" : props.size === "md" ? "30px" : "unset"};
-    padding: ${(props) => (props.size ? "0 6px 2px" : "0")};
-    font-size: 1.3rem;
+      props.size === "sm"
+        ? "24px"
+        : props.size === "md"
+        ? "30px"
+        : props.size === "lg"
+        ? "48px"
+        : "unset"};
+    padding: ${(props) =>
+      props.size === "sm" || props.size === "md"
+        ? "0 6px 2px"
+        : props.size === "lg"
+        ? "0 15px"
+        : "0"};
+    font-size: ${(props) => (props.size === "lg" ? "1.5rem;" : "1.3rem;")};
   }
 
   ${(props) =>
@@ -43,7 +54,7 @@ export const InputCommon = styled.div<InputProps>`
           border: none;
           border-bottom: 1px solid
             ${(props) => props.theme.colors.inputDarkBorder};
-          border-radius: 2px 2px 0 0;
+          border-radius: 3px 3px 0 0;
         }
       }
     `}

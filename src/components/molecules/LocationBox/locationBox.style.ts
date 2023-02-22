@@ -9,9 +9,20 @@ export const LocationBox = styled.div`
   color: white;
   font-size: 1.6rem;
   font-weight: 300;
-  grid-template-rows: auto 1fr;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
   grid-gap: 20px;
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    padding: 0 16px;
+    grid-template-areas:
+      "TT"
+      "MAP"
+      "IF";
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+  }
 `;
 
 export const LocationTit = styled.div`
@@ -31,4 +42,9 @@ export const LocationInfo = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
+
+  //모바일 화면 설정
+  @media screen and (max-width: 768px) {
+    padding: 10px 0 0;
+  }
 `;
