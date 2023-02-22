@@ -9,6 +9,7 @@ export const MobileHeader = styled.header`\
   background: ${(props) => props.theme.colors.mainBg};
   align-items: center;
   justify-content: space-between;
+  z-index: 11;
 `;
 
 export const MobileHeaderImgSpan = styled.span`

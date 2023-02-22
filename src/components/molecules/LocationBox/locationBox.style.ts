@@ -46,5 +46,6 @@ export const LocationInfo = styled.div`
   //모바일 화면 설정
   @media screen and (max-width: 768px) {
     padding: 10px 0 0;
+    line-height: 2rem;
   }
 `;
