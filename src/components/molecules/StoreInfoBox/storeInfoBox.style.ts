@@ -25,7 +25,8 @@ export const StoreInfo = styled.div`
 
   //모바일 화면 설정
   @media screen and (max-width: 768px) {
-    padding: 30px 16px;
+    padding: 0 16px;
+    margin-top: 30px;
   }
 `;
 

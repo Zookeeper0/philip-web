@@ -10,6 +10,8 @@ export const PostSection = styled.section`
 
   //모바일 화면 설정
   @media screen and (max-width: 768px) {
+    gap: 80px;
+
     & > button {
       display: none;
     }

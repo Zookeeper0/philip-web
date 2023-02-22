@@ -32,7 +32,8 @@ export const Button = styled.button<ButtonProps>`
   display: flex;
   width: ${(props) => (props.width ? props.width : "auto")};
   height: ${(props) => (props.height ? props.height + "px" : "initial")};
-  color: white;
+  color: ${(props) =>
+    props.color === "kakaoBg" ? props.theme.colors.kakaoTxt : "white"};
   font-size: ${(props) =>
     props.height && props.height >= 32 ? "1.6rem" : "1.2rem"};
   border: none;
@@ -84,11 +85,11 @@ export const Button = styled.button<ButtonProps>`
   &:disabled {
     cursor: default;
     background: ${(props) =>
-      props.color === "clear" ? "none" : props.theme.colors.DisabledBtn};
+      props.color === "clear" ? "none" : props.theme.colors.disabledBtn};
 
     &:hover {
       background: ${(props) =>
-        props.color === "clear" ? "none" : props.theme.colors.DisabledBtn};
+        props.color === "clear" ? "none" : props.theme.colors.disabledBtn};
     }
     svg {
       path {

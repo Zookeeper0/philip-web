@@ -9,7 +9,7 @@ body {
   padding: 0;
   margin: 0;
   font-size: 10px;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans KR', 'Roboto', sans-serif;
   letter-spacing: -0.5px;
   background: #212121;
 }

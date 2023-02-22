@@ -1,10 +1,9 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 import * as S from "./mobileHeader.style";
-import ImgLogo from "public/assets/images/img-logo-01.png";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
 import IconUser from "public/assets/svg/icon-user.svg";
 import { Button } from "@/components/atoms/Button";
+import Logo from "@/components/atoms/Logo";
 
 export const MobileHeader = () => {
   const router = useRouter();
@@ -13,12 +12,8 @@ export const MobileHeader = () => {
     router.back();
   };
 
-  const goMain = () => {
-    router.push("/main");
-  };
-
   const goUser = () => {
-    router.push("/user");
+    router.push("/auth");
   };
 
   return (
@@ -33,11 +28,7 @@ export const MobileHeader = () => {
       >
         <IconBack width="28px" height="28px" viewBox="0 0 24 24" />
       </Button>
-      <S.MobileHeaderImgBox onClick={goMain}>
-        <S.MobileHeaderImgSpan>
-          <Image src={ImgLogo} layout="fill" alt="필립 메인로고" />
-        </S.MobileHeaderImgSpan>
-      </S.MobileHeaderImgBox>
+      <Logo main={true} mobile={true} />
       <Button
         type="button"
         width="64px"

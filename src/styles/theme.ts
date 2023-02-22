@@ -16,13 +16,17 @@ export const theme: DefaultTheme = {
     darkHover: "#0C0C0C",
     func: "#646464",
     funcHover: "#585858",
+    search: "#2E2E2E",
+    searchHover: "#171717",
 
     mainBg: "#212121",
     searchBarBg: "#545454",
     kakaoBg: "#F7E600",
     kakaoBgHover: "#EBDB00",
+    vipBg: "#4637DE",
+    vipBgHover: "#3728CB",
 
-    DisabledBtn: "#dddddd",
+    disabledBtn: "#dddddd",
 
     inputDarkBg: "#424242",
     inputDarkBorder: "#4563FF",

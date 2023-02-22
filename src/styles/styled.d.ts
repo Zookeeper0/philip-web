@@ -11,12 +11,16 @@ declare module "styled-components" {
       [funcHover: string]: string;
       dark: string;
       darkHover: string;
+      search: string;
+      searchHover: string;
 
       mainBg: string;
       kakaoBg: string;
       kakaoBgHover: string;
+      vipBg: string;
+      vipBgHover: string;
 
-      DisabledBtn: string;
+      disabledBtn: string;
 
       inputDarkBg: string;
       inputDarkBorder: string;

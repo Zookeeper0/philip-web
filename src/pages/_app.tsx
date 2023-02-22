@@ -27,7 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
-            {router.pathname.includes("main") ? (
+            {router.pathname.includes("main") ||
+            router.pathname.includes("auth") ? (
               <>
                 {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
                 <Nav />

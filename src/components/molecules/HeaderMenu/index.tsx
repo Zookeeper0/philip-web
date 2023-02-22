@@ -30,18 +30,20 @@ export const HeaderMenu = () => {
         size="sm"
         label="로그인/회원가입"
         onClick={() => {
-          router.replace("/login");
+          router.replace("/auth");
         }}
       >
         <IconUser />
       </Button>
-      {router.pathname.includes("main") && (
+      {router.pathname.includes("main") || router.pathname.includes("auth") ? (
         <InputSelect
           label="지역선택"
           options={pageOptions}
           themeType="row"
           size="sm"
         />
+      ) : (
+        ""
       )}
     </S.HeaderMenu>
   );

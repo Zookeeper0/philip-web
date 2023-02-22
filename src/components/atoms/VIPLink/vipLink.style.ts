@@ -1,18 +1,24 @@
 import styled from "styled-components";
 
-export const KakaoLink = styled.div`
+export const VIPLink = styled.div`
   display: flex;
   width: 100%;
   height: 54px;
   padding: 0 20px;
-  color: ${(props) => props.theme.colors.kakaoTxt};
-  background: ${(props) => props.theme.colors.kakaoBg};
+  color: white;
+  background: ${(props) => props.theme.colors.vipBg};
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
 
+  svg {
+    path {
+      fill: white;
+    }
+  }
+
   &:hover {
-    background: ${(props) => props.theme.colors.kakaoBgHover};
+    background: ${(props) => props.theme.colors.vipBgHover};
   }
 
   //모바일 화면 설정
@@ -23,11 +29,11 @@ export const KakaoLink = styled.div`
   }
 `;
 
-export const KakaoLinkTitBox = styled.div`
+export const VIPLinkTitBox = styled.div`
   display: flex;
   font-size: 1.8rem;
   align-items: center;
   gap: 10px;
 `;
 
-export const KakaoLinkTxtSpan = styled.span``;
+export const VIPLinkTxtSpan = styled.span``;

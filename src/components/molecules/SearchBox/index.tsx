@@ -67,7 +67,7 @@ export const SearchBox = () => {
           form="searchForm"
           width="100%"
           height={40}
-          color="primary"
+          color="search"
           layout="solid"
           label="검색"
         />
