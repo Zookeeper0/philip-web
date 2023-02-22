@@ -43,7 +43,6 @@ export const Button = styled.button<ButtonProps>`
   gap: 5px;
   cursor: pointer;
   transition: background 0.1s ease-in-out;
-
   background: ${(props) =>
     props.color === "clear" ? "none" : props.theme.colors[props.color]};
 
@@ -63,6 +62,13 @@ export const Button = styled.button<ButtonProps>`
       &:disabled {
         opacity: 0;
       }
+    `}
+
+    ${(props) =>
+    props.color === "kakaoBg" &&
+    css`
+      font-size: 1.7rem;
+      font-weight: 500;
     `}
 
   &:hover {
