@@ -17,7 +17,7 @@ export const IntroPage = styled.div<IntroProps>`
   justify-content: ${(props) => (props.window < 769 ? "flex-start" : "center")};
   transition: all 0.5s ease-in-out;
   opacity: 1;
-  z-index: 5;
+  z-index: 15;
 
   &.delayed {
     opacity: 0;
