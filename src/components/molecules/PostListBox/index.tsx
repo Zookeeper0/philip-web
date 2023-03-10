@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useInfiniteQuery } from "react-query";
 import { PostItem } from "@/components/atoms/PostItem";
-import useIntersectionObserver from "@/lib/hooks/useObserver";
 import Data from "@/data/dummy";
 import * as S from "./postListBox.style";
 
