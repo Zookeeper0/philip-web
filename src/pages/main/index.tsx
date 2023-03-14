@@ -1,6 +1,6 @@
 import MainPage from "@/components/templates/MainPage";
 
-export const Main = () => {
+const Main = () => {
   return <MainPage />;
 };
 

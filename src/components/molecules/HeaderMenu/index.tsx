@@ -9,11 +9,11 @@ export const HeaderMenu = () => {
   const pageOptions = [
     {
       id: 1,
-      name: "마닐라",
+      name: "앙헬레스",
     },
     {
       id: 2,
-      name: "앙헬레스",
+      name: "마닐라",
     },
     {
       id: 3,
@@ -23,6 +23,33 @@ export const HeaderMenu = () => {
 
   return (
     <S.HeaderMenu>
+      {/* 임시 */}
+      <Button
+        type="button"
+        color="clear"
+        layout="icon"
+        size="sm"
+        label="관리자 글쓰기"
+        onClick={() => {
+          router.replace("/admin");
+        }}
+      >
+        <IconUser />
+      </Button>
+      {/* 임시 */}
+      <Button
+        type="button"
+        color="clear"
+        layout="icon"
+        size="sm"
+        label="관리자 로그인/회원가입"
+        onClick={() => {
+          router.replace("/admin/login");
+        }}
+      >
+        <IconUser />
+      </Button>
+
       <Button
         type="button"
         color="clear"

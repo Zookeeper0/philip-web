@@ -43,8 +43,10 @@ export const PriceImg = styled.div`
   display: flex;
   width: 100%;
   height: 500px;
-  background: white;
+  background: #171717;
   border-radius: 4px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const PriceInfo = styled.div`

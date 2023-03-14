@@ -8,7 +8,7 @@ export const PriceInfoBox = ({ post, title }: any) => {
       <S.PriceInfoBox>
         <S.PriceTit>{title}</S.PriceTit>
         <S.PriceImg>요금 이미지</S.PriceImg>
-        <S.PriceInfo>{post.content}</S.PriceInfo>
+        <S.PriceInfo>{post?.contents}</S.PriceInfo>
         {/* <ButtonGroup>
           <Button type="button" size="sm" color="clear" layout="icon">
             <IconDown />

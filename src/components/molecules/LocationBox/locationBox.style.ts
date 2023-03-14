@@ -38,8 +38,9 @@ export const LocationMap = styled.div`
 export const LocationInfo = styled.div`
   grid-area: IF;
   display: flex;
+  flex-direction: column;
   padding: 0 10px;
-  align-items: center;
+  align-items: left;
   flex-wrap: wrap;
   gap: 20px;
 
