@@ -25,8 +25,10 @@ export const AdminLoginBox = () => {
       localStorage.setItem("signKey", JSON.stringify(data));
       router.push("/main");
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.log(error);
+      const { response } = error;
+      alert(response.data.message);
     },
   });
 
@@ -43,7 +45,7 @@ export const AdminLoginBox = () => {
     <S.LoginBox onSubmit={handleSubmit(onSubmitForm)}>
       <S.LoginTit>Login</S.LoginTit>
       <InputText
-        label={isWindowWidth < 769 ? "아이디" : "아아디"}
+        label={isWindowWidth < 769 ? "아이디" : "아이디"}
         themeType={isWindowWidth < 769 ? "column" : "column"}
         size={isWindowWidth < 769 ? "lg" : "md"}
         width="100%"

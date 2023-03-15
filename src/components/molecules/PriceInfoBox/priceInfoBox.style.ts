@@ -1,11 +1,12 @@
+import { Props } from "google-map-react";
 import styled from "styled-components";
 
-export const PriceInfoBox = styled.div`
-  display: grid;
+export const PriceInfoBox = styled.div<{ isOpen: string }>`
+  display: ${(props) => (props.isOpen ? "grid" : "grid")};
   grid-template-areas:
     "TT TT"
-    "IMG IF";
-  // "BT BT";
+    "IMG IF"
+    "BT BT";
   width: 100%;
   color: white;
   font-size: 1.6rem;
@@ -13,7 +14,8 @@ export const PriceInfoBox = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
   grid-gap: 20px;
-
+  height: ${(props) => (props.isOpen ? "500px" : "60px")};
+  transition: 0.5s ease-in;
   //모바일 화면 설정
   @media screen and (max-width: 768px) {
     width: 100vw;
@@ -42,7 +44,7 @@ export const PriceImg = styled.div`
   grid-area: IMG;
   display: flex;
   width: 100%;
-  height: 500px;
+  height: 100%;
   background: #171717;
   border-radius: 4px;
   align-items: center;

@@ -26,5 +26,5 @@ export function uploadImagesApi(data: any) {
 
 // -----Nav 카테고리 불러오기 임시 -------
 export function getCategoryNavApi() {
-  return axiosInstance.get("/admin/category").then((res) => res.data);
+  return axiosInstance.get("/category").then((res) => res.data);
 }

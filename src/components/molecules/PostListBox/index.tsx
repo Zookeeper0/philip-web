@@ -9,7 +9,6 @@ import { tokenState } from "@/recoil/token";
 export const PostListBox = () => {
   //nav item 에서 현재 선택 카테고리
   const [currentCategory, setCurrentCategory] = useRecoilState(categoryState);
-  const [token, setToken] = useRecoilState(tokenState);
 
   // GET 메인 포스트, 쿼리스트링 sort ?categort = filter
   const { data: postItem, isLoading } = usePosts(currentCategory);

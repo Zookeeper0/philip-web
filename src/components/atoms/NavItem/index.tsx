@@ -13,7 +13,7 @@ export const NavItem = (item: any) => {
   const router = useRouter();
 
   const onClick = () => {
-    // nav바 카테고리 요소 클릭시 recoil oid값 변경
+    /** nav바 카테고리 요소 클릭시 recoil oid값 변경 */
     setCategory(item.item.oid);
     // 디테일 페이지에서 nav 클릭시 메인으로 이동
     if (router.pathname === "/main/post/[id]") {

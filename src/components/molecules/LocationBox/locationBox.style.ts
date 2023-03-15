@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
-export const LocationBox = styled.div`
+interface LocationBoxProps {
+  blur?: boolean;
+}
+
+export const LocationBox = styled.div<LocationBoxProps>`
   display: grid;
   grid-template-areas:
+    "BT BT"
     "TT TT"
     "MAP IF";
   width: 100%;
@@ -12,11 +17,15 @@ export const LocationBox = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
   grid-gap: 20px;
+  background-color: #212121;
+  mask-image: ${(props) =>
+    props.blur ? "linear-gradient(to top, #212121 95%, transparent 100%)" : ""};
 
   //모바일 화면 설정
   @media screen and (max-width: 768px) {
     padding: 0 16px;
     grid-template-areas:
+      "BT"
       "TT"
       "MAP"
       "IF";

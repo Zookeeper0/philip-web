@@ -1,19 +1,17 @@
-import { Button, ButtonGroup } from "@/components/atoms/Button";
 import * as S from "./priceInfoBox.style";
-import IconDown from "public/assets/svg/icon-arrow-down.svg";
 
-export const PriceInfoBox = ({ post, title }: any) => {
+import Menu from "public/assets/images/menu-test.jpg";
+import Image from "next/image";
+
+export const PriceInfoBox = ({ post, title, open }: any) => {
   return (
     <>
-      <S.PriceInfoBox>
+      <S.PriceInfoBox isOpen={open}>
         <S.PriceTit>{title}</S.PriceTit>
-        <S.PriceImg>요금 이미지</S.PriceImg>
+        <S.PriceImg>
+          <Image src={Menu} alt="선택된 업체 이미지" />
+        </S.PriceImg>
         <S.PriceInfo>{post?.contents}</S.PriceInfo>
-        {/* <ButtonGroup>
-          <Button type="button" size="sm" color="clear" layout="icon">
-            <IconDown />
-          </Button>
-        </ButtonGroup> */}
       </S.PriceInfoBox>
     </>
   );

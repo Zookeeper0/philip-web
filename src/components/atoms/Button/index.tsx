@@ -3,6 +3,7 @@ import * as S from "./button.style";
 interface ButtonGroupProps {
   children: any;
   width?: any;
+  height?: number;
   marginTop?: number;
   marginBottom?: number;
   alignItems?: string;
@@ -21,6 +22,7 @@ interface ButtonProps {
   form?: string;
   children?: any;
   disabled?: boolean;
+  rotate?: string;
 }
 
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({

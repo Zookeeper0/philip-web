@@ -1,7 +1,7 @@
 import { GoogleMap, LoadScriptNext, MarkerF } from "@react-google-maps/api";
 import React, { useMemo, useEffect, useState } from "react";
 import styled from "styled-components";
-import useGeoCode from "@/lib/hooks/Google-geocode";
+import useGeoCode from "@/lib/Google-geocode";
 
 const Wrapper = styled.div`
   .map-container {
@@ -31,7 +31,7 @@ const Map = ({ address }: any) => {
 
   return (
     <Wrapper>
-      {/* <LoadScriptNext
+      <LoadScriptNext
         googleMapsApiKey={`${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`}
       >
         <GoogleMap
@@ -42,7 +42,7 @@ const Map = ({ address }: any) => {
         >
           <MarkerF position={defaultCenter} />
         </GoogleMap>
-      </LoadScriptNext> */}
+      </LoadScriptNext>
     </Wrapper>
   );
 };
