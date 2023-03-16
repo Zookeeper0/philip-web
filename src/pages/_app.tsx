@@ -12,8 +12,6 @@ import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { GlobalStyle } from "@/styles/global-style";
 import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
-import { useEffect } from "react";
-import { tokenState } from "@/recoil/token";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

@@ -1,30 +1,19 @@
 import axiosInstance from "./index";
 
+/** GET 메인화면 전체게시글, 복수쿼리( 검색, 카테고리 )  */
 export function getPostsListApi({ queryKey }: any) {
+  console.log("queryKey", queryKey);
   return axiosInstance
-    .get(`/posts?category=${queryKey[1]}`)
+    .get(`/posts?category=${queryKey[1]}&search=${queryKey[2]}`)
     .then((res) => res.data);
 }
 
+/** GET 게시글 클릭시 상세페이지 정보 */
 export function detailPostApi(data: any) {
   return axiosInstance.get(`/posts/${data}`).then((res) => res.data[0]);
 }
 
-export function getCategoryPostListApi(data: any) {
-  return axiosInstance.get(`/posts/category/${data}`).then((res) => res.data);
-}
-
+/** POST [관리자] 게시글 등록 */
 export function addPostApi(data: FormData) {
   return axiosInstance.post("/posts", data).then((response) => response.data);
-}
-
-export function uploadImagesApi(data: any) {
-  return axiosInstance
-    .post("/posts/images", data)
-    .then((response) => response.data);
-}
-
-// -----Nav 카테고리 불러오기 임시 -------
-export function getCategoryNavApi() {
-  return axiosInstance.get("/category").then((res) => res.data);
 }

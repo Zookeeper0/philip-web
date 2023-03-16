@@ -5,10 +5,15 @@ import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 import { Button } from "@/components/atoms/Button";
 import Data from "@/data/dummy";
 import * as S from "./searchBox.style";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { searchState } from "@/recoil/search";
 
 export const SearchBox = () => {
   const isWindowWidth = useWindowWidth();
+  const [searchInput, setSearchInput] = useRecoilState(searchState);
 
+  console.log(searchInput);
   const options = [
     {
       id: 1,
@@ -23,6 +28,10 @@ export const SearchBox = () => {
       name: "세부",
     },
   ];
+
+  const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
 
   return (
     <S.SearchBox>
@@ -51,6 +60,7 @@ export const SearchBox = () => {
           size={isWindowWidth < 769 ? "lg" : "md"}
           width="100%"
           placeholder={isWindowWidth < 769 ? "키워드 검색..." : "입력..."}
+          onChange={getValue}
         />
         {/* <InputText
           label="기타 검색"

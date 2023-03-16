@@ -1,24 +1,60 @@
-import { addPostApi, uploadImagesApi } from "@/apis/postsApi";
+import { addPostApi } from "@/apis/postsApi";
 import { InputText } from "@/components/atoms/Input/InputText";
 import useWindowWidth from "@/lib/hooks/useWindowWidth";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import * as S from "./adminPostForm.style";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { InputSelect } from "@/components/atoms/Input/InputSelect";
+import { useRecoilState } from "recoil";
+import { tokenState } from "@/recoil/token";
+import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 
+interface PostdataProps {
+  title: string;
+  address: string;
+  phoneNumber: string;
+  contents: string;
+}
 export const AdminPostForm = () => {
   const isWindowWidth = useWindowWidth();
+  const [userOid, setUserOid] = useRecoilState(tokenState);
+  const [cityOptions, setCityOptions] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+
+  /** 카테고리 select 목록 불러오기 */
+  const { data: categoryItem } = useQuery(
+    "getCategoryNavApi",
+    getCategoryNavApi
+  );
+  /** 시티 select 목록 불러오기 */
+  const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
+
+  const schema = yup
+    .object({
+      title: yup.string().nullable().required("제목을 입력해 선택해주세요"),
+      address: yup.string().nullable().required("주소를 입력해주세요"),
+      phoneNumber: yup.string().nullable().required("전화번호를 등록해주세요"),
+      contents: yup.string().nullable().required("상세 설명을 입력해주세요"),
+      categoryOid: yup.string().required("카테고리를 선택하세요"),
+      cityOid: yup.string().required("도시를 선택하세요"),
+    })
+    .required();
+
   const {
     handleSubmit,
     formState: { errors },
     register,
     reset,
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const queryClient = useQueryClient();
-  //   const { data: me } = useQuery("user", loadMyInfoAPI);
   const [loading, setLoading] = useState(false);
-  // const { imagePaths, addPostDone } = useSelector((state) => state.post);
+  const [images, setImages] = useState<string[]>([]);
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const mutation = useMutation("posts", addPostApi, {
     onSuccess() {
@@ -34,10 +70,14 @@ export const AdminPostForm = () => {
   const onSubmit = useCallback(
     (data: any) => {
       const formData = new FormData();
-      imagePaths.forEach((p) => {
-        formData.append("image", p);
+      images.forEach((p) => {
+        formData.append("files", p);
       });
-      formData.append("content", data);
+
+      //어드민 토큰
+      data.token = userOid;
+      console.log("submit images:", formData);
+      formData.append("content", JSON.stringify(data));
       mutation.mutate(formData);
     },
     [mutation, imagePaths]
@@ -45,17 +85,15 @@ export const AdminPostForm = () => {
 
   // ref로 인풋태그 접근
   const imageInput = useRef<HTMLInputElement>(null);
-  const onClickImageUpload = useCallback(() => {
+  const onClickImageUpload = useCallback((e: any) => {
+    e.preventDefault();
     imageInput.current?.click();
   }, []);
 
+  /** 이미지 정보 state 저장 */
   const onChangeImages = useCallback((e: any) => {
-    const imageFormData = new FormData();
     [].forEach.call(e.target.files, (f) => {
-      imageFormData.append("file", f);
-    });
-    uploadImagesApi(imageFormData).then((result) => {
-      setImagePaths((prev) => prev.concat(result));
+      setImages((prev) => prev.concat(f));
     });
   }, []);
 
@@ -68,13 +106,31 @@ export const AdminPostForm = () => {
     []
   );
 
+  useEffect(() => {
+    setCategoryOptions(categoryItem);
+    setCityOptions(cityItem);
+  }, [categoryItem, cityItem]);
+
   return (
     <S.PostFormBox
       onSubmit={handleSubmit(onSubmit)}
       encType="multipart/form-data"
     >
       <S.PostFormTit>관리자페이지</S.PostFormTit>
-
+      <InputSelect
+        label="지역선택"
+        options={categoryOptions}
+        themeType="row"
+        size="sm"
+        register={register("categoryOid")}
+      />
+      <InputSelect
+        label="지역선택"
+        options={cityOptions}
+        themeType="row"
+        size="sm"
+        register={register("cityOid")}
+      />
       <InputText
         label={isWindowWidth < 769 ? "제목" : "제목"}
         themeType={isWindowWidth < 769 ? "column" : "column"}

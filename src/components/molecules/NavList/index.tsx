@@ -7,12 +7,12 @@ import IconArrowPrev from "public/assets/svg/icon-arrow-prev.svg";
 import IconArrowNext from "public/assets/svg/icon-arrow-next.svg";
 import axios from "axios";
 import { useQuery } from "react-query";
-import { getCategoryNavApi } from "@/apis/postsApi";
+import { getCategoryNavApi } from "@/apis/categoryApi";
 
 export const NavList = () => {
   const MENU_PER_SLIDE = 12;
-  // Nav 카테고리 가져오기
 
+  /** Nav 카테고리 가져오기*/
   const { data: categoryItem, isLoading } = useQuery(
     "getCategoryNavApi",
     getCategoryNavApi
