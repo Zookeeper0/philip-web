@@ -12,10 +12,11 @@ export const PriceInfoBox = styled.div<{ isOpen: string }>`
   font-size: 1.6rem;
   font-weight: 300;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 24px auto 24px;
   grid-gap: 20px;
-  height: ${(props) => (props.isOpen ? "500px" : "60px")};
+  height: ${(props) => (props.isOpen ? "100%" : "200px")};
   transition: 0.5s ease-in;
+
   //모바일 화면 설정
   @media screen and (max-width: 768px) {
     width: 100vw;
@@ -23,9 +24,10 @@ export const PriceInfoBox = styled.div<{ isOpen: string }>`
     grid-template-areas:
       "TT"
       "IF"
-      "IMG";
+      "IMG"
+      "BT";
     grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
   }
 `;
 
@@ -41,14 +43,22 @@ export const PriceTit = styled.div`
 `;
 
 export const PriceImg = styled.div`
+  position: relative;
+  overflow: hidden;
   grid-area: IMG;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: auto;
   background: #171717;
   border-radius: 4px;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 100%;
+    height: auto !important;
+    object-position: top;
+  }
 `;
 
 export const PriceInfo = styled.div`

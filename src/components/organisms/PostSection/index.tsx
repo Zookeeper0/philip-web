@@ -41,13 +41,13 @@ export const PostSection = () => {
         <IconBack />
       </Button>
       <StoreInfoBox post={bookItem} randomImg={randomImg} />
-      <PriceInfoBox post={bookItem} open={isOpen} title="요금 및 메뉴 안내" />
-      <LocationBox
+      <PriceInfoBox
         post={bookItem}
         openHandler={openHandler}
         open={isOpen}
-        title="오시는 길"
+        title="요금 및 메뉴 안내"
       />
+      <LocationBox post={bookItem} title="오시는 길" />
     </S.PostSection>
   );
 };
