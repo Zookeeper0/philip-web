@@ -67,6 +67,17 @@ const Menu = [
   },
 ];
 
+const Images = [
+  { id: 1, url: Images01 },
+  { id: 2, url: Images02 },
+  { id: 3, url: Images03 },
+  { id: 4, url: Images04 },
+  { id: 5, url: Images05 },
+  { id: 6, url: Images06 },
+  { id: 7, url: Images07 },
+  { id: 8, url: Images08 },
+];
+
 const Post = [
   {
     id: 1,
@@ -598,4 +609,4 @@ const Post = [
   },
 ];
 
-export default { Menu, Post };
+export default { Menu, Post, Images };

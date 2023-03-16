@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components";
 import Header from "@/components/organisms/Header";
@@ -28,6 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
             {router.pathname.includes("main") ||
+            router.pathname.includes("admin") ||
             router.pathname.includes("auth") ? (
               <>
                 {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
@@ -38,6 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
             ) : (
               <>
                 {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
+                {/* <Nav /> */}
                 <Component {...pageProps} />
               </>
             )}
