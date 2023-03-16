@@ -59,6 +59,14 @@ export const Button = styled.button<ButtonProps>`
     `}
 
   ${(props) =>
+    props.size === "md" &&
+    css`
+      height: 32px;
+      padding: 0 10px;
+      font-size: 1.4rem;
+    `}
+
+  ${(props) =>
     props.layout === "function" &&
     css`
       opacity: 0.6;
