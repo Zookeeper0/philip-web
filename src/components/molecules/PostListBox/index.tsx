@@ -2,7 +2,6 @@ import { PostItem } from "@/components/atoms/PostItem";
 import * as S from "./postListBox.style";
 import { categoryState } from "../../../recoil/category";
 import { useRecoilState } from "recoil";
-import { usePosts } from "./usePost";
 import { tokenState } from "@/recoil/token";
 import { searchState } from "@/recoil/search";
 import { useQuery } from "react-query";
