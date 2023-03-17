@@ -16,10 +16,12 @@ export const PostSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const queryFn = () => detailPostApi(router.query.id);
-  const { data: bookItem, isLoading } = useQuery(
-    ["bookDetail", router.query.id],
+  const { data: detailItem, isLoading } = useQuery(
+    ["detailItem", router.query.id],
     queryFn
   );
+
+  console.log(detailItem);
 
   const openHandler = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -40,14 +42,14 @@ export const PostSection = () => {
       >
         <IconBack />
       </Button>
-      <StoreInfoBox post={bookItem} randomImg={randomImg} />
+      <StoreInfoBox post={detailItem} randomImg={randomImg} />
       <PriceInfoBox
-        post={bookItem}
+        post={detailItem}
         openHandler={openHandler}
         open={isOpen}
         title="요금 및 메뉴 안내"
       />
-      <LocationBox post={bookItem} title="오시는 길" />
+      <LocationBox post={detailItem} title="오시는 길" />
     </S.PostSection>
   );
 };

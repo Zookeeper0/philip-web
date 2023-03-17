@@ -76,6 +76,9 @@ export const AdminPostForm = () => {
 
       //어드민 토큰
       data.token = userOid;
+      //방문자수 0 초기화
+      data.views = 0;
+
       console.log("submit images:", formData);
       formData.append("content", JSON.stringify(data));
       mutation.mutate(formData);

@@ -5,6 +5,8 @@ import { useRecoilState } from "recoil";
 import { usePosts } from "./usePost";
 import { tokenState } from "@/recoil/token";
 import { searchState } from "@/recoil/search";
+import { useQuery } from "react-query";
+import { getPostsListApi } from "@/apis/postsApi";
 
 export const PostListBox = () => {
   //nav item 에서 현재 선택 카테고리
@@ -12,9 +14,13 @@ export const PostListBox = () => {
   const [searchInput, setSearchInput] = useRecoilState(searchState);
 
   // GET 메인 포스트, 쿼리스트링 sort ?categort = filter
-  const { data: postItem, isLoading } = usePosts(currentCategory, searchInput);
+  const { data: postItem, isLoading } = useQuery(
+    ["getPostsListApi", currentCategory, searchInput],
+    getPostsListApi
+  );
 
-  const Images = Math.random();
+  console.log("getPostsListApi", postItem);
+
   return (
     <>
       <S.PostListBox>
