@@ -9,6 +9,7 @@ interface SelectProps {
   placeholder?: string;
   options: any;
   register?: UseFormRegisterReturn;
+  onChange?: any;
 }
 
 export const InputSelect: React.FC<SelectProps> = ({
@@ -19,12 +20,13 @@ export const InputSelect: React.FC<SelectProps> = ({
   label,
   placeholder,
   register,
+  onChange,
 }) => {
   return (
     <S.InputCommon themeType={themeType} size={size} width={width}>
       <label>
         {label && label}
-        <select {...register}>
+        <select {...register} onChange={onChange}>
           {placeholder && <option>{placeholder}</option>}
           {options?.map((option: any, idx: number) => {
             return (

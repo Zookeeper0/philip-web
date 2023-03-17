@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const useWindowWidth = () => {
   const [windowWidth, setWindowWidth] = useState(0);
 
   let timer: any;
-  const resizeWindow = () => {
+
+  const resizeWindow = useCallback(() => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       // 현재 window width 값
       setWindowWidth(window.innerWidth);
     }, 500);
-  };
+  }, []);
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -18,7 +19,7 @@ const useWindowWidth = () => {
     return () => {
       window.removeEventListener("resize", resizeWindow);
     };
-  }, [windowWidth]);
+  }, [windowWidth, resizeWindow]);
 
   return windowWidth;
 };

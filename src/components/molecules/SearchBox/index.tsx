@@ -12,10 +12,12 @@ import { useMutation, useQuery } from "react-query";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 import { useForm } from "react-hook-form";
 import { addPostApi } from "@/apis/postsApi";
+import { categoryState } from "@/recoil/category";
 
 export const SearchBox = () => {
   const isWindowWidth = useWindowWidth();
   const [searchInput, setSearchInput] = useRecoilState(searchState);
+  const [categoryInput, setCategoryInput] = useRecoilState(categoryState);
 
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -30,6 +32,14 @@ export const SearchBox = () => {
 
   const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
+  };
+
+  const getCityOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+  };
+
+  const getCategoryOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryInput(e.target.value);
   };
 
   const {
@@ -55,14 +65,14 @@ export const SearchBox = () => {
               width="calc(50vw - 20px)"
               placeholder="지역 검색"
               options={cityOptions}
-              register={register("cityOid")}
+              onChange={getCityOption}
             />
             <InputSelect
               themeType="row"
               size="lg"
               width="calc(50vw - 20px)"
               options={categoryItem}
-              register={register("categoryOid")}
+              onChange={getCategoryOption}
             />
           </S.SearchMobileInput>
         )}

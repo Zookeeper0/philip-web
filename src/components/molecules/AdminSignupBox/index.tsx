@@ -35,7 +35,7 @@ export const AdminSignupBox = () => {
     resolver: yupResolver(schema),
   });
 
-  const submit = useCallback((data: any) => {
+  const submit = (data: any) => {
     console.log(data);
     const { adminId, password, passwordCheck, name, birth } = data;
     if (password !== passwordCheck) {
@@ -54,7 +54,7 @@ export const AdminSignupBox = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  };
 
   return (
     <S.LoginBox onSubmit={handleSubmit(submit)}>

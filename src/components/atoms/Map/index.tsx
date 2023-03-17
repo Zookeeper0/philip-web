@@ -1,7 +1,7 @@
 import { GoogleMap, LoadScriptNext, MarkerF } from "@react-google-maps/api";
 import React, { useMemo, useEffect, useState } from "react";
 import styled from "styled-components";
-import useGeoCode from "@/lib/Google-geocode";
+import GeoCode from "@/lib/Google-geocode";
 
 const Wrapper = styled.div`
   .map-container {
@@ -15,7 +15,7 @@ const Map = ({ address }: any) => {
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {
-    useGeoCode(address).then((res) => {
+    GeoCode(address).then((res) => {
       setLocation({
         lat: res?.lat,
         lng: res?.lng,

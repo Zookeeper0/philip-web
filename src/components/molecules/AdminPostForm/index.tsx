@@ -67,25 +67,19 @@ export const AdminPostForm = () => {
     },
   });
 
-  const onSubmit = useCallback(
-    (data: any) => {
-      const formData = new FormData();
-      images.forEach((p) => {
-        formData.append("files", p);
-      });
+  const onSubmit = (data: any) => {
+    const formData = new FormData();
+    images.forEach((p) => {
+      formData.append("files", p);
+    });
 
-      //어드민 토큰
-      data.token = userOid;
-      //방문자수 0 초기화
-      data.views = 0;
-
-      console.log("submit images:", formData);
-      formData.append("content", JSON.stringify(data));
-      mutation.mutate(formData);
-    },
-    [mutation, imagePaths]
-  );
-
+    //어드민 토큰
+    data.token = userOid;
+    //방문자수 0 초기화
+    data.views = 0;
+    formData.append("content", JSON.stringify(data));
+    mutation.mutate(formData);
+  };
   // ref로 인풋태그 접근
   const imageInput = useRef<HTMLInputElement>(null);
   const onClickImageUpload = useCallback((e: any) => {
@@ -180,21 +174,6 @@ export const AdminPostForm = () => {
         <button type="submit" style={{ float: "right" }}>
           등록
         </button>
-      </div>
-
-      <div>
-        {imagePaths.map((v, i) => (
-          <div key={v} style={{ display: "inline-block" }}>
-            <img
-              src={`http://localhost:3001/${v}`}
-              style={{ width: "200px" }}
-              alt={v}
-            />
-            <div>
-              <button onClick={onRemoveImage(i)}>제거</button>
-            </div>
-          </div>
-        ))}
       </div>
     </S.PostFormBox>
   );

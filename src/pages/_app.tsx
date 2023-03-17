@@ -12,12 +12,16 @@ import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { GlobalStyle } from "@/styles/global-style";
 import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
+import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isWindowWidth = useWindowWidth();
   const queryClient = new QueryClient();
 
+  useEffect(() => {
+    console.log("check visitor");
+  }, []);
   return (
     <>
       <Head>
