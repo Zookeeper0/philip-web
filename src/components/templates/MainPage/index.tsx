@@ -5,8 +5,13 @@ import { tokenState } from "@/recoil/token";
 import { useRecoilState } from "recoil";
 import * as S from "./mainPage.style";
 import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { todayVisitAPI } from "@/apis/userApi";
 
 export const MainPage = () => {
+  const { data: cityItem } = useQuery("getCityListApi", todayVisitAPI);
+  console.log(cityItem);
+
   return (
     <S.MainLayout>
       <BannerSection />

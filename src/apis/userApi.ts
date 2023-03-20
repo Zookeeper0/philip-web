@@ -18,3 +18,7 @@ export function logInAPI(data: { adminId: string; password: string }) {
     .post("/admin/signin", data)
     .then((response) => response.data);
 }
+
+export function todayVisitAPI() {
+  return axiosInstance.get("/admin/visit").then((response) => response.data);
+}

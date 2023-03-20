@@ -48,7 +48,7 @@ export const Button = styled.button<ButtonProps>`
   transition: background 0.1s ease-in-out;
   background: ${(props) =>
     props.color === "clear" ? "none" : props.theme.colors[props.color]};
-  transform: ${(props) => (props.rotate ? `rotate(180deg)` : "")};
+  transform: ${(props) => (props.rotate === "open" ? "rotate(180deg)" : "")};
 
   ${(props) =>
     props.size === "sm" &&
