@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
-import { logInAPI } from "@/apis/userApi";
+import { logInAPI } from "@/apis/adminApi";
 
 export const AdminLoginBox = () => {
   const isWindowWidth = useWindowWidth();

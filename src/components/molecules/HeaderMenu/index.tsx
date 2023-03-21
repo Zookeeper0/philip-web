@@ -1,6 +1,6 @@
 import { Button } from "@/components/atoms/Button";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
-import { tokenState } from "@/recoil/token";
+import { userTokenState } from "@/recoil/userToken";
 import { useRouter } from "next/router";
 import IconUser from "public/assets/svg/icon-user.svg";
 import { useRecoilState } from "recoil";
@@ -24,24 +24,13 @@ export const HeaderMenu = () => {
   ];
 
   /** 관리자 로그인 되어있는지 체크 */
-  const [userOid, setUserOid] = useRecoilState(tokenState);
+  const [userToken, setUserToken] = useRecoilState(userTokenState);
 
+  console.log("header userTOken", userToken);
   return (
     <S.HeaderMenu>
-      {userOid ? (
+      {userToken ? (
         <>
-          <Button
-            type="button"
-            color="clear"
-            layout="icon"
-            size="sm"
-            label="관리자 글쓰기"
-            onClick={() => {
-              router.replace("/admin");
-            }}
-          >
-            <IconUser />
-          </Button>
           <Button
             type="button"
             color="clear"
@@ -49,8 +38,8 @@ export const HeaderMenu = () => {
             size="sm"
             label="로그아웃"
             onClick={() => {
-              localStorage.removeItem("signKey");
-              router.push("/");
+              localStorage.removeItem("kakaoSignKey");
+              router.reload();
             }}
           >
             <IconUser />
@@ -58,18 +47,6 @@ export const HeaderMenu = () => {
         </>
       ) : (
         <>
-          <Button
-            type="button"
-            color="clear"
-            layout="icon"
-            size="sm"
-            label="관리자 로그인/회원가입"
-            onClick={() => {
-              router.replace("/admin/login");
-            }}
-          >
-            <IconUser />
-          </Button>
           <Button
             type="button"
             color="clear"

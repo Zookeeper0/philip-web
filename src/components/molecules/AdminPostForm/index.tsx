@@ -8,8 +8,8 @@ import * as S from "./adminPostForm.style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
-import { useRecoilState } from "recoil";
-import { tokenState } from "@/recoil/token";
+import { useRecoilValue } from "recoil";
+import { adminTokenState } from "@/recoil/adminToken";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 
 interface PostdataProps {
@@ -20,7 +20,7 @@ interface PostdataProps {
 }
 export const AdminPostForm = () => {
   const isWindowWidth = useWindowWidth();
-  const [userOid, setUserOid] = useRecoilState(tokenState);
+  const userOid = useRecoilValue(adminTokenState);
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
 

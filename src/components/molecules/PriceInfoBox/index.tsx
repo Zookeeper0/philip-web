@@ -10,7 +10,7 @@ export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
       <S.PriceInfoBox isOpen={open}>
         <S.PriceTit>{title}</S.PriceTit>
         <S.PriceImg>
-          {/* <Image src={Menu} alt="선택된 업체 이미지" height={100} /> */}
+          <Image src={Menu} alt="선택된 업체 이미지" height={100} />
         </S.PriceImg>
         <S.PriceInfo>{post?.contents}</S.PriceInfo>
         <ButtonGroup height={24}>
@@ -20,7 +20,7 @@ export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
             color="clear"
             layout="icon"
             onClick={openHandler}
-            rotate={"open"}
+            rotate={open}
           >
             <IconDown />
           </Button>

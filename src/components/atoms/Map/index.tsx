@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const Map = ({ address }: any) => {
+  const center = useMemo(() => ({ lat: 35.1481, lng: 129.0623 }), []);
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {
@@ -23,8 +24,8 @@ const Map = ({ address }: any) => {
   }, [address]);
 
   const defaultCenter: any = {
-    lat: location ? +location.lat : 0,
-    lng: location ? +location.lng : 0,
+    lat: location ? location.lat : 0.0,
+    lng: location ? location.lng : 0.0,
   };
   const defaultZoom = 16;
 
