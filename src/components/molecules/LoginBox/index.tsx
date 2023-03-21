@@ -1,8 +1,6 @@
 import { Button } from "@/components/atoms/Button";
 import * as S from "./loginBox.style";
 import IconKakao from "public/assets/svg/icon-kakao.svg";
-import Link from "next/link";
-import { KAKAO_AUTH_URL } from "@/config/OAuth";
 
 export const LoginBox = () => {
   const kakaoLogin = () => {

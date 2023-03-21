@@ -14,6 +14,7 @@ import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
 import { useEffect } from "react";
 import Script from "next/dist/client/script";
+import { GetServerSideProps } from "next";
 
 declare global {
   // Kakao 함수를 전역에서 사용할 수 있도록 선언
@@ -33,9 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
     console.log(window.Kakao.isInitialized());
   }
 
-  useEffect(() => {
-    console.log("check visitor");
-  }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <Head>

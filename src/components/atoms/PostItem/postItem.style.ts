@@ -7,7 +7,7 @@ export const PostItem = styled.li`
   color: white;
   cursor: pointer;
   z-index: 0;
-
+  box-shadow: ${(props) => props.theme.shadow.dark};
   &::before {
     position: absolute;
     content: "";
@@ -44,7 +44,7 @@ export const PostItemSpan = styled.span`
   bottom: 16px;
   left: 16px;
   font-size: 2rem;
-  opacity: 0;
+  opacity: 1;
   justify-content: flex-end;
   flex-direction: column;
   transition: all 0.2s ease-in-out;
