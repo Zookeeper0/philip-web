@@ -5,22 +5,31 @@ import Data from "@/data/dummy";
 import * as S from "./navList.style";
 import IconArrowPrev from "public/assets/svg/icon-arrow-prev.svg";
 import IconArrowNext from "public/assets/svg/icon-arrow-next.svg";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { getCategoryNavApi } from "@/apis/categoryApi";
 
 export const NavList = () => {
   const MENU_PER_SLIDE = 12;
+
+  /** Nav 카테고리 가져오기*/
+  const { data: categoryItem, isLoading } = useQuery(
+    "getCategoryNavApi",
+    getCategoryNavApi
+  );
 
   const [lastSlide, setLastSlide] = useState(0);
   const [firstSlide, setFirstSlide] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentSlide, setCurrentSlide] = useState<any | null>(
-    Data.Menu.slice(1, 12)
+    categoryItem?.slice(1, 12)
   );
 
   useEffect(() => {
     setLastSlide(currentPage * MENU_PER_SLIDE);
     setFirstSlide(lastSlide - MENU_PER_SLIDE);
-    setCurrentSlide(Data.Menu.slice(firstSlide, lastSlide));
-  }, [Data.Menu, currentPage, firstSlide, lastSlide, MENU_PER_SLIDE]);
+    setCurrentSlide(categoryItem?.slice(firstSlide, lastSlide));
+  }, [categoryItem, currentPage, firstSlide, lastSlide, MENU_PER_SLIDE]);
 
   const onPrevSlide = () => {
     if (currentPage > 1) {
@@ -29,7 +38,7 @@ export const NavList = () => {
   };
 
   const onNextSlide = () => {
-    if (Data.Menu.length / 12 > currentPage) {
+    if (categoryItem.length / 12 > currentPage) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -47,7 +56,7 @@ export const NavList = () => {
         <IconArrowPrev />
       </Button>
       <S.NavList>
-        {currentSlide.map((item: any, idx: number) => {
+        {currentSlide?.map((item: any, idx: number) => {
           return <NavItem item={item} key={idx} />;
         })}
       </S.NavList>

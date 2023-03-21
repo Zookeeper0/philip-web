@@ -1,19 +1,31 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useInfiniteQuery } from "react-query";
 import { PostItem } from "@/components/atoms/PostItem";
-import useIntersectionObserver from "@/lib/hooks/useObserver";
-import Data from "@/data/dummy";
 import * as S from "./postListBox.style";
+import { categoryState } from "../../../recoil/category";
+import { useRecoilState } from "recoil";
+import { tokenState } from "@/recoil/adminToken";
+import { searchState } from "@/recoil/search";
+import { useQuery } from "react-query";
+import { getPostsListApi } from "@/apis/postsApi";
 
 export const PostListBox = () => {
-  const posts = Data.Post;
+  //nav item 에서 현재 선택 카테고리
+  const [currentCategory, setCurrentCategory] = useRecoilState(categoryState);
+  const [searchInput, setSearchInput] = useRecoilState(searchState);
+
+  // GET 메인 포스트, 쿼리스트링 sort ?categort = filter
+  const { data: postItem, isLoading } = useQuery(
+    ["getPostsListApi", currentCategory, searchInput],
+    getPostsListApi
+  );
+
+  console.log("getPostsListApi", postItem);
+
   return (
     <>
       <S.PostListBox>
-        <S.PostCountSpan>검색결과 총 {Data.Post.length}건</S.PostCountSpan>
+        <S.PostCountSpan>검색결과 총 {postItem?.length}건</S.PostCountSpan>
         <S.PostList>
-          {posts.map((item: any, idx: number) => {
+          {postItem?.map((item: any, idx: number) => {
             return <PostItem item={item} key={idx} />;
           })}
         </S.PostList>

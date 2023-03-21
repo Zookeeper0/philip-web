@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 interface ButtonGroupProps {
   width?: string;
+  height?: number;
   marginTop?: number;
   marginBottom?: number;
   alignItems?: string;
@@ -14,11 +15,13 @@ interface ButtonProps {
   size?: string;
   color: string;
   layout: string;
+  rotate?: string;
 }
 
 export const ButtonGroup = styled.div<ButtonGroupProps>`
   grid-area: BT;
   display: flex;
+  height: ${(props) => (props.height ? props.height + "px" : "initial")};
   width: ${(props) => (props.width ? props.width : "100%")};
   align-items: ${(props) => (props.alignItems ? props.alignItems : "center")};
   justify-content: ${(props) =>
@@ -45,6 +48,7 @@ export const Button = styled.button<ButtonProps>`
   transition: background 0.1s ease-in-out;
   background: ${(props) =>
     props.color === "clear" ? "none" : props.theme.colors[props.color]};
+  transform: ${(props) => (props.rotate ? `rotate(180deg)` : "")};
 
   ${(props) =>
     props.size === "sm" &&
@@ -52,6 +56,14 @@ export const Button = styled.button<ButtonProps>`
       height: 24px;
       padding: 0 10px;
       font-size: 1.1rem;
+    `}
+
+  ${(props) =>
+    props.size === "md" &&
+    css`
+      height: 32px;
+      padding: 0 10px;
+      font-size: 1.4rem;
     `}
 
   ${(props) =>

@@ -6,4 +6,5 @@ export const CategoryList = styled.ul`
   padding: 0 20px;
   justify-content: center;
   gap: 10px;
+  cursor: pointer;
 `;

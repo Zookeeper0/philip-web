@@ -5,24 +5,54 @@ import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 import { Button } from "@/components/atoms/Button";
 import Data from "@/data/dummy";
 import * as S from "./searchBox.style";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { searchState } from "@/recoil/search";
+import { useMutation, useQuery } from "react-query";
+import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
+import { useForm } from "react-hook-form";
+import { addPostApi } from "@/apis/postsApi";
+import { categoryState } from "@/recoil/category";
 
 export const SearchBox = () => {
   const isWindowWidth = useWindowWidth();
+  const [searchInput, setSearchInput] = useRecoilState(searchState);
+  const [categoryInput, setCategoryInput] = useRecoilState(categoryState);
 
-  const options = [
-    {
-      id: 1,
-      name: "마닐라",
-    },
-    {
-      id: 2,
-      name: "앙헬레스",
-    },
-    {
-      id: 3,
-      name: "세부",
-    },
-  ];
+  const [cityOptions, setCityOptions] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+
+  /** 카테고리 select 목록 불러오기 */
+  const { data: categoryItem } = useQuery(
+    "getCategoryNavApi",
+    getCategoryNavApi
+  );
+  /** 시티 select 목록 불러오기 */
+  const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
+
+  const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
+
+  const getCityOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+  };
+
+  const getCategoryOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryInput(e.target.value);
+  };
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+    reset,
+  } = useForm();
+
+  useEffect(() => {
+    setCategoryOptions(categoryItem);
+    setCityOptions(cityItem);
+  }, [categoryItem, cityItem]);
 
   return (
     <S.SearchBox>
@@ -34,14 +64,15 @@ export const SearchBox = () => {
               size="lg"
               width="calc(50vw - 20px)"
               placeholder="지역 검색"
-              options={options}
+              options={cityOptions}
+              onChange={getCityOption}
             />
             <InputSelect
               themeType="row"
               size="lg"
               width="calc(50vw - 20px)"
-              placeholder="카테고리 검색"
-              options={Data.Menu}
+              options={categoryItem}
+              onChange={getCategoryOption}
             />
           </S.SearchMobileInput>
         )}
@@ -51,6 +82,7 @@ export const SearchBox = () => {
           size={isWindowWidth < 769 ? "lg" : "md"}
           width="100%"
           placeholder={isWindowWidth < 769 ? "키워드 검색..." : "입력..."}
+          onChange={getValue}
         />
         {/* <InputText
           label="기타 검색"

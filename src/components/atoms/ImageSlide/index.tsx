@@ -24,8 +24,6 @@ export const ImageSlide = ({ items }: any) => {
     }
   };
 
-  console.log(selectedId);
-
   return (
     <S.ImageSlide>
       <S.ImageSelected>

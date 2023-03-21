@@ -94,6 +94,7 @@ export const RegionItem = styled.li<ItemProps>`
         props.disabled === false
           ? "8px solid" + props.theme.colors.primary
           : "none"};
+      transition: all 0.1s ease-in-out;
     }
   }
 

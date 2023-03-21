@@ -11,68 +11,71 @@ const Menu = [
   { id: 1, name: "전체" },
   {
     id: 2,
-    name: "JTV",
+    name: "KTV",
   },
   {
     id: 3,
-    name: "KTV",
-  },
-  {
-    id: 4,
-    name: "마사지샵",
-  },
-  {
-    id: 5,
-    name: "BAR",
-  },
-  {
-    id: 6,
-    name: "호텔",
-  },
-  {
-    id: 7,
-    name: "렌트카",
-  },
-  {
-    id: 8,
-    name: "음식점",
-  },
-  {
-    id: 9,
-    name: "숙박",
-  },
-  {
-    id: 10,
     name: "JTV",
   },
   {
-    id: 11,
-    name: "KTV",
-  },
-  {
-    id: 12,
-    name: "마사지샵",
-  },
-  {
-    id: 13,
+    id: 4,
     name: "BAR",
   },
   {
-    id: 14,
+    id: 5,
+    name: "마사지",
+  },
+  {
+    id: 6,
+    name: "클럽/나이트",
+  },
+  {
+    id: 7,
     name: "호텔",
   },
   {
-    id: 15,
-    name: "렌트카",
+    id: 8,
+    name: "풀빌라",
   },
   {
-    id: 16,
+    id: 9,
+    name: "카지노",
+  },
+  {
+    id: 10,
+    name: "골프CC",
+  },
+  {
+    id: 11,
     name: "음식점",
   },
   {
-    id: 17,
-    name: "레저",
+    id: 12,
+    name: "렌터카",
   },
+  {
+    id: 13,
+    name: "여행사",
+  },
+  {
+    id: 14,
+    name: "환전",
+  },
+  {
+    id: 15,
+    name: "기타",
+  },
+];
+
+const Images = [
+  { id: 1, url: Images01 },
+  { id: 2, url: Images02 },
+  { id: 3, url: Images03 },
+  { id: 4, url: Images04 },
+  { id: 5, url: Images05 },
+  { id: 6, url: Images06 },
+  { id: 7, url: Images07 },
+  { id: 8, url: Images08 },
 ];
 
 const Post = [
@@ -606,4 +609,4 @@ const Post = [
   },
 ];
 
-export default { Menu, Post };
+export default { Menu, Post, Images };
