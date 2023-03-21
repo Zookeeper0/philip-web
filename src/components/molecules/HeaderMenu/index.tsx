@@ -1,47 +1,35 @@
+import { getCityListApi } from "@/apis/categoryApi";
 import { Button } from "@/components/atoms/Button";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
-import { tokenState } from "@/recoil/token";
+import { adminTokenState } from "@/recoil/adminToken";
+import { userTokenState } from "@/recoil/userToken";
 import { useRouter } from "next/router";
 import IconUser from "public/assets/svg/icon-user.svg";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import * as S from "./headerMenu.style";
 
 export const HeaderMenu = () => {
-  const router = useRouter();
-  const pageOptions = [
-    {
-      id: 1,
-      name: "앙헬레스",
-    },
-    {
-      id: 2,
-      name: "마닐라",
-    },
-    {
-      id: 3,
-      name: "세부",
-    },
-  ];
+  /** 유저 로그인 체크 */
+  const [userToken, setUserToken] = useRecoilState(userTokenState);
+  /** 관리자 로그인 체크 */
+  const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
+  const [cityOptions, setCityOptions] = useState([]);
 
-  /** 관리자 로그인 되어있는지 체크 */
-  const [userOid, setUserOid] = useRecoilState(tokenState);
+  /** 시티 select 목록 불러오기 */
+  const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setCityOptions(cityItem);
+  }, [cityItem]);
 
   return (
     <S.HeaderMenu>
-      {userOid ? (
+      {userToken || adminToken ? (
         <>
-          <Button
-            type="button"
-            color="clear"
-            layout="icon"
-            size="sm"
-            label="관리자 글쓰기"
-            onClick={() => {
-              router.replace("/admin");
-            }}
-          >
-            <IconUser />
-          </Button>
           <Button
             type="button"
             color="clear"
@@ -49,8 +37,11 @@ export const HeaderMenu = () => {
             size="sm"
             label="로그아웃"
             onClick={() => {
-              localStorage.removeItem("signKey");
-              router.push("/");
+              localStorage.removeItem("kakaoSignKey");
+              localStorage.removeItem("adminSignKey");
+              setUserToken(null);
+              setAdminToken(null);
+              document.location.href = "/main";
             }}
           >
             <IconUser />
@@ -58,18 +49,6 @@ export const HeaderMenu = () => {
         </>
       ) : (
         <>
-          <Button
-            type="button"
-            color="clear"
-            layout="icon"
-            size="sm"
-            label="관리자 로그인/회원가입"
-            onClick={() => {
-              router.replace("/admin/login");
-            }}
-          >
-            <IconUser />
-          </Button>
           <Button
             type="button"
             color="clear"
@@ -84,12 +63,29 @@ export const HeaderMenu = () => {
           </Button>
         </>
       )}
-      {/* 임시 */}
-
+      {/* 관리자 로그인 시 글쓰기 버튼 */}
+      {adminToken ? (
+        <>
+          <Button
+            type="button"
+            color="clear"
+            layout="icon"
+            size="sm"
+            label="관리자 글쓰기"
+            onClick={() => {
+              router.replace("/admin");
+            }}
+          >
+            <IconUser />
+          </Button>
+        </>
+      ) : (
+        ""
+      )}
       {router.pathname.includes("main") || router.pathname.includes("auth") ? (
         <InputSelect
           label="지역선택"
-          options={pageOptions}
+          options={cityOptions}
           themeType="row"
           size="sm"
         />

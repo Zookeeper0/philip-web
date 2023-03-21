@@ -2,7 +2,6 @@ import axiosInstance from "./index";
 
 /** GET 메인화면 전체게시글, 복수쿼리( 검색, 카테고리 )  */
 export function getPostsListApi({ queryKey }: any) {
-  console.log("postList IN");
   return axiosInstance
     .get(`/posts?category=${queryKey[1]}&search=${queryKey[2]}`)
     .then((res) => res.data);
@@ -23,7 +22,6 @@ export function fetchCountViews(oid: string) {
 }
 
 export function getPromtionListApi({ queryKey }: any) {
-  console.log("promotion IN");
   return axiosInstance
     .get(`/posts/promotion?category=${queryKey[1]}`)
     .then((response) => response.data);

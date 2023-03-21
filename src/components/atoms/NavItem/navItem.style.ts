@@ -31,6 +31,12 @@ export const NavItem = styled.li`
     }
   }
 
+  &.active {
+    &::before {
+      opacity: 1;
+    }
+  }
+
   span {
     position: relative;
     z-index: 2;

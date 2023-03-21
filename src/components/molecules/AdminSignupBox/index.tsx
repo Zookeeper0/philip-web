@@ -6,7 +6,7 @@ import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useCallback, useState } from "react";
-import { signUpAPI } from "@/apis/userApi";
+import { signUpAPI } from "@/apis/adminApi";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { InputDate } from "@/components/atoms/Input/InputDate";
@@ -36,7 +36,6 @@ export const AdminSignupBox = () => {
   });
 
   const submit = (data: any) => {
-    console.log(data);
     const { adminId, password, passwordCheck, name, birth } = data;
     if (password !== passwordCheck) {
       alert("비밀번호가 다릅니다.");

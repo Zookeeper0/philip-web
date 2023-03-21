@@ -21,8 +21,6 @@ export const PostSection = () => {
     queryFn
   );
 
-  console.log(detailItem);
-
   const openHandler = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);

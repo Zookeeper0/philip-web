@@ -16,7 +16,6 @@ export const PromotionListBox = () => {
     getPromtionListApi
   );
 
-  console.log("getPromtionListApi", postItem);
   return (
     <S.PromotionListBox>
       <S.PropmotionTitSpan>이달의 프로모션</S.PropmotionTitSpan>

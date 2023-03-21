@@ -8,8 +8,8 @@ import * as S from "./adminPostForm.style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
-import { useRecoilState } from "recoil";
-import { tokenState } from "@/recoil/token";
+import { useRecoilValue } from "recoil";
+import { adminTokenState } from "@/recoil/adminToken";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 
 interface PostdataProps {
@@ -20,38 +20,9 @@ interface PostdataProps {
 }
 export const AdminPostForm = () => {
   const isWindowWidth = useWindowWidth();
-  const [userOid, setUserOid] = useRecoilState(tokenState);
+  const userOid = useRecoilValue(adminTokenState);
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
-
-  /** 카테고리 select 목록 불러오기 */
-  const { data: categoryItem } = useQuery(
-    "getCategoryNavApi",
-    getCategoryNavApi
-  );
-  /** 시티 select 목록 불러오기 */
-  const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
-
-  const schema = yup
-    .object({
-      title: yup.string().nullable().required("제목을 입력해 선택해주세요"),
-      address: yup.string().nullable().required("주소를 입력해주세요"),
-      phoneNumber: yup.string().nullable().required("전화번호를 등록해주세요"),
-      contents: yup.string().nullable().required("상세 설명을 입력해주세요"),
-      categoryOid: yup.string().required("카테고리를 선택하세요"),
-      cityOid: yup.string().required("도시를 선택하세요"),
-    })
-    .required();
-
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    reset,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<string[]>([]);
@@ -67,6 +38,34 @@ export const AdminPostForm = () => {
     },
   });
 
+  /** 카테고리 select 목록 불러오기 */
+  const { data: categoryItem } = useQuery(
+    "getCategoryNavApi",
+    getCategoryNavApi
+  );
+  /** 시티 select 목록 불러오기 */
+  const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
+
+  // const schema = yup
+  //   .object({
+  //     title: yup.string().nullable().required("제목을 입력해 선택해주세요"),
+  //     address: yup.string().nullable().required("주소를 입력해주세요"),
+  //     phoneNumber: yup.string().nullable().required("전화번호를 등록해주세요"),
+  //     contents: yup.string().nullable().required("상세 설명을 입력해주세요"),
+  //     categoryOid: yup.string().required("카테고리를 선택하세요"),
+  //     cityOid: yup.string().required("도시를 선택하세요"),
+  //   })
+  //   .required();
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+    reset,
+  } = useForm({
+    // resolver: yupResolver(schema),
+  });
+
   const onSubmit = (data: any) => {
     const formData = new FormData();
     images.forEach((p) => {
@@ -80,6 +79,7 @@ export const AdminPostForm = () => {
     formData.append("content", JSON.stringify(data));
     mutation.mutate(formData);
   };
+
   // ref로 인풋태그 접근
   const imageInput = useRef<HTMLInputElement>(null);
   const onClickImageUpload = useCallback((e: any) => {
