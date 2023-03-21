@@ -8,12 +8,14 @@ import { useCallback, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { logInAPI } from "@/apis/adminApi";
+import { useRecoilState } from "recoil";
+import { adminTokenState } from "@/recoil/adminToken";
 
 export const AdminLoginBox = () => {
   const isWindowWidth = useWindowWidth();
   const router = useRouter();
-  const queryClient = useQueryClient();
-  const [loading, setLoading] = useState(false);
+  const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -21,9 +23,10 @@ export const AdminLoginBox = () => {
   } = useForm();
 
   const mutation = useMutation("logInAPI", logInAPI, {
-    onSuccess: (data) => {
-      localStorage.setItem("signKey", JSON.stringify(data));
-      router.push("/main");
+    onSuccess: (token) => {
+      localStorage.setItem("adminSignKey", token);
+      setAdminToken(token);
+      document.location.href = "/main";
     },
     onError: (error: any) => {
       console.log(error);
@@ -34,7 +37,6 @@ export const AdminLoginBox = () => {
 
   const onSubmitForm = useCallback(
     (data: any) => {
-      console.log(data);
       const { adminId, password } = data;
       mutation.mutate({ adminId, password });
     },

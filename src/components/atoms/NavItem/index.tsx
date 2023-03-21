@@ -21,7 +21,10 @@ export const NavItem = (item: any) => {
   };
 
   return (
-    <S.NavItem onClick={onClick}>
+    <S.NavItem
+      onClick={onClick}
+      className={`${item.item.oid === category ? "active" : "default"}`}
+    >
       <span>{item.item.name}</span>
     </S.NavItem>
   );

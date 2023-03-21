@@ -9,7 +9,6 @@ export const Counter = () => {
 
   /** getVisitCount로부터 오늘의 방문자수 얻어와서 처리 */
   useEffect(() => {
-    console.log("todayCount", todayCount);
     const str = String(todayCount);
     const mapfn = (arg: string) => Number(arg);
 

@@ -1,7 +1,6 @@
 import axiosInstance from "./index";
 
 export function cookieAPI() {
-  console.log("cookieAPI");
   return axiosInstance.get("/app").then((response) => response.data);
 }
 

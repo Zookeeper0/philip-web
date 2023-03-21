@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const MobileHeader = styled.header`\
+export const MobileHeader = styled.header`
   position: -webkit-sticky;
   position: sticky;
   display: flex;
@@ -17,4 +17,9 @@ export const MobileHeaderImgSpan = styled.span`
   display: inline-block;
   width: 70px;
   height: 24px;
+`;
+
+export const Popup = styled.div`
+  position: static;
+  top: 30px;
 `;

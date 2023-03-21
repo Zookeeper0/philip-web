@@ -36,7 +36,6 @@ export const AdminSignupBox = () => {
   });
 
   const submit = (data: any) => {
-    console.log(data);
     const { adminId, password, passwordCheck, name, birth } = data;
     if (password !== passwordCheck) {
       alert("비밀번호가 다릅니다.");

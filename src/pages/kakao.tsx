@@ -16,10 +16,9 @@ const Kakao = () => {
 
   const mutation = useMutation("kakaoLoginAPI", kakaoLoginAPI, {
     onSuccess: (data) => {
-      const { accessToken } = data;
-
-      localStorage.setItem("kakaoSignKey", JSON.stringify(accessToken));
-      router.push("/main");
+      localStorage.setItem("kakaoSignKey", data);
+      setUserToken(data);
+      document.location.href = "/main";
     },
     onError: (error: any) => {
       console.log(error);
