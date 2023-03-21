@@ -30,6 +30,12 @@ export const StoreInfo = styled.div`
   }
 `;
 
+export const StoreInfoTop = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+`;
+
 export const StoreNameBox = styled.div`
   display: flex;
   margin-bottom: 10px;
@@ -52,6 +58,19 @@ export const CategorySpan = styled.div`
   @media screen and (max-width: 768px) {
     color: ${(props) => props.theme.colors.categorySubTxt};
     font-size: 1.8rem;
+  }
+`;
+
+export const StoreViewBox = styled.div`
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+  gap: 3px;
+
+  svg {
+    path:nth-child(2) {
+      fill: ${(props) => props.theme.colors.white};
+    }
   }
 `;
 
