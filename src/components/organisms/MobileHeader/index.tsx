@@ -4,12 +4,21 @@ import IconBack from "public/assets/svg/icon-arrow-back.svg";
 import IconUser from "public/assets/svg/icon-user.svg";
 import { Button } from "@/components/atoms/Button";
 import Logo from "@/components/atoms/Logo";
+import { useRecoilValue } from "recoil";
+import { userTokenState } from "@/recoil/userToken";
+import { useState } from "react";
 
 export const MobileHeader = () => {
   const router = useRouter();
+  const userToken = useRecoilValue(userTokenState);
+  const [popup, setPopup] = useState(false);
 
   const goBack = () => {
     router.back();
+  };
+
+  const popupHandler = () => {
+    setPopup((prev) => !prev);
   };
 
   const goUser = () => {
@@ -29,16 +38,38 @@ export const MobileHeader = () => {
         <IconBack width="28px" height="28px" viewBox="0 0 24 24" />
       </Button>
       <Logo main={true} mobile={true} />
-      <Button
-        type="button"
-        width="64px"
-        height={64}
-        color="clear"
-        layout="icon"
-        onClick={goUser}
-      >
-        <IconUser width="18px" height="18px" viewBox="0 0 12 12" />
-      </Button>
+      {userToken ? (
+        <>
+          <Button
+            type="button"
+            width="64px"
+            height={64}
+            color="clear"
+            layout="icon"
+            onClick={popupHandler}
+          >
+            <IconUser width="18px" height="18px" viewBox="0 0 12 12" />
+          </Button>
+          {popup ? (
+            <div>
+              <button>로그아웃</button>
+            </div>
+          ) : (
+            ""
+          )}
+        </>
+      ) : (
+        <Button
+          type="button"
+          width="64px"
+          height={64}
+          color="clear"
+          layout="icon"
+          onClick={goUser}
+        >
+          <IconUser width="18px" height="18px" viewBox="0 0 12 12" />
+        </Button>
+      )}
     </S.MobileHeader>
   );
 };

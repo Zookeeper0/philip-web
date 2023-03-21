@@ -9,7 +9,8 @@ const AxiosInstance = axios.create({
       "Bearer " +
       `${
         typeof window !== "undefined"
-          ? window.localStorage.getItem("kakaoSignKey")
+          ? window.localStorage.getItem("kakaoSignKey") ||
+            window.localStorage.getItem("adminSignKey")
           : null
       }`,
   },

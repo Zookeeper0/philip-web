@@ -16,7 +16,6 @@ const Kakao = () => {
 
   const mutation = useMutation("kakaoLoginAPI", kakaoLoginAPI, {
     onSuccess: (data) => {
-      console.log("Data:", data);
       localStorage.setItem("kakaoSignKey", data);
       setUserToken(data);
       document.location.href = "/main";
@@ -29,7 +28,6 @@ const Kakao = () => {
   });
 
   useEffect(() => {
-    console.log("authCode :", authCode);
     if (authCode) {
       mutation.mutate(authCode);
 

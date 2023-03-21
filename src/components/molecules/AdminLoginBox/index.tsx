@@ -14,8 +14,6 @@ import { adminTokenState } from "@/recoil/adminToken";
 export const AdminLoginBox = () => {
   const isWindowWidth = useWindowWidth();
   const router = useRouter();
-  const queryClient = useQueryClient();
-  const [loading, setLoading] = useState(false);
   const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
 
   const {
@@ -28,7 +26,7 @@ export const AdminLoginBox = () => {
     onSuccess: (token) => {
       localStorage.setItem("adminSignKey", token);
       setAdminToken(token);
-      router.push("/main");
+      document.location.href = "/main";
     },
     onError: (error: any) => {
       console.log(error);
@@ -39,7 +37,6 @@ export const AdminLoginBox = () => {
 
   const onSubmitForm = useCallback(
     (data: any) => {
-      console.log(data);
       const { adminId, password } = data;
       mutation.mutate({ adminId, password });
     },

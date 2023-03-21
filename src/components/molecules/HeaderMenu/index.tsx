@@ -26,8 +26,6 @@ export const HeaderMenu = () => {
     setCityOptions(cityItem);
   }, [cityItem]);
 
-  console.log("city:", cityItem);
-
   return (
     <S.HeaderMenu>
       {userToken || adminToken ? (
@@ -65,7 +63,7 @@ export const HeaderMenu = () => {
           </Button>
         </>
       )}
-      {/* 임시 */}
+      {/* 관리자 로그인 시 글쓰기 버튼 */}
       {adminToken ? (
         <>
           <Button

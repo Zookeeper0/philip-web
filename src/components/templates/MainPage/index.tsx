@@ -9,7 +9,6 @@ import { cookieAPI } from "@/apis/visitApi";
 export const MainPage = () => {
   const { data: cookie } = useQuery("cookieAPI", cookieAPI);
 
-  console.log(cookie);
   return (
     <S.MainLayout>
       <BannerSection />
