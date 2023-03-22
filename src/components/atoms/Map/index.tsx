@@ -11,7 +11,6 @@ const Wrapper = styled.div`
 `;
 
 const Map = ({ address }: any) => {
-  const center = useMemo(() => ({ lat: 35.1481, lng: 129.0623 }), []);
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {

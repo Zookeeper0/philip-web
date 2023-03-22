@@ -28,14 +28,17 @@ export const PostItem = ({ item }: any) => {
     mutation.mutate(item.oid);
   };
 
+  console.log("item:", item);
   //랜덤이미지 dummy
-  const ImageDum = Math.floor(Math.random() * Images.Images.length);
+  const ImageDum: any = Images.Category;
+
   return (
     <S.PostItem
       onClick={() => {
         goDetail(item), countViews;
       }}
     >
+      <Image src={ImageDum[item.categoryOid]} layout="fill" alt="업체 이미지" />
       <S.PostItemSpan>
         {/* {item.storeName} */}
         {item.title}
