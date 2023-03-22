@@ -25,9 +25,19 @@ export const PostSection = () => {
     setIsOpen((prev) => !prev);
   }, []);
 
+  console.log("router.query.id", router.query.id);
+
+  let randomImg = null;
   //랜덤이미지 dummy
-  const postId = Math.floor(Math.random() * 13);
-  const randomImg = Data.Post[postId];
+  if (router.query.id === "220975c0-c869-11ed-af91-e93afefe558a") {
+    randomImg = Data.SampleDetail[0];
+    console.log("randomImg", randomImg);
+  } else {
+    const postId = Math.floor(Math.random() * 13);
+    randomImg = Data.Post[postId];
+    console.log("randomImg", randomImg);
+  }
+
   return (
     <S.PostSection>
       <Button
