@@ -11,6 +11,7 @@ import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { useRecoilValue } from "recoil";
 import { adminTokenState } from "@/recoil/adminToken";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
+import { TextArea } from "@/components/atoms/TextArea";
 
 interface PostdataProps {
   title: string;
@@ -152,7 +153,7 @@ export const AdminPostForm = () => {
         placeholder={isWindowWidth < 769 ? "phoneNumber" : "phoneNumber"}
         register={register("phoneNumber")}
       />
-      <InputText
+      <TextArea
         label={isWindowWidth < 769 ? "컨텐츠" : "컨텐츠"}
         themeType={isWindowWidth < 769 ? "column" : "column"}
         size={isWindowWidth < 769 ? "lg" : "md"}

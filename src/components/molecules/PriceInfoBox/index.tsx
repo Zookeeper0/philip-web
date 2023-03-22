@@ -12,7 +12,17 @@ export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
         <S.PriceImg>
           <Image src={Menu} alt="선택된 업체 이미지" height={100} />
         </S.PriceImg>
-        <S.PriceInfo>{post?.contents}</S.PriceInfo>
+        <S.PriceInfo>
+          {post?.contents.split("\n").map((line: any, idx: any) => {
+            //this.props.data.content: 내용
+            return (
+              <span key={idx}>
+                {line}
+                <br />
+              </span>
+            );
+          })}
+        </S.PriceInfo>
         <ButtonGroup height={24}>
           <Button
             type="button"

@@ -10,9 +10,10 @@ import { categoryAll } from "@/recoil/category";
 interface LogoProps {
   main?: boolean;
   mobile?: boolean;
+  footer?: any;
 }
 
-export const Logo: React.FC<LogoProps> = ({ main, mobile }) => {
+export const Logo: React.FC<LogoProps> = ({ footer, main, mobile }) => {
   const [category, setCategory] = useRecoilState(categoryState);
 
   /** 메인로고 클릭시 카테고리 상태 전체로 변경*/
@@ -23,7 +24,7 @@ export const Logo: React.FC<LogoProps> = ({ main, mobile }) => {
     <S.Logo main={main} mobile={mobile}>
       <Link href="/main" onClick={onClick}>
         <Image
-          src={main ? LogoMain : LogoSub}
+          src={main ? LogoMain : footer ? LogoMain : LogoSub}
           alt="메인로고"
           width={mobile ? 70 : main ? 120 : 90}
           height={mobile ? 24 : main ? 40 : 30}
