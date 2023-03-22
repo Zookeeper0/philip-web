@@ -10,6 +10,7 @@ import { categoryAll } from "@/recoil/category";
 interface LogoProps {
   main?: boolean;
   mobile?: boolean;
+  footer?: any;
 }
 
 export const Logo: React.FC<LogoProps> = ({ footer, main, mobile }) => {
