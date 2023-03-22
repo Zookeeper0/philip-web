@@ -36,7 +36,11 @@ export const PostItem = ({ item, category }: any) => {
         goDetail(item), countViews;
       }}
     >
-      <Image src={Images.Images[0].url.src} layout="fill" alt="업체 이미지" />
+      <Image
+        src={Images.Images[ImageDum].url.src}
+        layout="fill"
+        alt="업체 이미지"
+      />
       <S.PostItemSpan>
         <span>카테고리{item.category}</span>
         {item.title}

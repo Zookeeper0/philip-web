@@ -18,7 +18,7 @@ export const IntroPage = () => {
       <Image
         src={isWindowWidth < 769 ? LogoMobile : LogoWeb}
         alt="필립 로고"
-        width={isWindowWidth < 769 ? 196 : 378}
+        width={isWindowWidth < 769 ? 196 : 413}
         height={isWindowWidth < 769 ? 56 : 55}
       />
     </S.IntroPage>
