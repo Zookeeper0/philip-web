@@ -14,7 +14,7 @@ export const KakaoLink = () => {
       <S.KakaoLinkTitBox>
         <IconKakao />
         <S.KakaoLinkTxtSpan>
-          카카오톡 <strong>1:1 상담문의</strong>
+          카카오톡 <strong>1:1 광고문의</strong>
         </S.KakaoLinkTxtSpan>
       </S.KakaoLinkTitBox>
       <IconLinkArrow />

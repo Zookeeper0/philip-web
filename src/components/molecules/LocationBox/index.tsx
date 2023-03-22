@@ -7,7 +7,7 @@ export const LocationBox = ({ post, title }: any) => {
     <S.LocationBox blur={true}>
       <S.LocationTit>{title}</S.LocationTit>
       <S.LocationMap>
-        <Map address={post?.title} />
+        <Map address={post?.address} />
       </S.LocationMap>
       <S.LocationInfo>
         {post?.address}

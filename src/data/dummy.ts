@@ -7,6 +7,20 @@ import Images06 from "../../public/assets/images/images-6.jpg";
 import Images07 from "../../public/assets/images/images-7.jpg";
 import Images08 from "../../public/assets/images/images-8.jpg";
 
+import Bar from "../../public/assets/images/img-bar.png";
+import Car from "../../public/assets/images/img-car.png";
+import Casino from "../../public/assets/images/img-casino.png";
+import Club from "../../public/assets/images/img-club.png";
+import Golf from "../../public/assets/images/img-golf.png";
+import Jtv from "../../public/assets/images/img-jtv.png";
+import Ktv from "../../public/assets/images/img-ktv.png";
+import Massage from "../../public/assets/images/img-massage.png";
+import Money from "../../public/assets/images/img-money.png";
+import Restaurant from "../../public/assets/images/img-restaurant.png";
+import Travel from "../../public/assets/images/img-travel.png";
+import Villa from "../../public/assets/images/img-villa.png";
+import Hotel from "../../public/assets/images/img-hotel.png";
+
 const Menu = [
   { id: 1, name: "전체" },
   {
@@ -66,6 +80,22 @@ const Menu = [
     name: "기타",
   },
 ];
+
+const Category = {
+  "1220cfe0-c153-11ed-8fb3-59762efda8c3": Hotel,
+  "15c65840-c153-11ed-8fb3-59762efda8c3": Car,
+  "d280e860-c202-11ed-9d04-9f79e1e743ff": Bar,
+  "e0a61fa0-c202-11ed-9d04-9f79e1e743ff": Casino,
+  "d90797b0-c202-11ed-9d04-9f79e1e743ff": Club,
+  "e4006e30-c202-11ed-9d04-9f79e1e743ff": Golf,
+  "cc510ba0-c202-11ed-9d04-9f79e1e743ff": Jtv,
+  "fded4da0-c152-11ed-8fb3-59762efda8c3": Ktv,
+  "d534e4d0-c202-11ed-9d04-9f79e1e743ff": Massage,
+  "f5937c00-c202-11ed-9d04-9f79e1e743ff": Money,
+  "ea0ee040-c202-11ed-9d04-9f79e1e743ff": Restaurant,
+  "f14f69b0-c202-11ed-9d04-9f79e1e743ff": Travel,
+  "ddb9d520-c202-11ed-9d04-9f79e1e743ff": Villa,
+};
 
 const Images = [
   { id: 1, url: Images01 },
@@ -609,4 +639,4 @@ const Post = [
   },
 ];
 
-export default { Menu, Post, Images };
+export default { Menu, Post, Images, Category };
