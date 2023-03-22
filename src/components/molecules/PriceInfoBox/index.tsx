@@ -13,10 +13,10 @@ export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
           <Image src={Menu} alt="선택된 업체 이미지" height={100} />
         </S.PriceImg>
         <S.PriceInfo>
-          {post?.contents.split("\n").map((line: any) => {
+          {post?.contents.split("\n").map((line: any, idx: any) => {
             //this.props.data.content: 내용
             return (
-              <span>
+              <span key={idx}>
                 {line}
                 <br />
               </span>
