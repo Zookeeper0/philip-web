@@ -4,7 +4,7 @@ import * as S from "./postItem.style";
 import Images from "@/data/dummy";
 import { useMutation } from "react-query";
 import { fetchCountViews } from "@/apis/postsApi";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { userTokenState } from "@/recoil/userToken";
 import { adminTokenState } from "@/recoil/adminToken";
 
@@ -28,7 +28,6 @@ export const PostItem = ({ item }: any) => {
     mutation.mutate(item.oid);
   };
 
-  console.log("item:", item);
   //랜덤이미지 dummy
   const ImageDum: any = Images.Category;
 
@@ -38,11 +37,14 @@ export const PostItem = ({ item }: any) => {
         goDetail(item), countViews;
       }}
     >
-      <Image src={ImageDum[item.categoryOid]} layout="fill" alt="업체 이미지" />
+      <Image
+        src={ImageDum[item.category_oid]}
+        layout="fill"
+        alt="업체 이미지"
+      />
       <S.PostItemSpan>
-        {/* {item.storeName} */}
-        {item.title}
         <span>{item.category}</span>
+        {item.title}
       </S.PostItemSpan>
     </S.PostItem>
   );
