@@ -7,7 +7,7 @@ export const Footer = () => {
     <S.Footer>
       <S.FooterRow>
         <S.FooterLinkBox>
-          <Logo main={false} />
+          <Logo footer={true} />
           <S.FooterBtnBox>
             <Button
               type="button"
