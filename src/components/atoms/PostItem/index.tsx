@@ -8,7 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userTokenState } from "@/recoil/userToken";
 import { adminTokenState } from "@/recoil/adminToken";
 
-export const PostItem = ({ item }: any) => {
+export const PostItem = ({ item, category }: any) => {
   const router = useRouter();
   const userToken = useRecoilValue(userTokenState);
   const adminToken = useRecoilValue(adminTokenState);
@@ -36,10 +36,10 @@ export const PostItem = ({ item }: any) => {
         goDetail(item), countViews;
       }}
     >
+      <Image src={Images.Images[0].url.src} layout="fill" alt="업체 이미지" />
       <S.PostItemSpan>
-        {/* {item.storeName} */}
+        <span>카테고리{item.category}</span>
         {item.title}
-        <span>{item.category}</span>
       </S.PostItemSpan>
     </S.PostItem>
   );
