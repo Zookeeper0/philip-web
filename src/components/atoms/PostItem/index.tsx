@@ -28,7 +28,7 @@ export const PostItem = ({ item }: any) => {
     mutation.mutate(item.oid);
   };
 
-  //랜덤이미지 dummy
+  //이미지 dummy
   const ImageDum: any = Images.Category;
 
   return (
@@ -38,7 +38,7 @@ export const PostItem = ({ item }: any) => {
       }}
     >
       <Image
-        src={ImageDum[item.category_oid]}
+        src={ImageDum[item.category_oid]?.src}
         layout="fill"
         alt="업체 이미지"
       />

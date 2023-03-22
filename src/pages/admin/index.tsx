@@ -1,10 +1,16 @@
 import { AdminPage } from "@/components/templates/AdminPage";
-import { useCallback, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { useQuery, useQueryClient } from "react-query";
-import styled from "styled-components";
+import { adminTokenState } from "@/recoil/adminToken";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
 
 const Admin = () => {
+  const adminToken = useRecoilValue(adminTokenState);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!adminToken) router.replace("/main");
+  }, []);
   return (
     <>
       <AdminPage />
