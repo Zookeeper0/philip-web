@@ -21,6 +21,30 @@ import Travel from "../../public/assets/images/img-travel.png";
 import Villa from "../../public/assets/images/img-villa.png";
 import Hotel from "../../public/assets/images/img-hotel.png";
 
+import SampleDetail01 from "../../public/assets/images/sample_detail01.jpeg";
+import SampleDetail02 from "../../public/assets/images/sample_detail02.jpeg";
+import SampleDetail03 from "../../public/assets/images/sample_detail03.jpeg";
+
+const SampleDetail = [
+  {
+    id: 1,
+    images: [
+      {
+        id: 1,
+        url: SampleDetail01,
+      },
+      {
+        id: 2,
+        url: SampleDetail02,
+      },
+      {
+        id: 3,
+        url: SampleDetail03,
+      },
+    ],
+  },
+];
+
 const Menu = [
   { id: 1, name: "전체" },
   {
@@ -639,4 +663,4 @@ const Post = [
   },
 ];
 
-export default { Menu, Post, Images, Category };
+export default { Menu, Post, Images, Category, SampleDetail };

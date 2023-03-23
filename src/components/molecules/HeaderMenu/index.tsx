@@ -2,12 +2,13 @@ import { getCityListApi } from "@/apis/categoryApi";
 import { Button } from "@/components/atoms/Button";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { adminTokenState } from "@/recoil/adminToken";
+import { cityState } from "@/recoil/city";
 import { userTokenState } from "@/recoil/userToken";
 import { useRouter } from "next/router";
 import IconUser from "public/assets/svg/icon-user.svg";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import * as S from "./headerMenu.style";
 
 export const HeaderMenu = () => {
@@ -17,10 +18,19 @@ export const HeaderMenu = () => {
   const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
   const [cityOptions, setCityOptions] = useState([]);
 
+  const [city, setCityState] = useRecoilState<any>(cityState);
+
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
 
   const router = useRouter();
+
+  /** 시티 목록 선택시 세팅 */
+  const getCityOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCityState(e.target.value);
+    // 새로 고침 시 선택 city 유지
+    localStorage.setItem("city", e.target.value);
+  };
 
   useEffect(() => {
     setCityOptions(cityItem);
@@ -88,6 +98,8 @@ export const HeaderMenu = () => {
           options={cityOptions}
           themeType="row"
           size="sm"
+          onChange={getCityOption}
+          value={city}
         />
       ) : (
         ""

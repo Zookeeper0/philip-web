@@ -7,7 +7,6 @@ import { LocationBox } from "@/components/molecules/LocationBox";
 import Data from "@/data/dummy";
 import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
-import axios from "axios";
 import { useQuery } from "react-query";
 import { detailPostApi } from "@/apis/postsApi";
 
@@ -25,9 +24,17 @@ export const PostSection = () => {
     setIsOpen((prev) => !prev);
   }, []);
 
-  //랜덤이미지 dummy
-  const postId = Math.floor(Math.random() * 13);
-  const randomImg = Data.Post[postId];
+  console.log("router.query.id", router.query.id);
+
+  // 임시 랜덤이미지 dummy
+  let randomImg = null;
+  if (router.query.id === "220975c0-c869-11ed-af91-e93afefe558a") {
+    randomImg = Data.SampleDetail[0];
+  } else {
+    const postId = Math.floor(Math.random() * 13);
+    randomImg = Data.Post[postId];
+  }
+
   return (
     <S.PostSection>
       <Button

@@ -12,6 +12,7 @@ import { useRecoilValue } from "recoil";
 import { adminTokenState } from "@/recoil/adminToken";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 import { TextArea } from "@/components/atoms/TextArea";
+import { AdminInputSelect } from "@/components/atoms/Input/AdminInputSelect";
 
 interface PostdataProps {
   title: string;
@@ -44,6 +45,7 @@ export const AdminPostForm = () => {
     "getCategoryNavApi",
     getCategoryNavApi
   );
+
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
 
@@ -115,14 +117,14 @@ export const AdminPostForm = () => {
       encType="multipart/form-data"
     >
       <S.PostFormTit>관리자페이지</S.PostFormTit>
-      <InputSelect
+      <AdminInputSelect
         label="지역선택"
         options={categoryOptions}
         themeType="row"
         size="sm"
         register={register("categoryOid")}
       />
-      <InputSelect
+      <AdminInputSelect
         label="지역선택"
         options={cityOptions}
         themeType="row"
