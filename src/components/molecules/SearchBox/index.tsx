@@ -13,11 +13,13 @@ import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 import { useForm } from "react-hook-form";
 import { addPostApi } from "@/apis/postsApi";
 import { categoryState } from "@/recoil/category";
+import { cityState } from "@/recoil/city";
 
 export const SearchBox = () => {
   const isWindowWidth = useWindowWidth();
   const [searchInput, setSearchInput] = useRecoilState(searchState);
   const [categoryInput, setCategoryInput] = useRecoilState(categoryState);
+  const [city, setCityState] = useRecoilState<any>(cityState);
 
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -34,20 +36,16 @@ export const SearchBox = () => {
     setSearchInput(e.target.value);
   };
 
+  /** 시티 목록 선택시 세팅 */
   const getCityOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
+    setCityState(e.target.value);
+    // 새로 고침 시 선택 city 유지
+    localStorage.setItem("city", e.target.value);
   };
 
   const getCategoryOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoryInput(e.target.value);
   };
-
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    reset,
-  } = useForm();
 
   useEffect(() => {
     setCategoryOptions(categoryItem);
@@ -63,9 +61,9 @@ export const SearchBox = () => {
               themeType="row"
               size="lg"
               width="calc(50vw - 20px)"
-              placeholder="지역 검색"
               options={cityOptions}
               onChange={getCityOption}
+              value={city}
             />
             <InputSelect
               themeType="row"
