@@ -13,10 +13,9 @@ interface SelectProps {
   options: any;
   register?: UseFormRegisterReturn;
   onChange?: any;
-  value?: any;
 }
 
-export const InputSelect: React.FC<SelectProps> = ({
+export const AdminInputSelect: React.FC<SelectProps> = ({
   width,
   themeType,
   size,
@@ -25,23 +24,12 @@ export const InputSelect: React.FC<SelectProps> = ({
   placeholder,
   register,
   onChange,
-  value,
 }) => {
-  const [name, setName] = useState<any>();
-
-  useEffect(() => {
-    const value = localStorage.getItem("city");
-    setName(value);
-  }, [value]);
-
-  console.log("options :", options);
-  console.log("value :", value);
-
   return (
     <S.InputCommon themeType={themeType} size={size} width={width}>
       <label>
         {label && label}
-        <select {...register} onChange={onChange} value={value || name}>
+        <select {...register} onChange={onChange}>
           {placeholder && <option>{placeholder}</option>}
           {options?.map((option: any, idx: number) => {
             return (
