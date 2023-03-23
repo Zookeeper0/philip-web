@@ -52,6 +52,7 @@ export const SearchBox = () => {
     setCityOptions(cityItem);
   }, [categoryItem, cityItem]);
 
+  console.log("categoryInput", categoryInput);
   return (
     <S.SearchBox>
       <S.SearchForm id="searchForm">
@@ -71,6 +72,7 @@ export const SearchBox = () => {
               width="calc(50vw - 20px)"
               options={categoryItem}
               onChange={getCategoryOption}
+              value={categoryInput}
             />
           </S.SearchMobileInput>
         )}

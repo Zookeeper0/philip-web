@@ -34,11 +34,14 @@ export const InputSelect: React.FC<SelectProps> = ({
     setName(value);
   }, [value]);
 
+  console.log("options :", options);
+  console.log("value :", value);
+
   return (
     <S.InputCommon themeType={themeType} size={size} width={width}>
       <label>
         {label && label}
-        <select {...register} onChange={onChange} value={name || ""}>
+        <select {...register} onChange={onChange} value={value || name}>
           {placeholder && <option>{placeholder}</option>}
           {options?.map((option: any, idx: number) => {
             return (
