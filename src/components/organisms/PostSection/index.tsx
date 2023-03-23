@@ -7,7 +7,6 @@ import { LocationBox } from "@/components/molecules/LocationBox";
 import Data from "@/data/dummy";
 import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
-import axios from "axios";
 import { useQuery } from "react-query";
 import { detailPostApi } from "@/apis/postsApi";
 
@@ -27,8 +26,8 @@ export const PostSection = () => {
 
   console.log("router.query.id", router.query.id);
 
+  // 임시 랜덤이미지 dummy
   let randomImg = null;
-  //랜덤이미지 dummy
   if (router.query.id === "220975c0-c869-11ed-af91-e93afefe558a") {
     randomImg = Data.SampleDetail[0];
   } else {
