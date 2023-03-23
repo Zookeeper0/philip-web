@@ -52,7 +52,6 @@ export const SearchBox = () => {
     setCityOptions(cityItem);
   }, [categoryItem, cityItem]);
 
-  console.log("categoryInput", categoryInput);
   return (
     <S.SearchBox>
       <S.SearchForm id="searchForm">
