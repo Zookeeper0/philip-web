@@ -1,7 +1,14 @@
+import { getCityListApi } from "@/apis/categoryApi";
 import RegionItem from "@/components/atoms/RegionItem";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import * as S from "./regionList.style";
 
 export const RegionList = () => {
+  /** 시티 select 목록 불러오기 */
+  const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
+  const [cityOptions, setCityOptions] = useState([]);
+
   const options = [
     {
       id: 1,
@@ -26,6 +33,10 @@ export const RegionList = () => {
     },
   ];
 
+  console.log("cityItem", cityItem);
+  useEffect(() => {
+    setCityOptions(cityItem);
+  }, [cityItem]);
   return (
     <S.RegionList>
       {options.map((option: any, idx: number) => {

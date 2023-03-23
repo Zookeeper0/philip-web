@@ -44,6 +44,7 @@ export const AdminPostForm = () => {
     "getCategoryNavApi",
     getCategoryNavApi
   );
+
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
 

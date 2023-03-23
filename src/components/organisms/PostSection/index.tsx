@@ -31,11 +31,9 @@ export const PostSection = () => {
   //랜덤이미지 dummy
   if (router.query.id === "220975c0-c869-11ed-af91-e93afefe558a") {
     randomImg = Data.SampleDetail[0];
-    console.log("randomImg", randomImg);
   } else {
     const postId = Math.floor(Math.random() * 13);
     randomImg = Data.Post[postId];
-    console.log("randomImg", randomImg);
   }
 
   return (

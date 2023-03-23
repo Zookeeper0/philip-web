@@ -16,10 +16,10 @@ export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
           {post?.contents.split("\n").map((line: any, idx: any) => {
             //this.props.data.content: 내용
             return (
-              <span key={idx}>
+              <S.InfoLine key={idx}>
                 {line}
                 <br />
-              </span>
+              </S.InfoLine>
             );
           })}
         </S.PriceInfo>
