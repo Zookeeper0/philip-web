@@ -24,7 +24,9 @@ export const AdminLoginBox = () => {
 
   const mutation = useMutation("logInAPI", logInAPI, {
     onSuccess: (token) => {
-      localStorage.setItem("adminSignKey", token);
+      localStorage.setItem("adminSignKey", token.accessToken);
+      localStorage.setItem("adminOid", token.oid);
+
       setAdminToken(token);
       document.location.href = "/main";
     },

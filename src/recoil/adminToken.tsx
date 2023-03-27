@@ -3,5 +3,8 @@ import { v1 } from "uuid";
 
 export const adminTokenState = atom({
   key: `adminTokenState/${v1()}`,
-  default: null,
+  default:
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("adminSignKey")
+      : null,
 });

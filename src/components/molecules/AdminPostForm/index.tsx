@@ -7,12 +7,12 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import * as S from "./adminPostForm.style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { useRecoilValue } from "recoil";
 import { adminTokenState } from "@/recoil/adminToken";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 import { TextArea } from "@/components/atoms/TextArea";
 import { AdminInputSelect } from "@/components/atoms/Input/AdminInputSelect";
+import { useRouter } from "next/router";
 
 interface PostdataProps {
   title: string;
@@ -29,11 +29,14 @@ export const AdminPostForm = () => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const [imagePaths, setImagePaths] = useState<string[]>([]);
+  const router = useRouter();
+
   const mutation = useMutation("posts", addPostApi, {
     onSuccess() {
       reset();
       setImagePaths([]);
       queryClient.refetchQueries("posts");
+      document.location.href = "/admin";
     },
     onSettled() {
       setLoading(false);
@@ -49,16 +52,16 @@ export const AdminPostForm = () => {
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
 
-  // const schema = yup
-  //   .object({
-  //     title: yup.string().nullable().required("제목을 입력해 선택해주세요"),
-  //     address: yup.string().nullable().required("주소를 입력해주세요"),
-  //     phoneNumber: yup.string().nullable().required("전화번호를 등록해주세요"),
-  //     contents: yup.string().nullable().required("상세 설명을 입력해주세요"),
-  //     categoryOid: yup.string().required("카테고리를 선택하세요"),
-  //     cityOid: yup.string().required("도시를 선택하세요"),
-  //   })
-  //   .required();
+  const schema = yup
+    .object({
+      title: yup.string().nullable().required("제목을 입력해 선택해주세요"),
+      address: yup.string().nullable().required("주소를 입력해주세요"),
+      phoneNumber: yup.string().nullable().required("전화번호를 등록해주세요"),
+      contents: yup.string().nullable().required("상세 설명을 입력해주세요"),
+      categoryOid: yup.string().required("카테고리를 선택하세요"),
+      cityOid: yup.string().required("도시를 선택하세요"),
+    })
+    .required();
 
   const {
     handleSubmit,
@@ -66,15 +69,16 @@ export const AdminPostForm = () => {
     register,
     reset,
   } = useForm({
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: any) => {
+    console.log("images :", images);
     const formData = new FormData();
     images.forEach((p) => {
       formData.append("files", p);
     });
-
+    console.log("formData :", formData);
     //어드민 토큰
     data.token = userOid;
     //방문자수 0 초기화
@@ -118,7 +122,7 @@ export const AdminPostForm = () => {
     >
       <S.PostFormTit>관리자페이지</S.PostFormTit>
       <AdminInputSelect
-        label="지역선택"
+        label="카테고리 선택"
         options={categoryOptions}
         themeType="row"
         size="sm"
@@ -167,7 +171,6 @@ export const AdminPostForm = () => {
       <div>
         <input
           type="file"
-          name="image"
           multiple
           hidden
           ref={imageInput}

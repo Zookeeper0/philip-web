@@ -12,7 +12,6 @@ const Main = () => {
   const [userToken, setUserToken]: any = useRecoilState(userTokenState);
   const city = useRecoilValue(cityState);
 
-  console.log("city", city);
   useEffect(() => {
     const userInfo = localStorage.getItem("kakaoSignKey");
     const adminInfo = localStorage.getItem("adminSignKey");

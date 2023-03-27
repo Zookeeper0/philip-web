@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosInstance from "./index";
 
 /** GET 메인화면 전체게시글, 복수쿼리( 검색, 카테고리 )  */
@@ -16,7 +17,14 @@ export function detailPostApi(data: any) {
 
 /** POST [관리자] 게시글 등록 */
 export function addPostApi(data: FormData) {
-  return axiosInstance.post("/posts", data).then((response) => response.data);
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  return axiosInstance
+    .post("/posts", data, config)
+    .then((response) => response.data);
 }
 
 export function fetchCountViews(oid: string) {
@@ -26,5 +34,11 @@ export function fetchCountViews(oid: string) {
 export function getPromtionListApi({ queryKey }: any) {
   return axiosInstance
     .get(`/posts/promotion?city=${queryKey[1]}&category=${queryKey[2]}`)
+    .then((response) => response.data);
+}
+
+export function deletePost(oid: string) {
+  return axiosInstance
+    .delete(`/posts/${oid}`)
     .then((response) => response.data);
 }

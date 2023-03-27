@@ -7,18 +7,27 @@ import { LocationBox } from "@/components/molecules/LocationBox";
 import Data from "@/data/dummy";
 import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
-import { useQuery } from "react-query";
-import { detailPostApi } from "@/apis/postsApi";
+import { useMutation, useQuery } from "react-query";
+import { deletePost, detailPostApi } from "@/apis/postsApi";
+import { useRecoilValue } from "recoil";
+import { adminInfoState } from "@/recoil/adminInfo";
 
 export const PostSection = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const adminInfo = useRecoilValue(adminInfoState);
 
   const queryFn = () => detailPostApi(router.query.id);
   const { data: detailItem, isLoading } = useQuery(
     ["detailItem", router.query.id],
     queryFn
   );
+
+  const mutation = useMutation("posts", deletePost);
+  const postDelete = () => {
+    mutation.mutate(detailItem.oid);
+    router.back();
+  };
 
   const openHandler = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -35,18 +44,34 @@ export const PostSection = () => {
     randomImg = Data.Post[postId];
   }
 
+  console.log(detailItem);
   return (
     <S.PostSection>
-      <Button
-        type="button"
-        height={36}
-        color="clear"
-        layout="icon"
-        label="목록으로"
-        onClick={() => router.back()}
-      >
-        <IconBack />
-      </Button>
+      <div style={{ justifyContent: "space-between", display: "flex" }}>
+        <Button
+          type="button"
+          height={36}
+          color="clear"
+          layout="icon"
+          label="목록으로"
+          onClick={() => router.back()}
+        >
+          <IconBack />
+        </Button>
+        {/* {detailItem?.admin_oid === adminInfo ? (
+          <Button
+            type="button"
+            height={36}
+            color="clear"
+            layout="icon"
+            label="삭제"
+            onClick={() => postDelete()}
+          ></Button>
+        ) : (
+          ""
+        )} */}
+      </div>
+
       <StoreInfoBox post={detailItem} randomImg={randomImg} />
       <PriceInfoBox
         post={detailItem}

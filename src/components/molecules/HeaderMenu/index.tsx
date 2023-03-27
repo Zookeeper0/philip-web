@@ -32,6 +32,15 @@ export const HeaderMenu = () => {
     localStorage.setItem("city", e.target.value);
   };
 
+  const onLogout = () => {
+    localStorage.removeItem("kakaoSignKey");
+    localStorage.removeItem("adminSignKey");
+    localStorage.removeItem("adminOid");
+    setUserToken(null);
+    setAdminToken(null);
+    document.location.href = "/main";
+  };
+
   useEffect(() => {
     setCityOptions(cityItem);
   }, [cityItem]);
@@ -46,13 +55,7 @@ export const HeaderMenu = () => {
             layout="icon"
             size="sm"
             label="로그아웃"
-            onClick={() => {
-              localStorage.removeItem("kakaoSignKey");
-              localStorage.removeItem("adminSignKey");
-              setUserToken(null);
-              setAdminToken(null);
-              document.location.href = "/main";
-            }}
+            onClick={() => onLogout()}
           >
             <IconUser />
           </Button>
