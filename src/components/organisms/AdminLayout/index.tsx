@@ -3,12 +3,14 @@ import { AdminContentSection } from "./AdminContentSection";
 import { AdminHeader } from "./AdminHeader";
 import * as S from "./adminLayout.style";
 
-export const AdminLayout = ({ children }: any) => {
+export const AdminLayout = ({ title, link, linkLabel, children }: any) => {
   return (
     <S.AdminLayout>
       <AdminHeader />
       <AdminAsideSection />
-      <AdminContentSection>{children}</AdminContentSection>
+      <AdminContentSection title={title} link={link} linkLabel={linkLabel}>
+        {children}
+      </AdminContentSection>
     </S.AdminLayout>
   );
 };

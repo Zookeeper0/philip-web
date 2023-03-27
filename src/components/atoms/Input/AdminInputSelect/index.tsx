@@ -7,6 +7,7 @@ import * as S from "../Input.style";
 interface SelectProps {
   width?: string;
   size: string;
+  layout: string;
   themeType: string;
   label?: string;
   placeholder?: string;
@@ -17,16 +18,22 @@ interface SelectProps {
 
 export const AdminInputSelect: React.FC<SelectProps> = ({
   width,
-  themeType,
+  layout,
   size,
   options,
   label,
+  themeType,
   placeholder,
   register,
   onChange,
 }) => {
   return (
-    <S.InputCommon themeType={themeType} size={size} width={width}>
+    <S.InputCommon
+      themeType={themeType}
+      layout={layout}
+      size={size}
+      width={width}
+    >
       <label>
         {label && label}
         <select {...register} onChange={onChange}>

@@ -4,8 +4,8 @@ import { AdminPostForm } from "@/components/molecules/AdminPostForm";
 
 export const AdminStorePage = () => {
   return (
-    <AdminLayout>
-      <S.AdminStorePage>{/* <AdminPostForm /> */}</S.AdminStorePage>
+    <AdminLayout title="업체관리" link="store/post" linkLabel="신규등록">
+      <S.AdminStorePage></S.AdminStorePage>
     </AdminLayout>
   );
 };

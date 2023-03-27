@@ -14,6 +14,8 @@ export const theme: DefaultTheme = {
   colors: {
     primary: "#4462FF",
     primaryHover: "#3451E7",
+    secondary: "#344AB9",
+    secondaryHover: "#263BAA",
     dark: "#171717",
     darkHover: "#0C0C0C",
     func: "#646464",

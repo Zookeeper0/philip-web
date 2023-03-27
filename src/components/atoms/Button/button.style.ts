@@ -29,6 +29,7 @@ export const ButtonGroup = styled.div<ButtonGroupProps>`
   margin-top: ${(props) => (props.marginTop ? props.marginTop + "px" : "0")};
   margin-bottom: ${(props) =>
     props.marginBottom ? props.marginBottom + "px" : "0"};
+  gap: 10px;
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -42,7 +43,11 @@ export const Button = styled.button<ButtonProps>`
       ? props.theme.colors.adminMainTxt
       : "white"};
   font-size: ${(props) =>
-    props.height && props.height >= 32 ? "1.6rem" : "1.2rem"};
+    props.height && props.height >= 38
+      ? "1.6rem"
+      : props.height && props.height >= 32
+      ? "1.4rem"
+      : "1.2rem"};
   border: none;
   border-radius: ${(props) => (props.layout === "icon" ? "2px" : "0")};
   align-items: center;

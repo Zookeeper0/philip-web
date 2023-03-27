@@ -7,6 +7,8 @@ declare module "styled-components" {
     colors: {
       [primary: string]: string;
       [primaryHover: string]: string;
+      [secondary: string]: string;
+      [secondaryHover: string]: string;
       [func: string]: string;
       [funcHover: string]: string;
       dark: string;
