@@ -9,13 +9,10 @@ const Admin = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!adminToken) router.replace("/main");
+    // if (!adminToken) router.replace("/admin/login");
   }, []);
-  return (
-    <>
-      <AdminPage />
-    </>
-  );
+
+  return <AdminPage />;
 };
 
 export default Admin;

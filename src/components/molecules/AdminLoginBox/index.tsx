@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { logInAPI } from "@/apis/adminApi";
 import { useRecoilState } from "recoil";
 import { adminTokenState } from "@/recoil/adminToken";
+import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 
 export const AdminLoginBox = () => {
   const isWindowWidth = useWindowWidth();
@@ -44,24 +45,34 @@ export const AdminLoginBox = () => {
   );
 
   return (
-    <S.LoginBox onSubmit={handleSubmit(onSubmitForm)}>
-      <S.LoginTit>Login</S.LoginTit>
-      <InputText
-        label={isWindowWidth < 769 ? "아이디" : "아이디"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
-        width="100%"
-        placeholder={isWindowWidth < 769 ? "아이디 입력" : "아이디 입력"}
-        register={register("adminId")}
-      />
-      <InputText
-        label={isWindowWidth < 769 ? "비밀번호" : "비밀번호"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
-        width="100%"
-        placeholder={isWindowWidth < 769 ? "비밀번호 입력" : "비밀번호 입력"}
-        register={register("password")}
-      />
+    <S.AdminLoginBox onSubmit={handleSubmit(onSubmitForm)}>
+      <S.LoginTit>관리자 로그인</S.LoginTit>
+      <S.LoginInputBox>
+        <InputText
+          label="아이디"
+          layout="column"
+          themeType="admin"
+          size="lg"
+          width="100%"
+          placeholder="아이디 입력"
+          register={register("adminId")}
+        />
+        <InputText
+          label="비밀번호"
+          layout="column"
+          themeType="admin"
+          size="lg"
+          width="100%"
+          placeholder="비밀번호 입력"
+          register={register("password")}
+        />
+        <InputCheckbox
+          value="1"
+          themeType="admin"
+          layout="row"
+          displayValue="아이디 저장"
+        />
+      </S.LoginInputBox>
       <Button
         type="submit"
         width="100%"
@@ -70,7 +81,7 @@ export const AdminLoginBox = () => {
         layout="solid"
         label="로그인하기"
       />
-      <Button
+      {/* <Button
         type="button"
         width="100%"
         height={56}
@@ -80,7 +91,7 @@ export const AdminLoginBox = () => {
         onClick={() => {
           router.replace("/admin/signup");
         }}
-      />
-    </S.LoginBox>
+      /> */}
+    </S.AdminLoginBox>
   );
 };

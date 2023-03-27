@@ -2,7 +2,7 @@ import "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    shadow: { dark: string };
+    shadow: { dark: string; admin: string; adminHeader: string };
     gradient: { primary: string; dark: string };
     colors: {
       [primary: string]: string;
@@ -29,8 +29,15 @@ declare module "styled-components" {
       kakaoTxt: string;
       categorySubTxt: string;
 
+      adminBg: string;
+      adminMainTxt: string;
+      adminLabelTxt: string;
+      adminPlaceholder: string;
+      adminBorder: string;
+
       black: string;
       white: string;
+      whiteHover: string;
     };
   }
 }

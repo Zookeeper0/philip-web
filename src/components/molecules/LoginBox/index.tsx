@@ -11,6 +11,7 @@ export const LoginBox = () => {
 
   return (
     <S.LoginBox>
+      <S.LoginTit>간편 로그인</S.LoginTit>
       <Button
         type="button"
         width="100%"
