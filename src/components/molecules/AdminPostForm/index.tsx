@@ -124,45 +124,45 @@ export const AdminPostForm = () => {
       <AdminInputSelect
         label="카테고리 선택"
         options={categoryOptions}
-        themeType="row"
+        layout="row"
         size="sm"
         register={register("categoryOid")}
       />
       <AdminInputSelect
         label="지역선택"
         options={cityOptions}
-        themeType="row"
+        layout="row"
         size="sm"
         register={register("cityOid")}
       />
       <InputText
         label={isWindowWidth < 769 ? "제목" : "제목"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "title" : "title"}
         register={register("title")}
       />
       <InputText
         label={isWindowWidth < 769 ? "주소" : "주소"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "address" : "address"}
         register={register("address")}
       />
       <InputText
         label={isWindowWidth < 769 ? "전화번호" : "전화번호"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "phoneNumber" : "phoneNumber"}
         register={register("phoneNumber")}
       />
       <TextArea
         label={isWindowWidth < 769 ? "컨텐츠" : "컨텐츠"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "contents" : "contents"}
         register={register("contents")}

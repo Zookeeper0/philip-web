@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 interface InputProps {
   width?: string;
   size?: string;
-  themeType?: string;
+  layout?: string;
 }
 
 export const InputCommon = styled.div<InputProps>`
@@ -42,7 +42,7 @@ export const InputCommon = styled.div<InputProps>`
   }
 
   ${(props) =>
-    props.themeType === "row" &&
+    props.layout === "row" &&
     css`
       label {
         color: white;
@@ -60,7 +60,7 @@ export const InputCommon = styled.div<InputProps>`
     `}
 
   ${(props) =>
-    props.themeType === "column" &&
+    props.layout === "column" &&
     css`
       label {
         color: white;

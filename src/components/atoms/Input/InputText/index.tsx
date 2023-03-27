@@ -4,7 +4,8 @@ import { UseFormRegisterReturn } from "react-hook-form";
 interface TextProps {
   width?: string;
   size: string;
-  themeType: string;
+  layout: string;
+  themeType?: string;
   label?: string;
   placeholder?: string;
   register?: UseFormRegisterReturn;
@@ -14,6 +15,7 @@ interface TextProps {
 export const InputText: React.FC<TextProps> = ({
   width,
   size,
+  layout,
   themeType,
   label,
   placeholder,
@@ -21,7 +23,12 @@ export const InputText: React.FC<TextProps> = ({
   onChange,
 }) => {
   return (
-    <S.InputCommon themeType={themeType} size={size} width={width}>
+    <S.InputCommon
+      layout={layout}
+      themeType={themeType}
+      size={size}
+      width={width}
+    >
       <label>
         {label && label}
         <input

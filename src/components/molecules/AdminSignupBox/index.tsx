@@ -61,8 +61,8 @@ export const AdminSignupBox = () => {
       <S.IdCheckWrapper>
         <InputText
           label={isWindowWidth < 769 ? "아이디" : "아아디"}
-          themeType={isWindowWidth < 769 ? "column" : "column"}
-          size={isWindowWidth < 769 ? "lg" : "md"}
+          layout={isWindowWidth < 769 ? "column" : "column"}
+          size={isWindowWidth < 769 ? "xlg" : "md"}
           width="145px"
           placeholder={isWindowWidth < 769 ? "아이디 입력" : "아이디 입력"}
           register={register("adminId")}
@@ -79,32 +79,32 @@ export const AdminSignupBox = () => {
 
       <InputText
         label={isWindowWidth < 769 ? "비밀번호" : "비밀번호"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "비밀번호 입력" : "비밀번호 입력"}
         register={register("password")}
       />
       <InputText
         label={isWindowWidth < 769 ? "비밀번호확인" : "비밀번호확인"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "비밀번호확인" : "비밀번호확인"}
         register={register("passwordCheck")}
       />
       <InputText
         label={isWindowWidth < 769 ? "이름" : "이름"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "이름 입력" : "이름 입력"}
         register={register("name")}
       />
       <InputDate
         label={isWindowWidth < 769 ? "생년월일" : "생년월일"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="190px"
         placeholder={isWindowWidth < 769 ? "생년월일 입력" : "생년월일 입력"}
         register={register("birth")}

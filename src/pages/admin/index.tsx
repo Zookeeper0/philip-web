@@ -10,13 +10,10 @@ const Admin = () => {
 
   /** 어드민 토큰 없는 상태에서 접근시 메인으로 이동 */
   useEffect(() => {
-    if (!adminToken) router.replace("/main");
+    // if (!adminToken) router.replace("/admin/login");
   }, []);
-  return (
-    <>
-      <AdminPage />
-    </>
-  );
+
+  return <AdminPage />;
 };
 
 export default Admin;

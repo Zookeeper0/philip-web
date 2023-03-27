@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 interface InputProps {
   width?: string;
   size?: string;
+  layout?: string;
   themeType?: string;
 }
 
@@ -12,12 +13,15 @@ export const InputCommon = styled.div<InputProps>`
   label {
     display: flex;
     width: ${(props) => (props.width ? props.width : "initial")};
+    color: ${(props) =>
+      props.themeType === "admin" ? props.theme.colors.adminLabelTxt : "white"};
     font-size: 1.2rem;
     align-items: center;
     gap: 5px 10px;
 
     .displayValue {
       font-size: 1.4rem;
+      cursor: pointer;
     }
   }
 
@@ -30,6 +34,8 @@ export const InputCommon = styled.div<InputProps>`
         : props.size === "md"
         ? "30px"
         : props.size === "lg"
+        ? "40px"
+        : props.size === "xlg"
         ? "48px"
         : "unset"};
     padding: ${(props) =>
@@ -42,11 +48,9 @@ export const InputCommon = styled.div<InputProps>`
   }
 
   ${(props) =>
-    props.themeType === "row" &&
+    props.layout === "row" &&
     css`
       label {
-        color: white;
-
         input,
         select {
           color: white;
@@ -60,10 +64,9 @@ export const InputCommon = styled.div<InputProps>`
     `}
 
   ${(props) =>
-    props.themeType === "column" &&
+    props.layout === "column" &&
     css`
       label {
-        color: white;
         flex-direction: column;
         align-items: flex-start;
       }

@@ -46,13 +46,16 @@ export default function App({ Component, pageProps }: AppProps) {
           />
           <ThemeProvider theme={theme}>
             {router.pathname.includes("main") ||
-            router.pathname.includes("admin") ||
             router.pathname.includes("auth") ? (
               <>
                 {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
                 <Nav />
                 <Component {...pageProps} />
                 <Footer />
+              </>
+            ) : router.pathname.includes("admin") ? (
+              <>
+                <Component {...pageProps} />
               </>
             ) : (
               <>
