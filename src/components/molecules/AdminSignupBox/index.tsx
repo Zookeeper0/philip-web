@@ -82,6 +82,7 @@ export const AdminSignupBox = () => {
         themeType={isWindowWidth < 769 ? "column" : "column"}
         size={isWindowWidth < 769 ? "lg" : "md"}
         width="100%"
+        type={"password"}
         placeholder={isWindowWidth < 769 ? "비밀번호 입력" : "비밀번호 입력"}
         register={register("password")}
       />
@@ -90,6 +91,7 @@ export const AdminSignupBox = () => {
         themeType={isWindowWidth < 769 ? "column" : "column"}
         size={isWindowWidth < 769 ? "lg" : "md"}
         width="100%"
+        type={"password"}
         placeholder={isWindowWidth < 769 ? "비밀번호확인" : "비밀번호확인"}
         register={register("passwordCheck")}
       />

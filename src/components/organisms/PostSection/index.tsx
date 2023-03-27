@@ -11,6 +11,7 @@ import { useMutation, useQuery } from "react-query";
 import { deletePost, detailPostApi } from "@/apis/postsApi";
 import { useRecoilValue } from "recoil";
 import { adminInfoState } from "@/recoil/adminInfo";
+import { signOut } from "next-auth/react";
 
 export const PostSection = () => {
   const router = useRouter();
@@ -18,11 +19,20 @@ export const PostSection = () => {
   const adminInfo = useRecoilValue(adminInfoState);
 
   const queryFn = () => detailPostApi(router.query.id);
-  const { data: detailItem, isLoading } = useQuery(
+  const { data: detailItem, isError } = useQuery(
     ["detailItem", router.query.id],
-    queryFn
+    queryFn,
+    {
+      retry: false,
+      onError: () => {
+        router.push("/admin/login");
+        signOut();
+        alert("토큰이 만료되었습니다, 다시 로그인해 주세요");
+      },
+    }
   );
 
+  // post delete
   const mutation = useMutation("posts", deletePost);
   const postDelete = () => {
     mutation.mutate(detailItem.oid);
@@ -33,8 +43,6 @@ export const PostSection = () => {
     setIsOpen((prev) => !prev);
   }, []);
 
-  console.log("router.query.id", router.query.id);
-
   // 임시 랜덤이미지 dummy
   let randomImg = null;
   if (router.query.id === "220975c0-c869-11ed-af91-e93afefe558a") {
@@ -44,7 +52,6 @@ export const PostSection = () => {
     randomImg = Data.Post[postId];
   }
 
-  console.log(detailItem);
   return (
     <S.PostSection>
       <div style={{ justifyContent: "space-between", display: "flex" }}>

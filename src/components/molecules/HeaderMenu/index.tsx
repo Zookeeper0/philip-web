@@ -4,6 +4,7 @@ import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { adminTokenState } from "@/recoil/adminToken";
 import { cityState } from "@/recoil/city";
 import { userTokenState } from "@/recoil/userToken";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import IconUser from "public/assets/svg/icon-user.svg";
 import { useEffect, useState } from "react";
@@ -19,6 +20,8 @@ export const HeaderMenu = () => {
   const [cityOptions, setCityOptions] = useState([]);
 
   const [city, setCityState] = useRecoilState<any>(cityState);
+
+  const { data: session } = useSession();
 
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
@@ -47,7 +50,7 @@ export const HeaderMenu = () => {
 
   return (
     <S.HeaderMenu>
-      {userToken || adminToken ? (
+      {userToken || session?.user ? (
         <>
           <Button
             type="button"
@@ -55,7 +58,9 @@ export const HeaderMenu = () => {
             layout="icon"
             size="sm"
             label="로그아웃"
-            onClick={() => onLogout()}
+            onClick={() => {
+              signOut(), onLogout();
+            }}
           >
             <IconUser />
           </Button>
@@ -77,7 +82,7 @@ export const HeaderMenu = () => {
         </>
       )}
       {/* 관리자 로그인 시 글쓰기 버튼 */}
-      {adminToken ? (
+      {session?.user ? (
         <>
           <Button
             type="button"

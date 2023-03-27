@@ -1,69 +1,73 @@
 import { Button } from "@/components/atoms/Button";
 import * as S from "./adminLoginBox.style";
-import IconKakao from "public/assets/svg/icon-kakao.svg";
 import { InputText } from "@/components/atoms/Input/InputText";
 import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { useForm } from "react-hook-form";
-import { logInAPI } from "@/apis/adminApi";
-import { useRecoilState } from "recoil";
-import { adminTokenState } from "@/recoil/adminToken";
+import { useEffect, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
+import axios from "axios";
 
 export const AdminLoginBox = () => {
   const isWindowWidth = useWindowWidth();
   const router = useRouter();
-  const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-  } = useForm();
+  const [userInfo, setUserInfo] = useState({ adminId: "", password: "" });
 
-  const mutation = useMutation("logInAPI", logInAPI, {
-    onSuccess: (token) => {
-      localStorage.setItem("adminSignKey", token.accessToken);
-      localStorage.setItem("adminOid", token.oid);
+  const onSubmitForm = async (e: any) => {
+    // validate your userinfo
+    e.preventDefault();
 
-      setAdminToken(token);
-      document.location.href = "/main";
-    },
-    onError: (error: any) => {
-      console.log(error);
-      const { response } = error;
-      alert(response.data.message);
-    },
-  });
+    // redirect : true => callbackUrl 설정할려면
+    const response = await signIn("credentials", {
+      adminId: userInfo.adminId,
+      password: userInfo.password,
+      redirect: false,
+    });
 
-  const onSubmitForm = useCallback(
-    (data: any) => {
-      const { adminId, password } = data;
-      mutation.mutate({ adminId, password });
-    },
-    [mutation]
-  );
+    if (response?.error) {
+      setErrorMessage(response?.error);
+    }
+
+    if (response?.ok === true) {
+      router.push("/main");
+    }
+    console.log("response", response);
+  };
 
   return (
-    <S.LoginBox onSubmit={handleSubmit(onSubmitForm)}>
+    <S.LoginBox onSubmit={onSubmitForm}>
       <S.LoginTit>Login</S.LoginTit>
       <InputText
         label={isWindowWidth < 769 ? "아이디" : "아이디"}
         themeType={isWindowWidth < 769 ? "column" : "column"}
         size={isWindowWidth < 769 ? "lg" : "md"}
         width="100%"
+        type={"text"}
         placeholder={isWindowWidth < 769 ? "아이디 입력" : "아이디 입력"}
-        register={register("adminId")}
+        value={userInfo.adminId}
+        onChange={({ target }: any) =>
+          setUserInfo({ ...userInfo, adminId: target.value })
+        }
       />
       <InputText
         label={isWindowWidth < 769 ? "비밀번호" : "비밀번호"}
         themeType={isWindowWidth < 769 ? "column" : "column"}
         size={isWindowWidth < 769 ? "lg" : "md"}
         width="100%"
+        type={"password"}
         placeholder={isWindowWidth < 769 ? "비밀번호 입력" : "비밀번호 입력"}
-        register={register("password")}
+        value={userInfo.password}
+        onChange={({ target }: any) =>
+          setUserInfo({ ...userInfo, password: target.value })
+        }
       />
+      {errorMessage && (
+        <span className="error-msg-mobile">
+          <span>!</span>
+          {errorMessage}
+        </span>
+      )}
       <Button
         type="submit"
         width="100%"

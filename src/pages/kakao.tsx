@@ -16,14 +16,13 @@ const Kakao = () => {
 
   const mutation = useMutation("kakaoLoginAPI", kakaoLoginAPI, {
     onSuccess: (data) => {
-      localStorage.setItem("kakaoSignKey", data);
+      localStorage.setItem("kakaoSignKey", data.accessToken);
       setUserToken(data);
       document.location.href = "/main";
     },
     onError: (error: any) => {
-      console.log(error);
       const { response } = error;
-      alert(response.data.message);
+      console.log(response);
     },
   });
 

@@ -2,6 +2,7 @@ import MainPage from "@/components/templates/MainPage";
 import { adminTokenState } from "@/recoil/adminToken";
 import { cityState } from "@/recoil/city";
 import { userTokenState } from "@/recoil/userToken";
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -12,6 +13,9 @@ const Main = () => {
   const [userToken, setUserToken]: any = useRecoilState(userTokenState);
   const city = useRecoilValue(cityState);
 
+  const { data: session } = useSession();
+
+  console.log("session :", session);
   useEffect(() => {
     const userInfo = localStorage.getItem("kakaoSignKey");
     const adminInfo = localStorage.getItem("adminSignKey");

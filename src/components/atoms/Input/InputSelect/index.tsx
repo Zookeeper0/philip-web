@@ -34,9 +34,6 @@ export const InputSelect: React.FC<SelectProps> = ({
     setName(value);
   }, [value]);
 
-  console.log("options :", options);
-  console.log("value :", value);
-
   return (
     <S.InputCommon themeType={themeType} size={size} width={width}>
       <label>

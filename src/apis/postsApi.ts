@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosInstance from "./index";
 
 /** GET 메인화면 전체게시글, 복수쿼리( 검색, 카테고리 )  */

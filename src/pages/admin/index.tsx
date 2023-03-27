@@ -3,15 +3,17 @@ import { adminTokenState } from "@/recoil/adminToken";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const Admin = () => {
-  const adminToken = useRecoilValue(adminTokenState);
+  const { data: session } = useSession();
   const router = useRouter();
 
   /** 어드민 토큰 없는 상태에서 접근시 메인으로 이동 */
   useEffect(() => {
-    if (!adminToken) router.replace("/main");
-  }, []);
+    console.log(session?.user);
+    if (!session?.user) router.replace("/main");
+  }, [session]);
   return (
     <>
       <AdminPage />

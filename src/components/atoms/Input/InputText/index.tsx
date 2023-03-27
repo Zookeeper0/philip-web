@@ -9,6 +9,8 @@ interface TextProps {
   placeholder?: string;
   register?: UseFormRegisterReturn;
   onChange?: any;
+  value?: any;
+  type?: string;
 }
 
 export const InputText: React.FC<TextProps> = ({
@@ -19,16 +21,19 @@ export const InputText: React.FC<TextProps> = ({
   placeholder,
   register,
   onChange,
+  value,
+  type,
 }) => {
   return (
     <S.InputCommon themeType={themeType} size={size} width={width}>
       <label>
         {label && label}
         <input
-          type="text"
+          type={type || "text"}
           placeholder={placeholder}
           {...register}
           onChange={onChange}
+          value={value}
         />
       </label>
     </S.InputCommon>

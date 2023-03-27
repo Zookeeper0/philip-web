@@ -1,43 +1,58 @@
 import { logInAPI } from "@/apis/adminApi";
-import { NextApiRequest } from "next";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import KakaoProvider from "next-auth/providers/kakao";
 
-export default NextAuth({
+const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      type: "credentials",
       credentials: {
-        adminId: { label: "아이디", type: "text" },
-        password: { label: "비밀번호", type: "text" },
+        adminId: { label: "Text", type: "text", placeholder: "id" },
+        password: { label: "password", type: "password" },
       },
+      async authorize(credentials, req) {
+        const { adminId, password } = credentials as {
+          adminId: string;
+          password: string;
+        };
 
-      //로그인 유효성 검사
-      // 로그인 요청인 "signIn("credentials", { id, password })"에서 넣어준 "id", "password"값이 그대로 들어옴
-      async authorize(credentials, req): Promise<any> {
-        // try {
-        //   console.log("credentials", credentials);
-        // const data: any = await logInAPI()
-        //   const data: any = await request({
-        //     method: "POST",
-        //     url: "/stm-user/login",
-        //     data: {
-        //       userId: credentials?.userId,
-        //       password: credentials?.password,
-        //       ip: credentials?.ip,
-        //     },
-        //   });
-        //   return credentials;
-        // } catch (error) {
-        //   const response = error as unknown as any;
-        //   throw new Error(response.message);
-        // }
-        console.log(credentials);
+        try {
+          const user: any = await logInAPI({
+            adminId: adminId,
+            password: password,
+          });
+
+          return user;
+        } catch (error) {
+          const response = error as unknown as any;
+          throw new Error(response.message);
+        }
       },
     }),
+    // KakaoProvider({
+    //   clientId: process.env.NEXT_PUBLIC_KAKAO_REST_API!,
+    //   clientSecret: process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET!,
+    // }),
   ],
+  callbacks: {
+    async jwt({ token, user }: any) {
+      console.log("token, user", token, user);
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
+      console.log("session, token, user", session, token, user);
+      session.user = token as any;
+      return session;
+    },
+  },
 
   pages: {
     signIn: "/admin/login",
+    signOut: "/admin/login",
+    // error: "/admin/login",
   },
-});
+};
+
+export default NextAuth(authOptions);

@@ -13,6 +13,7 @@ import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 import { TextArea } from "@/components/atoms/TextArea";
 import { AdminInputSelect } from "@/components/atoms/Input/AdminInputSelect";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 interface PostdataProps {
   title: string;
@@ -51,6 +52,7 @@ export const AdminPostForm = () => {
 
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
+  const { data: session } = useSession();
 
   const schema = yup
     .object({
