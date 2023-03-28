@@ -1,23 +1,23 @@
 import { Button } from "@/components/atoms/Button";
 import * as S from "./adminLoginBox.style";
 import { InputText } from "@/components/atoms/Input/InputText";
-import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 
 export const AdminLoginBox = () => {
-  const isWindowWidth = useWindowWidth();
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-
+  // 아이디 저장 체크박스 체크 유무
+  const [isRemember, setIsRemember] = useState(false);
+  // id, pw 상태저장
   const [userInfo, setUserInfo] = useState({ adminId: "", password: "" });
 
+  /** 로그인 submit 버튼 */
   const onSubmitForm = async (e: any) => {
     // validate your userinfo
     e.preventDefault();
-
     // redirect : true => callbackUrl 설정할려면
     const response = await signIn("credentials", {
       adminId: userInfo.adminId,
@@ -29,11 +29,35 @@ export const AdminLoginBox = () => {
       setErrorMessage(response?.error);
     }
 
+    // 로그인 성공시 관리자 페이지로 이동
     if (response?.ok === true) {
-      router.push("/main");
+      router.push("/admin");
     }
-    console.log("response", response);
+    // id저장 버튼 클릭됬다면 id 로컬스토리지에 저장
+    if (isRemember) {
+      localStorage.setItem("rememberUserId", userInfo.adminId);
+    }
   };
+
+  /** InputCheckbox checked 상태 변경 함수 */
+  const handleOnChange = (e: any) => {
+    setIsRemember(e.target.checked);
+    if (!e.target.checked) {
+      localStorage.removeItem("rememberUserId");
+    }
+  };
+
+  /*페이지가 최초 렌더링 될 경우*/
+  useEffect(() => {
+    /*저장된 로컬값이 있으면, CheckBox TRUE 및 adminId에 값 셋팅*/
+    if (localStorage.getItem("rememberUserId") !== null) {
+      setUserInfo({
+        ...userInfo,
+        adminId: localStorage.getItem("rememberUserId")!,
+      });
+      setIsRemember(true);
+    }
+  }, []);
 
   return (
     <S.AdminLoginBox onSubmit={onSubmitForm}>
@@ -70,9 +94,14 @@ export const AdminLoginBox = () => {
           themeType="admin"
           layout="row"
           displayValue="아이디 저장"
+          checked={isRemember}
+          onChange={(e: Event) => {
+            handleOnChange(e);
+          }}
         />
+        {errorMessage && <span style={{ color: "red" }}>{errorMessage}</span>}
       </S.LoginInputBox>
-      {errorMessage && <span className="error-msg-mobile">{errorMessage}</span>}
+
       <Button
         type="submit"
         width="100%"

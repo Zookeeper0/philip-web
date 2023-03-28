@@ -26,8 +26,8 @@ const authOptions: NextAuthOptions = {
 
           return user;
         } catch (error) {
-          const response = error as unknown as any;
-          throw new Error(response.message);
+          const { response } = error as unknown as any;
+          throw new Error(response.data.message);
         }
       },
     }),

@@ -45,7 +45,8 @@ export const HeaderMenu = () => {
   return (
     <S.HeaderMenu>
       {/* 관리자 페이지 이동 버튼 */}
-      {admin?.user && (
+      {/* 관리자 페이지 이동버튼이 보일 필요가 있을까 */}
+      {/* {admin?.user && (
         <>
           <Button
             type="button"
@@ -58,9 +59,9 @@ export const HeaderMenu = () => {
             }}
           ></Button>
         </>
-      )}
+      )} */}
 
-      {userToken || admin?.user ? (
+      {userToken ? (
         <>
           <Button
             type="button"
@@ -69,7 +70,7 @@ export const HeaderMenu = () => {
             size="sm"
             label="로그아웃"
             onClick={() => {
-              signOut(), onLogout();
+              onLogout();
             }}
           >
             <IconUser />
