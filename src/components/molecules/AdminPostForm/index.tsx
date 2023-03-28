@@ -170,6 +170,15 @@ export const AdminPostForm = () => {
           register={register("title")}
         />
         <InputText
+          label="대표자명"
+          layout="column"
+          themeType="admin"
+          size="md"
+          width="100%"
+          placeholder="입력..."
+          register={register("title")}
+        />
+        <InputText
           label="주소"
           layout="column"
           themeType="admin"
@@ -207,6 +216,15 @@ export const AdminPostForm = () => {
           />
           <button onClick={onClickImageUpload}>이미지 업로드</button>
         </S.PostFormImgInput>
+        <InputText
+          label="비고"
+          layout="column"
+          themeType="admin"
+          size="md"
+          width="100%"
+          placeholder="입력..."
+          register={register("title")}
+        />
       </S.PostFormInfoBox>
 
       <S.PostFormBtnBox>

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "../../Button";
 import * as S from "./inputFile.style";
 
-export const InputFile = ({ multiple }: any) => {
+export const InputFile = ({ label, multiple }: any) => {
   const [fileName, setFileName] = useState("");
   const [imgPreview, setImgPreview] = useState([]);
 
@@ -25,14 +25,14 @@ export const InputFile = ({ multiple }: any) => {
   };
   return (
     <S.InputFile>
-      {/* <S.AdminImgLabelBox multiple={multiple}>
-        {!multiple && imgName}
+      <S.FileLabelBox multiple={multiple}>
+        {label && label}
         <label htmlFor="input-img" onChange={handleAddImgs}>
           이미지 등록
           <input type="file" id="input-img" hidden multiple={multiple} />
         </label>
         {multiple && <>이미지는 최대 5장까지 등록 가능합니다.</>}
-      </S.AdminImgLabelBox>
+      </S.FileLabelBox>
       {multiple && (
         <S.ImgPreviewList>
           {imgPreview.map((img, id) => (
@@ -41,7 +41,7 @@ export const InputFile = ({ multiple }: any) => {
             </S.ImgPreviewItem>
           ))}
         </S.ImgPreviewList>
-      )} */}
+      )}
     </S.InputFile>
   );
 };
