@@ -58,16 +58,16 @@ export const SearchBox = () => {
         {isWindowWidth < 769 && (
           <S.SearchMobileInput>
             <InputSelect
-              themeType="row"
-              size="lg"
+              layout="row"
+              size="xlg"
               width="calc(50vw - 20px)"
               options={cityOptions}
               onChange={getCityOption}
               value={city}
             />
             <InputSelect
-              themeType="row"
-              size="lg"
+              layout="row"
+              size="xlg"
               width="calc(50vw - 20px)"
               options={categoryItem}
               onChange={getCategoryOption}
@@ -77,20 +77,20 @@ export const SearchBox = () => {
         )}
         <InputText
           label={isWindowWidth < 769 ? "" : "키워드 검색"}
-          themeType={isWindowWidth < 769 ? "row" : "column"}
-          size={isWindowWidth < 769 ? "lg" : "md"}
+          layout={isWindowWidth < 769 ? "row" : "column"}
+          size={isWindowWidth < 769 ? "xlg" : "md"}
           width="100%"
           placeholder={isWindowWidth < 769 ? "키워드 검색..." : "입력..."}
           onChange={getValue}
         />
         {/* <InputText
           label="기타 검색"
-          themeType="column"
+          layout="column"
           size="md"
           width="100%"
         />
-        <InputCheckbox value="1" themeType="row" displayValue="기타 검색옵션" />
-        <InputCheckbox value="2" themeType="row" displayValue="기타 검색옵션" /> */}
+        <InputCheckbox value="1" layout="row" displayValue="기타 검색옵션" />
+        <InputCheckbox value="2" layout="row" displayValue="기타 검색옵션" /> */}
       </S.SearchForm>
       {isWindowWidth >= 769 && (
         <Button

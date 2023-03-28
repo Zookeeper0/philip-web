@@ -1,16 +1,16 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 import { getCityListApi } from "@/apis/categoryApi";
-import { Button } from "@/components/atoms/Button";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { adminTokenState } from "@/recoil/adminToken";
 import { cityState } from "@/recoil/city";
 import { userTokenState } from "@/recoil/userToken";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import IconUser from "public/assets/svg/icon-user.svg";
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { useRecoilState, useRecoilValue } from "recoil";
 import * as S from "./headerMenu.style";
+import IconUser from "public/assets/svg/icon-user.svg";
+import { Button } from "@/components/atoms/Button";
 
 export const HeaderMenu = () => {
   /** 유저 로그인 체크 */
@@ -50,6 +50,22 @@ export const HeaderMenu = () => {
 
   return (
     <S.HeaderMenu>
+      {/* 관리자 페이지 이동 버튼 */}
+      {session?.user && (
+        <>
+          <Button
+            type="button"
+            color="clear"
+            layout="icon"
+            size="sm"
+            label="관리자 페이지"
+            onClick={() => {
+              router.replace("/admin");
+            }}
+          ></Button>
+        </>
+      )}
+
       {userToken || session?.user ? (
         <>
           <Button
@@ -81,30 +97,12 @@ export const HeaderMenu = () => {
           </Button>
         </>
       )}
-      {/* 관리자 로그인 시 글쓰기 버튼 */}
-      {session?.user ? (
-        <>
-          <Button
-            type="button"
-            color="clear"
-            layout="icon"
-            size="sm"
-            label="관리자 글쓰기"
-            onClick={() => {
-              router.replace("/admin");
-            }}
-          >
-            <IconUser />
-          </Button>
-        </>
-      ) : (
-        ""
-      )}
+
       {router.pathname.includes("main") || router.pathname.includes("auth") ? (
         <InputSelect
           label="지역선택"
           options={cityOptions}
-          themeType="row"
+          layout="row"
           size="sm"
           onChange={getCityOption}
           value={city}

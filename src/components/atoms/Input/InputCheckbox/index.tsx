@@ -1,20 +1,22 @@
 import * as S from "../Input.style";
 
 interface CheckProps {
-  themeType: string;
+  layout: string;
+  themeType?: string;
   label?: string;
   value?: any;
   displayValue?: string;
 }
 
 export const InputCheckbox: React.FC<CheckProps> = ({
+  layout,
   themeType,
   label,
   value,
   displayValue,
 }) => {
   return (
-    <S.InputCommon themeType={themeType}>
+    <S.InputCommon layout={layout} themeType={themeType}>
       <label>
         {label && label}
         <input type="checkbox" value={value} />

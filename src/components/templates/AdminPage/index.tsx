@@ -1,11 +1,11 @@
-import { AdminPostForm } from "@/components/molecules/AdminPostForm";
+import { AdminLayout } from "@/components/organisms/AdminLayout";
 import React from "react";
 import * as S from "./adminPage.style";
 
-export const AdminPage = () => {
+export const AdminPage = ({ children }: any) => {
   return (
-    <S.AdminPage>
-      <AdminPostForm />
-    </S.AdminPage>
+    <AdminLayout>
+      <S.AdminPage></S.AdminPage>
+    </AdminLayout>
   );
 };

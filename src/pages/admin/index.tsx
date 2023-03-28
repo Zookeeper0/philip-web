@@ -12,13 +12,9 @@ const Admin = () => {
   /** 어드민 토큰 없는 상태에서 접근시 메인으로 이동 */
   useEffect(() => {
     console.log(session?.user);
-    if (!session?.user) router.replace("/main");
+    if (!session?.user) router.replace("/admin/login");
   }, [session]);
-  return (
-    <>
-      <AdminPage />
-    </>
-  );
+  return <AdminPage />;
 };
 
 export default Admin;

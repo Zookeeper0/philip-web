@@ -11,11 +11,7 @@ const Main = () => {
   const [token, setAdminToken]: any = useRecoilState(adminTokenState);
   /** 사용자 인증 로컬 저장  */
   const [userToken, setUserToken]: any = useRecoilState(userTokenState);
-  const city = useRecoilValue(cityState);
 
-  const { data: session } = useSession();
-
-  console.log("session :", session);
   useEffect(() => {
     const userInfo = localStorage.getItem("kakaoSignKey");
     const adminInfo = localStorage.getItem("adminSignKey");

@@ -7,8 +7,6 @@ import { useQuery } from "react-query";
 import { cookieAPI } from "@/apis/visitApi";
 
 export const MainPage = () => {
-  const { data: cookie } = useQuery("cookieAPI", cookieAPI);
-
   return (
     <S.MainLayout>
       <BannerSection />

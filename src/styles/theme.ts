@@ -3,6 +3,8 @@ import { DefaultTheme } from "styled-components";
 export const theme: DefaultTheme = {
   shadow: {
     dark: "0 0 14px 2px rgba(0, 0, 0, 0.4)",
+    admin: "0 4px 10px -4px rgba(0,0,0,.1)",
+    adminHeader: "0 2px 6px -4px rgba(0,0,0,.1)",
   },
   gradient: {
     primary:
@@ -35,7 +37,14 @@ export const theme: DefaultTheme = {
     kakaoTxt: "#181600",
     categorySubTxt: "#BABABA",
 
+    adminBg: "#FBFBFC",
+    adminMainTxt: "#484848",
+    adminLabelTxt: "#6A6A6A",
+    adminPlaceholder: "#C7C7C7",
+    adminBorder: "#F6F7FA",
+
     black: "#000000",
     white: "#ffffff",
+    whiteHover: "#F6F7FA",
   },
 };
