@@ -33,8 +33,6 @@ export const PostSection = () => {
     setIsOpen((prev) => !prev);
   }, []);
 
-  console.log("router.query.id", router.query.id);
-
   // 임시 랜덤이미지 dummy
   let randomImg = null;
   if (router.query.id === "220975c0-c869-11ed-af91-e93afefe558a") {
@@ -44,7 +42,6 @@ export const PostSection = () => {
     randomImg = Data.Post[postId];
   }
 
-  console.log(detailItem);
   return (
     <S.PostSection>
       <div style={{ justifyContent: "space-between", display: "flex" }}>

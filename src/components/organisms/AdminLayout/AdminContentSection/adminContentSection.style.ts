@@ -11,9 +11,11 @@ export const AdminContentSection = styled.section`
 `;
 
 export const AdminContentBox = styled.div`
+  overflow: hidden;
   display: flex;
   width: 100%;
   height: 100%;
+  max-height: calc(100vh - 132px);
   padding: 20px;
   border-radius: 4px;
   background: ${(props) => props.theme.colors.white};

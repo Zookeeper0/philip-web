@@ -78,4 +78,18 @@ export const InputCommon = styled.div<InputProps>`
         align-items: flex-start;
       }
     `}
+
+    ${(props) =>
+    props.layout === "adminRow" &&
+    css`
+      label {
+        color: ${(props) => props.theme.colors.adminLabelTxt};
+
+        input {
+          padding: 0px 6px;
+          border: 1px solid ${(props) => props.theme.colors.adminInputBorder};
+          border-radius: 3px;
+        }
+      }
+    `}
 `;

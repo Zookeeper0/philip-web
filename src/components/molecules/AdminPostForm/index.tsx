@@ -21,6 +21,7 @@ interface PostdataProps {
   phoneNumber: string;
   contents: string;
 }
+
 export const AdminPostForm = () => {
   const isWindowWidth = useWindowWidth();
   const userOid = useRecoilValue(adminTokenState);
@@ -69,6 +70,8 @@ export const AdminPostForm = () => {
     formState: { errors },
     register,
     reset,
+    setValue,
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -125,17 +128,22 @@ export const AdminPostForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       encType="multipart/form-data"
     >
-      <S.PostFormImgInput>
-        <input
-          type="file"
-          multiple
-          hidden
-          ref={imageInput}
-          onChange={onChangeImages}
-        />
-        <button onClick={onClickImageUpload}>이미지 업로드</button>
-      </S.PostFormImgInput>
-      <S.PostFormInfoInput>
+      <S.PostFormImgBox>
+        <S.PostFormBoxTit>대표이미지 등록</S.PostFormBoxTit>
+        {/* 메인페이지 대표 이미지 등록 */}
+        <S.PostFormImgInput>
+          <input
+            type="file"
+            multiple
+            hidden
+            ref={imageInput}
+            onChange={onChangeImages}
+          />
+          <button onClick={onClickImageUpload}>이미지 업로드</button>
+        </S.PostFormImgInput>
+      </S.PostFormImgBox>
+      <S.PostFormInfoBox>
+        <S.PostFormBoxTit>업체정보 등록</S.PostFormBoxTit>
         <AdminInputSelect
           label="지역선택"
           layout="column"
@@ -188,7 +196,18 @@ export const AdminPostForm = () => {
           placeholder="내용을 입력해 주세요."
           register={register("contents")}
         />
-      </S.PostFormInfoInput>
+        {/* 요금 및 메뉴설명에 대한 이미지 등록 */}
+        <S.PostFormImgInput>
+          <input
+            type="file"
+            multiple
+            hidden
+            ref={imageInput}
+            onChange={onChangeImages}
+          />
+          <button onClick={onClickImageUpload}>이미지 업로드</button>
+        </S.PostFormImgInput>
+      </S.PostFormInfoBox>
 
       <S.PostFormBtnBox>
         <ButtonGroup>

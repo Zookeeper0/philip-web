@@ -44,6 +44,9 @@ export const theme: DefaultTheme = {
     adminLabelTxt: "#6A6A6A",
     adminPlaceholder: "#C7C7C7",
     adminBorder: "#F6F7FA",
+    adminDivider: "#E4E4E4",
+    adminInputBorder: "#DFDFDF",
+    adminInputBg: "#F8F8F8",
 
     black: "#000000",
     white: "#ffffff",

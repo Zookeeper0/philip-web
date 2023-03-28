@@ -36,6 +36,9 @@ declare module "styled-components" {
       adminLabelTxt: string;
       adminPlaceholder: string;
       adminBorder: string;
+      adminDivider: string;
+      adminInputBorder: string;
+      adminInputBg: string;
 
       black: string;
       white: string;
