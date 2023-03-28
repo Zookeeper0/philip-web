@@ -6,7 +6,6 @@ import { useMutation } from "react-query";
 import { fetchCountViews } from "@/apis/postsApi";
 import { useRecoilValue } from "recoil";
 import { userTokenState } from "@/recoil/userToken";
-import { adminTokenState } from "@/recoil/adminToken";
 import { useSession } from "next-auth/react";
 
 export const PostItem = ({ item }: any) => {
@@ -15,14 +14,14 @@ export const PostItem = ({ item }: any) => {
   /** 고객 토큰관리 */
   const userToken = useRecoilValue(userTokenState);
   /** 관리자 세션 관리 */
-  const { data: session } = useSession();
+  const { data: admin } = useSession();
 
   /** 게시물 클릭시 해당 게시물 조회수 count api */
   const mutation = useMutation("posts", fetchCountViews);
 
   /** 게시물 클릭시 로그인 토큰 값(userToken) 이 없다면 알림 */
   const goDetail = (e: any) => {
-    if (userToken || session?.user) router.push(`/main/post/${item.oid}`);
+    if (userToken || admin?.user) router.push(`/main/post/${item.oid}`);
     else alert("로그인이 필요한 서비스 입니다.");
   };
 

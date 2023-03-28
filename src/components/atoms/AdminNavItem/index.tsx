@@ -6,8 +6,6 @@ import IconArrow from "public/assets/svg/icon-circlearrow.svg";
 export const AdminNavItem = ({ data }: any) => {
   const router = useRouter();
 
-  console.log(router.pathname);
-
   return (
     <S.AdminNavItem
       className={`${router.pathname.includes(data.path) ? "active" : "false"}`}

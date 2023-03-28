@@ -9,14 +9,11 @@ import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
 import { useMutation, useQuery } from "react-query";
 import { deletePost, detailPostApi } from "@/apis/postsApi";
-import { useRecoilValue } from "recoil";
-import { adminInfoState } from "@/recoil/adminInfo";
 import { signOut } from "next-auth/react";
 
 export const PostSection = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const adminInfo = useRecoilValue(adminInfoState);
 
   const queryFn = () => detailPostApi(router.query.id);
   const { data: detailItem, isError } = useQuery(

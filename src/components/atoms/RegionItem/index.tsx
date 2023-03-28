@@ -20,8 +20,6 @@ export const RegionItem = ({ data }: any) => {
     }
   };
 
-  console.log("data :", data);
-
   return (
     <S.RegionItem
       item={data.oid}

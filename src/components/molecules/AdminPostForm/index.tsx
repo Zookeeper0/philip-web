@@ -7,8 +7,6 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import * as S from "./adminPostForm.style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRecoilValue } from "recoil";
-import { adminTokenState } from "@/recoil/adminToken";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 import { TextArea } from "@/components/atoms/TextArea";
 import { AdminInputSelect } from "@/components/atoms/Input/AdminInputSelect";
@@ -23,7 +21,6 @@ interface PostdataProps {
 }
 export const AdminPostForm = () => {
   const isWindowWidth = useWindowWidth();
-  const userOid = useRecoilValue(adminTokenState);
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const queryClient = useQueryClient();
@@ -31,6 +28,8 @@ export const AdminPostForm = () => {
   const [images, setImages] = useState<string[]>([]);
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const router = useRouter();
+
+  const { data: admin } = useSession();
 
   const mutation = useMutation("posts", addPostApi, {
     onSuccess() {
@@ -52,7 +51,6 @@ export const AdminPostForm = () => {
 
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
-  const { data: session } = useSession();
 
   const schema = yup
     .object({
@@ -82,7 +80,7 @@ export const AdminPostForm = () => {
     });
     console.log("formData :", formData);
     //어드민 토큰
-    data.token = userOid;
+    data.token = admin?.user.oid;
     //방문자수 0 초기화
     data.views = 0;
     formData.append("content", JSON.stringify(data));
@@ -126,14 +124,14 @@ export const AdminPostForm = () => {
       <AdminInputSelect
         label="카테고리 선택"
         options={categoryOptions}
-        layout="row"
+        themeType="row"
         size="sm"
         register={register("categoryOid")}
       />
       <AdminInputSelect
         label="지역선택"
         options={cityOptions}
-        layout="row"
+        themeType="row"
         size="sm"
         register={register("cityOid")}
       />

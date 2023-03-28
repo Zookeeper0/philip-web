@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { getCityListApi } from "@/apis/categoryApi";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
-import { adminTokenState } from "@/recoil/adminToken";
 import { cityState } from "@/recoil/city";
 import { userTokenState } from "@/recoil/userToken";
 import { signOut, useSession } from "next-auth/react";
@@ -15,13 +14,11 @@ import { Button } from "@/components/atoms/Button";
 export const HeaderMenu = () => {
   /** 유저 로그인 체크 */
   const [userToken, setUserToken] = useRecoilState(userTokenState);
-  /** 관리자 로그인 체크 */
-  const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
-  const [cityOptions, setCityOptions] = useState([]);
 
+  const [cityOptions, setCityOptions] = useState([]);
   const [city, setCityState] = useRecoilState<any>(cityState);
 
-  const { data: session } = useSession();
+  const { data: admin } = useSession();
 
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
@@ -37,10 +34,7 @@ export const HeaderMenu = () => {
 
   const onLogout = () => {
     localStorage.removeItem("kakaoSignKey");
-    localStorage.removeItem("adminSignKey");
-    localStorage.removeItem("adminOid");
     setUserToken(null);
-    setAdminToken(null);
     document.location.href = "/main";
   };
 
@@ -51,7 +45,7 @@ export const HeaderMenu = () => {
   return (
     <S.HeaderMenu>
       {/* 관리자 페이지 이동 버튼 */}
-      {session?.user && (
+      {admin?.user && (
         <>
           <Button
             type="button"
@@ -66,7 +60,7 @@ export const HeaderMenu = () => {
         </>
       )}
 
-      {userToken || session?.user ? (
+      {userToken || admin?.user ? (
         <>
           <Button
             type="button"

@@ -9,7 +9,6 @@ const AxiosInstance = axios.create({
 });
 
 export const setToken = (token: any) => {
-  console.log("token", token);
   AxiosInstance.defaults.headers.common["Authorization"] = `Bearer ${
     token || localStorage.getItem("kakaoSignKey")
   }`;
