@@ -1,10 +1,11 @@
 import { AdminModal } from "..";
 import { Button } from "@/components/atoms/Button";
+import * as S from "../adminModal.style";
 
-export const StoreModal = ({ onClose, store }: any) => {
+export const UserModal = ({ onClose, user }: any) => {
   return (
     <AdminModal>
-      {store.storeName}
+      {user.storeName}
       <Button
         type="button"
         layout="solid"
