@@ -1,31 +1,30 @@
 import { DataGrid } from "devextreme-react";
+import { Column } from "devextreme-react/data-grid";
+import { useState } from "react";
 import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
-import { Column } from "devextreme-react/data-grid";
 import { Button } from "@/components/atoms/Button";
-import { useState } from "react";
-import { UserModal } from "../../AdminModal/UserModal";
+import { AccountModal } from "../../AdminModal/AccountModal";
 
-export const UserGrid = () => {
-  const [userModal, setUserModal] = useState(false);
-  const [user, setUser] = useState();
+export const AccountGrid = () => {
+  const [accountModal, setAccountModal] = useState(false);
+  const [account, setAccount] = useState();
 
-  const users = Data.Post;
+  const accounts = Data.Post;
 
-  const openUserModal = (data: any) => {
-    setUser(data);
-    setUserModal(!userModal);
+  const openAccountModal = (data: any) => {
+    setAccount(data);
+    setAccountModal(!accountModal);
   };
 
   return (
     <>
       <S.AdminGrid>
-        <DataGrid dataSource={users} keyExpr="id">
+        <DataGrid dataSource={accounts} keyExpr="id">
           <Column caption="No." dataField="id" />
+          <Column caption="ID" />
           <Column caption="이름" dataField="storeName" />
-          <Column caption="카카오ID" />
-          <Column caption="연락처" />
-          <Column caption="회원등급" />
+          <Column caption="관리자 권한등급" />
           <Column
             caption="상세보기"
             width={90}
@@ -37,13 +36,15 @@ export const UserGrid = () => {
                 width="60px"
                 height={24}
                 label="보기"
-                onClick={() => openUserModal(e.data)}
+                onClick={() => openAccountModal(e.data)}
               />
             )}
           />
         </DataGrid>
       </S.AdminGrid>
-      {userModal && <UserModal onClose={openUserModal} user={user} />}
+      {accountModal && (
+        <AccountModal onClose={openAccountModal} account={account} />
+      )}
     </>
   );
 };

@@ -21,6 +21,7 @@ export const StoreGrid = () => {
     <>
       <S.AdminGrid>
         <DataGrid dataSource={posts} keyExpr="id">
+          <Column caption="No." dataField="id" width={30} />
           <Column caption="업체명" dataField="storeName" width={120} />
           <Column caption="업종" dataField="category" width={80} />
           <Column caption="대표자명" dataField="ownerName" width={80} />
