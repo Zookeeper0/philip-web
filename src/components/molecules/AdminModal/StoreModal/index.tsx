@@ -4,6 +4,7 @@ import { Button } from "@/components/atoms/Button";
 export const StoreModal = ({ onClose, store }: any) => {
   return (
     <AdminModal>
+      {/* <div>{store.oid}</div> */}
       <div>{store.city}</div>
       <div>{store.category}</div>
       <div>{store.store_name}</div>
@@ -21,6 +22,14 @@ export const StoreModal = ({ onClose, store }: any) => {
         color="func"
         label="닫기"
         onClick={onClose}
+      />
+      <Button
+        type="button"
+        width="60px"
+        height={36}
+        color="primary"
+        layout="solid"
+        label="수정"
       />
     </AdminModal>
   );

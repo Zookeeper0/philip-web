@@ -5,12 +5,24 @@ import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
 import { Button } from "@/components/atoms/Button";
 import { AccountModal } from "../../AdminModal/AccountModal";
+import { useQuery } from "react-query";
+import { getAdminList } from "@/apis/adminApi";
 
-export const AccountGrid = () => {
+type Props = {
+  adminSearchKeyword: string;
+};
+
+export const AccountGrid = ({ adminSearchKeyword }: Props) => {
   const [accountModal, setAccountModal] = useState(false);
   const [account, setAccount] = useState();
 
   const accounts = Data.Post;
+
+  /** 관리자 목록 불러오기 */
+  const { data: dataSource } = useQuery(
+    ["getAdminList", adminSearchKeyword],
+    getAdminList
+  );
 
   const openAccountModal = (data: any) => {
     setAccount(data);
@@ -20,11 +32,15 @@ export const AccountGrid = () => {
   return (
     <>
       <S.AdminGrid>
-        <DataGrid dataSource={accounts} keyExpr="id">
-          <Column caption="No." dataField="id" />
-          <Column caption="ID" />
-          <Column caption="이름" dataField="storeName" />
-          <Column caption="관리자 권한등급" />
+        <DataGrid dataSource={dataSource} keyExpr="oid">
+          <Column
+            caption="No."
+            cellRender={(e) => e.row.loadIndex + 1}
+            width={30}
+          />
+          <Column caption="ID" dataField="admin_id" />
+          <Column caption="이름" dataField="name" />
+          <Column caption="관리자 권한등급" dataField="role" />
           <Column
             caption="상세보기"
             width={90}

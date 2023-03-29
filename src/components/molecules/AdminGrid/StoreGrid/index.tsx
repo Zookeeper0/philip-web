@@ -11,13 +11,17 @@ import { getAdminStorePosts, getPostsListApi } from "@/apis/postsApi";
 import { useRecoilValue } from "recoil";
 import { searchState } from "@/recoil/search";
 
-export const StoreGrid = () => {
-  const searchInput = useRecoilValue(searchState);
+type Props = {
+  storeSearchKeyword: string;
+};
+
+export const StoreGrid = ({ storeSearchKeyword }: Props) => {
   const [storeModal, setStoreModal] = useState(false);
   const [store, setStore] = useState();
 
+  /** 업체 목록 불러오기 */
   const { data: dataSource } = useQuery(
-    ["getAdminStorePosts", searchInput],
+    ["getAdminStorePosts", storeSearchKeyword],
     getAdminStorePosts
   );
 
@@ -26,14 +30,6 @@ export const StoreGrid = () => {
     setStore(data);
     setStoreModal(!storeModal);
   };
-
-  // const dataSource = useMemo(() => {
-
-  //   return new CustomStore({
-  //     key: "Oid",
-  //     load: () => sendRequest(apiUrl, "GET", search),
-  //   });
-  // }, [search]);
 
   return (
     <>

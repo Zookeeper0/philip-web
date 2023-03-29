@@ -56,6 +56,7 @@ export const AdminPostForm = () => {
       categoryOid: yup.string().required("카테고리를 선택하세요"),
       cityOid: yup.string().required("도시를 선택하세요"),
       ownerName: yup.string().required("대표자명을 입력해주세요"),
+      remark: yup.string(),
     })
     .required();
 
@@ -106,11 +107,11 @@ export const AdminPostForm = () => {
       imageFormData.append("files", f);
     });
     uploadImagesAPI(imageFormData).then((result) => {
-      console.log("result", result);
       setImagePaths((prev) => prev.concat(result));
     });
   }, []);
 
+  /** 미리보기 아닌 로직 */
   // const onClickImageUpload = useCallback((e: any) => {
   //   const imageFormData = new FormData();
   //   [].forEach.call(e.target.files, (f) => {
@@ -129,22 +130,15 @@ export const AdminPostForm = () => {
   // }, []);
 
   /** preview 이미지 삭제 */
-  const onRemoveImage = useCallback(
-    (v: string, index: number) => () => {
-      console.log("### v, index  :", v, index);
-      deleteImagesAPI(v).then((result) => {
-        console.log(result);
-        setImagePaths((prev) => {
-          return prev.filter((v, i) => i !== index);
-        });
+  const onRemoveImage = useCallback((v: any, index: number, e: any) => {
+    e.preventDefault();
+    deleteImagesAPI(v.filename).then((result) => {
+      console.log(result);
+      setImagePaths((prev) => {
+        return prev.filter((v, i) => i !== index);
       });
-    },
-    []
-  );
-
-  const goBack = () => {
-    router.back();
-  };
+    });
+  }, []);
 
   useEffect(() => {
     setCategoryOptions(categoryItem);
@@ -177,7 +171,7 @@ export const AdminPostForm = () => {
                   alt={v}
                 />
                 <div>
-                  <button onClick={onRemoveImage(v, i)}>제거</button>
+                  <button onClick={(e) => onRemoveImage(v, i, e)}>제거</button>
                 </div>
               </div>
             ))}
@@ -265,7 +259,7 @@ export const AdminPostForm = () => {
           size="md"
           width="100%"
           placeholder="입력..."
-          register={register("etc")}
+          register={register("remark")}
         />
       </S.PostFormInfoBox>
 
@@ -286,7 +280,7 @@ export const AdminPostForm = () => {
             width="80px"
             height={40}
             label="취소"
-            onClick={goBack}
+            onClick={() => router.back()}
           />
         </ButtonGroup>
       </S.PostFormBtnBox>

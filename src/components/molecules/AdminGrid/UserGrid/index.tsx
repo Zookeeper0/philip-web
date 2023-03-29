@@ -5,25 +5,29 @@ import { Column } from "devextreme-react/data-grid";
 import { Button } from "@/components/atoms/Button";
 import { useState } from "react";
 import { UserModal } from "../../AdminModal/UserModal";
+import { useQuery } from "react-query";
+import { getKakaoUsers } from "@/apis/kakaoApi";
 
 export const UserGrid = () => {
   const [userModal, setUserModal] = useState(false);
   const [user, setUser] = useState();
 
-  const users = Data.Post;
+  /** 회원목록 불러오기 */
+  const { data: dataSource } = useQuery(["getKakaoUsers"], getKakaoUsers);
 
   const openUserModal = (data: any) => {
     setUser(data);
     setUserModal(!userModal);
   };
 
+  console.log(dataSource);
   return (
     <>
       <S.AdminGrid>
-        <DataGrid dataSource={users} keyExpr="id">
+        <DataGrid dataSource={dataSource} keyExpr="id">
           <Column caption="No." dataField="id" />
           <Column caption="이름" dataField="storeName" />
-          <Column caption="카카오ID" />
+          <Column caption="카카오ID" dataField="kakao_id" />
           <Column caption="연락처" />
           <Column caption="회원등급" />
           <Column

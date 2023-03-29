@@ -4,17 +4,22 @@ import { searchState } from "@/recoil/search";
 import { useRecoilState } from "recoil";
 import * as S from "../adminSearchBox.style";
 
-export const StoreSearch = () => {
-  const [searchInput, setSearchInput] = useRecoilState(searchState);
-  const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-  };
+type Props = {
+  setStoreSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+};
 
+export const StoreSearch = ({ setStoreSearchKeyword }: Props) => {
   return (
     <S.AdminSearchBox>
       <S.AdminSearchTit>업체검색</S.AdminSearchTit>
       <S.AdminSearch>
-        <InputText layout="adminRow" size="sm" onChange={getValue} />
+        <InputText
+          layout="adminRow"
+          size="sm"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setStoreSearchKeyword(e.target.value)
+          }
+        />
         <Button
           type="submit"
           width="60px"
