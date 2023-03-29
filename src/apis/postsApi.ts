@@ -26,10 +26,12 @@ export function addPostApi(data: FormData) {
     .then((response) => response.data);
 }
 
+/** PATCH 디테일 페이지 들어갈때 방문자수 카운트 */
 export function fetchCountViews(oid: string) {
   return axiosInstance.patch(`/posts/${oid}`);
 }
 
+/** GET 프로모션 리스트  */
 export function getPromtionListApi({ queryKey }: any) {
   return axiosInstance
     .get(`/posts/promotion?city=${queryKey[1]}&category=${queryKey[2]}`)
@@ -40,4 +42,8 @@ export function deletePost(oid: string) {
   return axiosInstance
     .delete(`/posts/${oid}`)
     .then((response) => response.data);
+}
+
+export function getAdminStorePosts() {
+  return axiosInstance.get("/posts/store").then((response) => response.data);
 }
