@@ -26,7 +26,8 @@ export const InputCommon = styled.div<InputProps>`
   }
 
   input,
-  select {
+  select,
+  textarea {
     width: ${(props) => (props.width ? props.width : "initial")};
     height: ${(props) =>
       props.size === "sm"
@@ -45,6 +46,12 @@ export const InputCommon = styled.div<InputProps>`
         ? "0 15px"
         : "0"};
     font-size: ${(props) => (props.size === "lg" ? "1.5rem;" : "1.3rem;")};
+  }
+
+  textarea {
+    height: 120px;
+    padding: 10px;
+    font-size: 1.3rem;
   }
 
   ${(props) =>
@@ -69,6 +76,20 @@ export const InputCommon = styled.div<InputProps>`
       label {
         flex-direction: column;
         align-items: flex-start;
+      }
+    `}
+
+    ${(props) =>
+    props.layout === "adminRow" &&
+    css`
+      label {
+        color: ${(props) => props.theme.colors.adminLabelTxt};
+
+        input {
+          padding: 0px 6px;
+          border: 1px solid ${(props) => props.theme.colors.adminInputBorder};
+          border-radius: 3px;
+        }
       }
     `}
 `;

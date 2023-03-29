@@ -11,17 +11,17 @@ export const AdminNavList = () => {
     {
       id: 2,
       name: "광고관리",
-      path: "/admin/banner",
+      path: "/admin/ads",
     },
     {
       id: 3,
       name: "회원관리",
-      path: "/admin/user",
+      path: "/admin/users",
     },
     {
       id: 4,
       name: "관리자 설정",
-      path: "/admin/admin-account",
+      path: "/admin/account",
     },
   ];
 

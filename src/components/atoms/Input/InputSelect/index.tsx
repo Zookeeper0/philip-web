@@ -9,6 +9,7 @@ interface SelectProps {
   size: string;
   layout: string;
   label?: string;
+  themeType: string;
   placeholder?: string;
   options: any;
   register?: UseFormRegisterReturn;
@@ -22,6 +23,7 @@ export const InputSelect: React.FC<SelectProps> = ({
   size,
   options,
   label,
+  themeType,
   placeholder,
   register,
   onChange,
@@ -35,7 +37,12 @@ export const InputSelect: React.FC<SelectProps> = ({
   }, [value]);
 
   return (
-    <S.InputCommon layout={layout} size={size} width={width}>
+    <S.InputCommon
+      themeType={themeType}
+      layout={layout}
+      size={size}
+      width={width}
+    >
       <label>
         {label && label}
         <select {...register} onChange={onChange} value={value || name}>

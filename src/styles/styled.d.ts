@@ -7,6 +7,8 @@ declare module "styled-components" {
     colors: {
       [primary: string]: string;
       [primaryHover: string]: string;
+      [secondary: string]: string;
+      [secondaryHover: string]: string;
       [func: string]: string;
       [funcHover: string]: string;
       dark: string;
@@ -34,6 +36,9 @@ declare module "styled-components" {
       adminLabelTxt: string;
       adminPlaceholder: string;
       adminBorder: string;
+      adminDivider: string;
+      adminInputBorder: string;
+      adminInputBg: string;
 
       black: string;
       white: string;
