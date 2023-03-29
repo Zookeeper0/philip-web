@@ -6,6 +6,7 @@ export const UserPopupItem = styled.div`
   padding: 10px 0;
   border-radius: 3px;
   font-size: 1.4rem;
+  justify-content: center;
   cursor: pointer;
 
   &:hover {

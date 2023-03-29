@@ -1,4 +1,4 @@
-import { addPostApi } from "@/apis/postsApi";
+import { addPostApi, deleteImagesAPI, uploadImagesAPI } from "@/apis/postsApi";
 import { InputText } from "@/components/atoms/Input/InputText";
 import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -13,13 +13,6 @@ import { AdminInputSelect } from "@/components/atoms/Input/AdminInputSelect";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
-
-interface PostdataProps {
-  title: string;
-  address: string;
-  phoneNumber: string;
-  contents: string;
-}
 
 export const AdminPostForm = () => {
   const isWindowWidth = useWindowWidth();
@@ -56,12 +49,13 @@ export const AdminPostForm = () => {
 
   const schema = yup
     .object({
-      title: yup.string().nullable().required("제목을 입력해 선택해주세요"),
+      storeName: yup.string().nullable().required("제목을 입력해 선택해주세요"),
       address: yup.string().nullable().required("주소를 입력해주세요"),
       phoneNumber: yup.string().nullable().required("전화번호를 등록해주세요"),
       contents: yup.string().nullable().required("상세 설명을 입력해주세요"),
       categoryOid: yup.string().required("카테고리를 선택하세요"),
       cityOid: yup.string().required("도시를 선택하세요"),
+      ownerName: yup.string().required("대표자명을 입력해주세요"),
     })
     .required();
 
@@ -77,18 +71,23 @@ export const AdminPostForm = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log("images :", images);
-    const formData = new FormData();
-    images.forEach((p) => {
-      formData.append("files", p);
-    });
-    console.log("formData :", formData);
-    //어드민 토큰
-    data.token = admin?.user.oid;
-    //방문자수 0 초기화
+    // const formData = new FormData();
+    // imagePaths.forEach((p) => {
+    //   formData.append("files", p); // req.body.files
+    // });
     data.views = 0;
-    formData.append("content", JSON.stringify(data));
-    mutation.mutate(formData);
+
+    const datas = {
+      files: imagePaths,
+      content: data,
+    };
+    console.log("onSubmit imagePaths", imagePaths);
+    console.log("onSubmit data", data);
+    console.log("onSubmit datas", datas);
+    //방문자수 0 초기화
+
+    // formData.append("content", JSON.stringify(data));
+    mutation.mutate(datas);
   };
 
   // ref로 인풋태그 접근
@@ -100,15 +99,44 @@ export const AdminPostForm = () => {
 
   /** 이미지 정보 state 저장 */
   const onChangeImages = useCallback((e: any) => {
+    e.preventDefault();
+    const imageFormData = new FormData();
+
     [].forEach.call(e.target.files, (f) => {
-      setImages((prev) => prev.concat(f));
+      imageFormData.append("files", f);
+    });
+    uploadImagesAPI(imageFormData).then((result) => {
+      console.log("result", result);
+      setImagePaths((prev) => prev.concat(result));
     });
   }, []);
 
+  // const onClickImageUpload = useCallback((e: any) => {
+  //   const imageFormData = new FormData();
+  //   [].forEach.call(e.target.files, (f) => {
+  //     imageFormData.append("image", f);
+  //   });
+  //   uploadImagesAPI(imageFormData).then((result) => {
+  //     setImagePaths((prev) => prev.concat(result));
+  //   });
+  // }, []);
+
+  // /** 이미지 정보 state 저장 */
+  // const onChangeImages = useCallback((e: any) => {
+  //   [].forEach.call(e.target.files, (f) => {
+  //     setImages((prev) => prev.concat(f));
+  //   });
+  // }, []);
+
+  /** preview 이미지 삭제 */
   const onRemoveImage = useCallback(
-    (index: number) => () => {
-      setImagePaths((prev) => {
-        return prev.filter((v, i) => i !== index);
+    (v: string, index: number) => () => {
+      console.log("### v, index  :", v, index);
+      deleteImagesAPI(v).then((result) => {
+        console.log(result);
+        setImagePaths((prev) => {
+          return prev.filter((v, i) => i !== index);
+        });
       });
     },
     []
@@ -140,6 +168,20 @@ export const AdminPostForm = () => {
             onChange={onChangeImages}
           />
           <button onClick={onClickImageUpload}>이미지 업로드</button>
+          <div>
+            {imagePaths.map((v: any, i) => (
+              <div key={v?.filename} style={{ display: "inline-block" }}>
+                <img
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                  style={{ width: "200px" }}
+                  alt={v}
+                />
+                <div>
+                  <button onClick={onRemoveImage(v, i)}>제거</button>
+                </div>
+              </div>
+            ))}
+          </div>
         </S.PostFormImgInput>
       </S.PostFormImgBox>
       <S.PostFormInfoBox>
@@ -167,7 +209,7 @@ export const AdminPostForm = () => {
           size="md"
           width="100%"
           placeholder="입력..."
-          register={register("title")}
+          register={register("storeName")}
         />
         <InputText
           label="대표자명"
@@ -176,7 +218,7 @@ export const AdminPostForm = () => {
           size="md"
           width="100%"
           placeholder="입력..."
-          register={register("title")}
+          register={register("ownerName")}
         />
         <InputText
           label="주소"
@@ -223,7 +265,7 @@ export const AdminPostForm = () => {
           size="md"
           width="100%"
           placeholder="입력..."
-          register={register("title")}
+          register={register("etc")}
         />
       </S.PostFormInfoBox>
 

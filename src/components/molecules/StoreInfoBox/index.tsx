@@ -3,10 +3,6 @@ import { CopyButton } from "@/components/atoms/Button/CopyButton";
 import * as S from "./storeInfoBox.style";
 import IconPhone from "public/assets/svg/icon-phone.svg";
 import IconView from "public/assets/svg/icon-view.svg";
-import Images08 from "../../../../public/assets/images/images-4.jpg";
-import { useEffect } from "react";
-import { useMutation } from "react-query";
-import { fetchCountViews } from "@/apis/postsApi";
 
 export const StoreInfoBox = ({ post, randomImg }: any) => {
   return (
@@ -17,7 +13,7 @@ export const StoreInfoBox = ({ post, randomImg }: any) => {
         <S.StoreInfoTop>
           <S.StoreNameBox>
             {/* 스토어 네임 */}
-            {post?.title}
+            {post?.store_name}
             <S.CategorySpan>{post?.category}</S.CategorySpan>
           </S.StoreNameBox>
           <S.StoreViewBox>

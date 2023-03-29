@@ -4,7 +4,15 @@ import { Button } from "@/components/atoms/Button";
 export const StoreModal = ({ onClose, store }: any) => {
   return (
     <AdminModal>
-      {store.storeName}
+      <div>{store.city}</div>
+      <div>{store.category}</div>
+      <div>{store.store_name}</div>
+      {/* <div>{store.owner_name}</div> */}
+      <div>{store.address}</div>
+      <div>{store.phone_number}</div>
+      <div>{store.contents}</div>
+      {/* <div>{store.etc}</div> */}
+
       <Button
         type="button"
         layout="solid"

@@ -9,8 +9,8 @@ const Admin = () => {
 
   /** 어드민 토큰 없는 상태에서 접근시 메인으로 이동 */
   useEffect(() => {
-    console.log(admin?.user);
     if (!admin?.user) router.replace("/admin/login");
+    else router.replace("/admin/store");
   }, [admin]);
   return <AdminPage />;
 };

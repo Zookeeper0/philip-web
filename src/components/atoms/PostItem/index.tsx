@@ -47,7 +47,7 @@ export const PostItem = ({ item }: any) => {
       />
       <S.PostItemSpan>
         <span>{item.category}</span>
-        {item.title}
+        {item.store_name}
       </S.PostItemSpan>
     </S.PostItem>
   );

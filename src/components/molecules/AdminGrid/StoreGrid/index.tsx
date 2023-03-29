@@ -8,19 +8,21 @@ import { StoreModal } from "../../AdminModal/StoreModal";
 import CustomStore from "devextreme/data/custom_store";
 import { useQuery } from "react-query";
 import { getAdminStorePosts, getPostsListApi } from "@/apis/postsApi";
+import { useRecoilValue } from "recoil";
+import { searchState } from "@/recoil/search";
 
 export const StoreGrid = () => {
+  const searchInput = useRecoilValue(searchState);
   const [storeModal, setStoreModal] = useState(false);
   const [store, setStore] = useState();
 
   const { data: dataSource } = useQuery(
-    ["getAdminStorePosts"],
+    ["getAdminStorePosts", searchInput],
     getAdminStorePosts
   );
-  const gridRef: any = useRef();
-  const posts = Data.Post;
 
   const openStoreModal = (data: any) => {
+    console.log("data: ", data);
     setStore(data);
     setStoreModal(!storeModal);
   };
@@ -41,18 +43,21 @@ export const StoreGrid = () => {
           dataSource={dataSource}
           showRowLines={true}
           hoverStateEnabled={true}
-          allowColumnResizing={true}
           allowColumnReordering={true}
           focusedRowEnabled={true}
           keyExpr="oid"
         >
           <Scrolling mode="virtual" />
-          <Column caption="No." cellRender={(e) => e.rowIndex + 1} width={30} />
-          <Column caption="업체명" dataField="title" width={120} />
+          <Column
+            caption="No."
+            cellRender={(e) => e.row.loadIndex + 1}
+            width={30}
+          />
+          <Column caption="업체명" dataField="store_name" width={120} />
           <Column caption="업종" dataField="category" width={80} />
-          <Column caption="대표자명" dataField="ownerName" width={80} />
+          <Column caption="대표자명" dataField="owner_name" width={80} />
           <Column caption="전화번호" dataField="phone_number" width={120} />
-          <Column caption="지역" dataField="region" width={80} />
+          <Column caption="지역" dataField="city" width={80} />
           <Column caption="주소" dataField="address" />
           <Column
             caption="등록일"

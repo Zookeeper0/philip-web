@@ -15,15 +15,8 @@ export function detailPostApi(data: any) {
 }
 
 /** POST [관리자] 게시글 등록 */
-export function addPostApi(data: FormData) {
-  const config = {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  };
-  return axiosInstance
-    .post("/posts", data, config)
-    .then((response) => response.data);
+export function addPostApi(data: Object) {
+  return axiosInstance.post("/posts", data).then((response) => response.data);
 }
 
 /** PATCH 디테일 페이지 들어갈때 방문자수 카운트 */
@@ -44,6 +37,25 @@ export function deletePost(oid: string) {
     .then((response) => response.data);
 }
 
-export function getAdminStorePosts() {
-  return axiosInstance.get("/posts/store").then((response) => response.data);
+export function getAdminStorePosts({ queryKey }: any) {
+  return axiosInstance
+    .get(`/posts/store?search=${queryKey[1]}`)
+    .then((response) => response.data);
+}
+
+export function uploadImagesAPI(data: FormData) {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  return axiosInstance
+    .post("/posts/images", data, config)
+    .then((response) => response.data);
+}
+
+export function deleteImagesAPI(data: string) {
+  return axiosInstance
+    .delete(`/posts/images/${data}`)
+    .then((response) => response.data);
 }

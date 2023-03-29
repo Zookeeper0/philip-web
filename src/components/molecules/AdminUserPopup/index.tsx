@@ -11,8 +11,8 @@ export const AdminUserPopup = () => {
           <span>홈으로 가기</span>
         </Link>
       </UserPopupItem>
-      <UserPopupItem onClick={() => signOut()}>
-        <span>로그아웃</span>
+      <UserPopupItem>
+        <span onClick={() => signOut()}>로그아웃</span>
       </UserPopupItem>
     </S.AdminUserPopup>
   );
