@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 export const PostItem = ({ item }: any) => {
   const router = useRouter();
 
+  console.log("!!!!!!!!!:", item);
   /** 고객 토큰관리 */
   const userToken = useRecoilValue(userTokenState);
   /** 관리자 세션 관리 */
@@ -28,6 +29,7 @@ export const PostItem = ({ item }: any) => {
 
   /** 게시물 클릭시 handler */
   const countViews = () => {
+    console.log("check", item.oid);
     mutation.mutate(item.oid);
   };
 
@@ -37,7 +39,7 @@ export const PostItem = ({ item }: any) => {
   return (
     <S.PostItem
       onClick={() => {
-        goDetail(item), countViews;
+        goDetail(item), countViews();
       }}
     >
       <Image

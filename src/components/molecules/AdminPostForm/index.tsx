@@ -13,14 +13,13 @@ import { AdminInputSelect } from "@/components/atoms/Input/AdminInputSelect";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
+import Image from "next/image";
 
 export const AdminPostForm = () => {
-  const isWindowWidth = useWindowWidth();
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState<string[]>([]);
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const router = useRouter();
 
@@ -76,75 +75,30 @@ export const AdminPostForm = () => {
     // imagePaths.forEach((p) => {
     //   formData.append("files", p); // req.body.files
     // });
+    //방문자수 0 초기화
     data.views = 0;
-
     const datas = {
       files: imagePaths,
       content: data,
     };
-    console.log("onSubmit imagePaths", imagePaths);
-    console.log("onSubmit data", data);
-    console.log("onSubmit datas", datas);
-    //방문자수 0 초기화
-
     // formData.append("content", JSON.stringify(data));
     mutation.mutate(datas);
   };
 
-  // ref로 인풋태그 접근
-  const thumbImageInput = useRef<HTMLInputElement>(null);
-  const detailImageInput = useRef<HTMLInputElement>(null);
-  const menuImageInput = useRef<HTMLInputElement>(null);
-  const onClickThumbImageUpload = useCallback((e: any) => {
+  /** 이미지 id값에 따라 label 저장 */
+  const onChangeImages = (e: any) => {
     e.preventDefault();
-    thumbImageInput.current?.click();
-  }, []);
-  const onClickDetailImageUpload = useCallback((e: any) => {
-    e.preventDefault();
-    detailImageInput.current?.click();
-  }, []);
-  const onClickMenuImageUpload = useCallback((e: any) => {
-    e.preventDefault();
-    menuImageInput.current?.click();
-  }, []);
-
-  /** 이미지 대표이미지 state 저장 */
-  const onChangeImagesThumb = useCallback((e: any) => {
-    e.preventDefault();
+    console.log("e.target : ", e.target.id);
     const imageFormData = new FormData();
     [].forEach.call(e.target.files, (f: any) => {
       imageFormData.append("files", f);
     });
     uploadImagesAPI(imageFormData).then((result) => {
-      result.map((data: any) => (data.label = "thumb"));
+      // taeget.id 따라 label 구분해서 서버로 전송
+      result.map((data: any) => (data.label = e.target.id));
       setImagePaths((prev) => prev.concat(result));
     });
-  }, []);
-  /** 이미지 상세이미지 state 저장 */
-  const onChangeImagesDetail = useCallback((e: any) => {
-    e.preventDefault();
-    const imageFormData = new FormData();
-    [].forEach.call(e.target.files, (f: any) => {
-      imageFormData.append("files", f);
-    });
-    uploadImagesAPI(imageFormData).then((result) => {
-      result.map((data: any) => (data.label = "detail"));
-      setImagePaths((prev) => prev.concat(result));
-    });
-  }, []);
-  /** 이미지 메뉴이미지 state 저장 */
-  const onChangeImagesMenu = useCallback((e: any) => {
-    e.preventDefault();
-    const imageFormData = new FormData();
-    [].forEach.call(e.target.files, (f: any) => {
-      console.log(f);
-      imageFormData.append("files", f);
-    });
-    uploadImagesAPI(imageFormData).then((result) => {
-      result.map((data: any) => (data.label = "menu"));
-      setImagePaths((prev) => prev.concat(result));
-    });
-  }, []);
+  };
 
   console.log(imagePaths);
 
@@ -191,22 +145,26 @@ export const AdminPostForm = () => {
         <S.PostFormBoxTit>대표이미지 등록</S.PostFormBoxTit>
         {/* 메인페이지 대표 이미지 등록 */}
         <S.PostFormImgInput>
-          <input
-            type="file"
-            multiple
-            hidden
-            ref={thumbImageInput}
-            onChange={onChangeImagesThumb}
-          />
-          <button onClick={onClickThumbImageUpload}>이미지 업로드</button>
+          <label htmlFor="thumb">
+            이미지 업로드
+            <input
+              type="file"
+              id="thumb"
+              multiple
+              hidden
+              onChange={onChangeImages}
+            />
+          </label>
+
           {/* 이미지 미리보기 */}
           <div>
             {imagePaths.map((v: any, i) => (
               <div key={v?.filename} style={{ display: "inline-block" }}>
-                <img
+                <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                  style={{ width: "200px" }}
                   alt={v}
+                  width={200}
+                  height={120}
                 />
                 <div>
                   <button onClick={(e) => onRemoveImage(v, i, e)}>제거</button>
@@ -219,14 +177,17 @@ export const AdminPostForm = () => {
       <S.PostFormInfoBox>
         <S.PostFormBoxTit>업체정보 등록</S.PostFormBoxTit>
         {/* 임시 상세이미지 버튼 (feat. 동주) */}
-        <input
-          type="file"
-          multiple
-          hidden
-          ref={detailImageInput}
-          onChange={onChangeImagesDetail}
-        />
-        <button onClick={onClickDetailImageUpload}>이미지 업로드</button>
+        <label htmlFor="detail">
+          이미지 업로드
+          <input
+            type="file"
+            id="detail"
+            multiple
+            hidden
+            onChange={onChangeImages}
+          />
+        </label>
+
         <AdminInputSelect
           label="지역선택"
           layout="column"
@@ -290,14 +251,16 @@ export const AdminPostForm = () => {
         />
         {/* 요금 및 메뉴설명에 대한 이미지 등록 */}
         <S.PostFormImgInput>
-          <input
-            type="file"
-            multiple
-            hidden
-            ref={menuImageInput}
-            onChange={onChangeImagesMenu}
-          />
-          <button onClick={onClickMenuImageUpload}>이미지 업로드</button>
+          <label htmlFor="menu">
+            이미지 업로드
+            <input
+              type="file"
+              id="menu"
+              multiple
+              hidden
+              onChange={onChangeImages}
+            />
+          </label>
         </S.PostFormImgInput>
         <InputText
           label="비고"

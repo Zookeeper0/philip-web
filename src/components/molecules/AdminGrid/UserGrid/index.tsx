@@ -24,7 +24,7 @@ export const UserGrid = () => {
   return (
     <>
       <S.AdminGrid>
-        <DataGrid dataSource={dataSource} keyExpr="id">
+        <DataGrid dataSource={dataSource} keyExpr="kakao_id">
           <Column caption="No." dataField="id" />
           <Column caption="이름" dataField="storeName" />
           <Column caption="카카오ID" dataField="kakao_id" />
