@@ -20,7 +20,6 @@ export const PostSection = () => {
     ["detailItem", router.query.id],
     queryFn,
     {
-      retry: false,
       onError: () => {
         router.push("/admin/login");
         signOut();
@@ -28,6 +27,8 @@ export const PostSection = () => {
       },
     }
   );
+
+  console.log("detailItem", detailItem);
 
   // post delete
   const mutation = useMutation("posts", deletePost);

@@ -14,12 +14,18 @@ export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
     InfoImg = Menu;
   }
 
+  console.log("price info:", post);
   return (
     <>
       <S.PriceInfoBox isOpen={open}>
         <S.PriceTit>{title}</S.PriceTit>
         <S.PriceImg>
-          <Image src={InfoImg} alt="선택된 업체 이미지" />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_API_URL}/${post?.menu[0].filename}`}
+            alt="선택된 업체 이미지"
+            width={800}
+            height={100}
+          />
         </S.PriceImg>
         <S.PriceInfo>
           {post?.contents.split("\n").map((line: any, idx: any) => {

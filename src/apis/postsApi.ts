@@ -11,7 +11,7 @@ export function getPostsListApi({ queryKey }: any) {
 
 /** GET 게시글 클릭시 상세페이지 정보 */
 export function detailPostApi(data: any) {
-  return axiosInstance.get(`/posts/${data}`).then((res) => res.data[0]);
+  return axiosInstance.get(`/posts/test/${data}`).then((res) => res.data);
 }
 
 /** POST [관리자] 게시글 등록 */
