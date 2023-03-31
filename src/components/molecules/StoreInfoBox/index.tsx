@@ -14,8 +14,8 @@ export const StoreInfoBox = ({ post, randomImg }: any) => {
         <S.StoreInfoTop>
           <S.StoreNameBox>
             {/* 스토어 네임 */}
-            {post?.store_name}
-            <S.CategorySpan>{post?.category}</S.CategorySpan>
+            {post?.storeName}
+            <S.CategorySpan>{post?.category.name}</S.CategorySpan>
           </S.StoreNameBox>
           <S.StoreViewBox>
             <IconView width={16} height={16} viewBox="0 0 24 24" />

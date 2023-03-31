@@ -9,7 +9,7 @@ interface SelectProps {
   size: string;
   layout: string;
   label?: string;
-  themeType: string;
+  themeType?: string;
   placeholder?: string;
   options: any;
   register?: UseFormRegisterReturn;

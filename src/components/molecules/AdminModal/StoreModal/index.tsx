@@ -1,10 +1,17 @@
 import { AdminModal } from "..";
 import { Button } from "@/components/atoms/Button";
+import { useRouter } from "next/router";
 
 export const StoreModal = ({ onClose, store }: any) => {
+  const router = useRouter();
+  const goEdit = (e: any) => {
+    // if (userToken || admin?.user) router.push(`/main/post/${item.oid}`);
+    // else alert("로그인이 필요한 서비스 입니다.");
+    router.push(`/admin/store/edit/${store.oid}`);
+  };
   return (
     <AdminModal>
-      {/* <div>{store.oid}</div> */}
+      <div>{store.oid}</div>
       <div>{store.city}</div>
       <div>{store.category}</div>
       <div>{store.store_name}</div>
@@ -30,6 +37,7 @@ export const StoreModal = ({ onClose, store }: any) => {
         color="primary"
         layout="solid"
         label="수정"
+        onClick={goEdit}
       />
     </AdminModal>
   );

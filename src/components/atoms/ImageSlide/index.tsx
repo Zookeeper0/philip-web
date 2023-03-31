@@ -30,8 +30,9 @@ export const ImageSlide = ({ items }: any) => {
       <S.ImageSelected>
         <Image
           src={
-            items &&
-            `${process.env.NEXT_PUBLIC_API_URL}/${items[selectedId]?.filename}`
+            items
+              ? `${process.env.NEXT_PUBLIC_API_URL}/${items[selectedId]?.filename}`
+              : ""
           }
           layout="fill"
           alt="선택된 업체 이미지"

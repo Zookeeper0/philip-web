@@ -1,15 +1,13 @@
-import { DataGrid } from "devextreme-react";
+import { CheckBox, DataGrid } from "devextreme-react";
 import { Column, Scrolling } from "devextreme-react/data-grid";
 import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
 import { Button } from "@/components/atoms/Button";
 import { useMemo, useRef, useState } from "react";
 import { StoreModal } from "../../AdminModal/StoreModal";
-import CustomStore from "devextreme/data/custom_store";
 import { useQuery } from "react-query";
 import { getAdminStorePosts, getPostsListApi } from "@/apis/postsApi";
-import { useRecoilValue } from "recoil";
-import { searchState } from "@/recoil/search";
+import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 
 type Props = {
   storeSearchKeyword: string;
@@ -55,6 +53,7 @@ export const StoreGrid = ({ storeSearchKeyword }: Props) => {
           <Column caption="전화번호" dataField="phone_number" width={120} />
           <Column caption="지역" dataField="city" width={80} />
           <Column caption="주소" dataField="address" />
+          <Column caption="프로모션" dataField="promotion" width={80} />
           <Column
             caption="등록일"
             dataField="created_at"

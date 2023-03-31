@@ -1,8 +1,4 @@
-import {
-  addPostApi,
-  deletePreviewImagesAPI,
-  uploadImagesAPI,
-} from "@/apis/postsApi";
+import { addPostApi, deleteImageAPI, uploadImagesAPI } from "@/apis/postsApi";
 import { InputText } from "@/components/atoms/Input/InputText";
 import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -19,15 +15,13 @@ import { useSession } from "next-auth/react";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
 import Image from "next/image";
 
-export const AdminPostForm = () => {
+export const AdminEditForm = ({ initialState }: any) => {
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
-  const [imagePaths, setImagePaths] = useState<string[]>([]);
+  const [imagePaths, setImagePaths] = useState(initialState);
   const router = useRouter();
-
-  const { data: admin } = useSession();
 
   const mutation = useMutation("posts", addPostApi, {
     onSuccess() {
@@ -63,62 +57,50 @@ export const AdminPostForm = () => {
     })
     .required();
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    reset,
-    setValue,
-    watch,
-  } = useForm({
+  const { handleSubmit, register, reset } = useForm({
+    defaultValues: initialState,
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: any) => {
-    // const formData = new FormData();
-    // imagePaths.forEach((p) => {
-    //   formData.append("files", p); // req.body.files
-    // });
-    //방문자수 0 초기화
-    data.views = 0;
-    const datas = {
-      files: imagePaths,
-      content: data,
-    };
-    // formData.append("content", JSON.stringify(data));
-    mutation.mutate(datas);
+    console.log("data", data);
+    // data.views = 0;
+    // const datas = {
+    //   files: imagePaths,
+    //   content: data,
+    // };
+    // mutation.mutate(datas);
   };
 
   /** 이미지 id값에 따라 label 저장 */
   const onChangeImages = (e: any) => {
     e.preventDefault();
-    console.log("e.target : ", e.target.id);
     const imageFormData = new FormData();
     [].forEach.call(e.target.files, (f: any) => {
       imageFormData.append("files", f);
     });
-    uploadImagesAPI(imageFormData).then((result) => {
-      // taeget.id 따라 label 구분해서 서버로 전송
-      result.map((data: any) => (data.label = e.target.id));
-      setImagePaths((prev) => prev.concat(result));
-    });
+    // uploadImagesAPI(imageFormData).then((result) => {
+    //   // taeget.id 따라 label 구분해서 서버로 전송
+    //   result.map((data: any) => (data.label = e.target.id));
+    //   setImagePaths((prev) => prev.concat(result));
+    // });
   };
 
   /** preview 이미지 삭제 */
   const onRemoveImage = useCallback((v: any, index: number, e: any) => {
-    e.preventDefault();
-    deletePreviewImagesAPI(v.filename).then((result) => {
-      console.log(result);
-      setImagePaths((prev) => {
-        return prev.filter((v, i) => i !== index);
-      });
-    });
+    // e.preventDefault();
+    // deleteImageAPI(v.oid).then((result) => {
+    //   console.log(result);
+    // });
+    console.log("onRemoveImage imagePaths", imagePaths);
   }, []);
 
   useEffect(() => {
     setCategoryOptions(categoryItem);
     setCityOptions(cityItem);
-  }, [categoryItem, cityItem]);
+    reset(initialState);
+    setImagePaths(initialState);
+  }, [categoryItem, cityItem, initialState]);
 
   return (
     <S.PostFormBox
@@ -142,7 +124,75 @@ export const AdminPostForm = () => {
 
           {/* 이미지 미리보기 */}
           <div>
-            {imagePaths.map((v: any, i) => (
+            {imagePaths?.thumb.map(
+              (v: any, i: number) => (
+                console.log("v", v),
+                (
+                  <div key={v?.filename} style={{ display: "inline-block" }}>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                      alt={v}
+                      width={200}
+                      height={120}
+                    />
+                    <div>
+                      <button onClick={(e) => onRemoveImage(v, i, e)}>
+                        제거
+                      </button>
+                    </div>
+                  </div>
+                )
+              )
+            )}
+          </div>
+        </S.PostFormImgInput>
+        <S.PostFormBoxTit>상세이미지 등록</S.PostFormBoxTit>
+        {/* 상세이미지 등록 */}
+        <S.PostFormImgInput>
+          <label htmlFor="thumb">
+            이미지 업로드
+            <input
+              type="file"
+              id="thumb"
+              multiple
+              hidden
+              onChange={onChangeImages}
+            />
+          </label>
+
+          {/* 이미지 미리보기 */}
+          <div>
+            {imagePaths?.detail.map((v: any, i: number) => (
+              <div key={v?.filename} style={{ display: "inline-block" }}>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                  alt={v}
+                  width={200}
+                  height={120}
+                />
+                <div>
+                  <button onClick={(e) => onRemoveImage(v, i, e)}>제거</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </S.PostFormImgInput>
+        <S.PostFormBoxTit>메뉴이미지 등록</S.PostFormBoxTit>
+        {/* 메뉴이미지 등록 */}
+        <S.PostFormImgInput>
+          <label htmlFor="thumb">
+            이미지 업로드
+            <input
+              type="file"
+              id="thumb"
+              multiple
+              hidden
+              onChange={onChangeImages}
+            />
+          </label>
+          {/* 이미지 미리보기 */}
+          <div>
+            {imagePaths?.menu.map((v: any, i: number) => (
               <div key={v?.filename} style={{ display: "inline-block" }}>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
@@ -265,7 +315,7 @@ export const AdminPostForm = () => {
             layout="solid"
             width="80px"
             height={40}
-            label="등록"
+            label="저장"
           />
           <Button
             type="button"

@@ -8,24 +8,17 @@ import Data from "@/data/dummy";
 import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
 import { useMutation, useQuery } from "react-query";
-import { deletePost, detailPostApi } from "@/apis/postsApi";
+import { deletePost, getOnePostInfoApi } from "@/apis/postsApi";
 import { signOut } from "next-auth/react";
 
 export const PostSection = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const queryFn = () => detailPostApi(router.query.id);
+  const queryFn = () => getOnePostInfoApi(router.query.id);
   const { data: detailItem, isError } = useQuery(
     ["detailItem", router.query.id],
-    queryFn,
-    {
-      onError: () => {
-        router.push("/admin/login");
-        signOut();
-        alert("토큰이 만료되었습니다, 다시 로그인해 주세요");
-      },
-    }
+    queryFn
   );
 
   console.log("detailItem", detailItem);

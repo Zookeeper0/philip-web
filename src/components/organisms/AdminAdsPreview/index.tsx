@@ -11,7 +11,6 @@ export const AdminAdsPreview = () => {
   const btm2 = adsData?.find((ads: any) => ads.label === "bottom2");
   const btm3 = adsData?.find((ads: any) => ads.label === "bottom3");
 
-  console.log("adsData", adsData);
   return (
     <S.AdminAdsPreview>
       <S.AdminAdsPreviewTit>배너 미리보기</S.AdminAdsPreviewTit>

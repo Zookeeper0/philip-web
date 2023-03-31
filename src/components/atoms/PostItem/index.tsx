@@ -11,7 +11,6 @@ import { useSession } from "next-auth/react";
 export const PostItem = ({ item }: any) => {
   const router = useRouter();
 
-  console.log("!!!!!!!!!:", item);
   /** 고객 토큰관리 */
   const userToken = useRecoilValue(userTokenState);
   /** 관리자 세션 관리 */
@@ -43,7 +42,7 @@ export const PostItem = ({ item }: any) => {
       }}
     >
       <Image
-        src={ImageDum[item.category_oid]?.src}
+        src={`${process.env.NEXT_PUBLIC_API_URL}/${item.thumb}`}
         layout="fill"
         alt="업체 이미지"
       />

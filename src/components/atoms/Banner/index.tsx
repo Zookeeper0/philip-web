@@ -7,7 +7,6 @@ interface BannerProps {
 }
 
 export const Banner: React.FC<BannerProps> = ({ order, ads }) => {
-  console.log("ads", ads);
   return (
     <S.Banner order={order}>
       <Image

@@ -31,7 +31,7 @@ export const AdminLoginBox = () => {
 
     // 로그인 성공시 관리자 페이지로 이동
     if (response?.ok === true) {
-      router.push("/admin");
+      router.push("/admin/store");
     }
     // id저장 버튼 클릭됬다면 id 로컬스토리지에 저장
     if (isRemember) {

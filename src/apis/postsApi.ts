@@ -10,8 +10,8 @@ export function getPostsListApi({ queryKey }: any) {
 }
 
 /** GET 게시글 클릭시 상세페이지 정보 */
-export function detailPostApi(data: any) {
-  return axiosInstance.get(`/posts/test/${data}`).then((res) => res.data);
+export function getOnePostInfoApi(data: any) {
+  return axiosInstance.get(`/posts/${data}`).then((res) => res.data);
 }
 
 /** POST [관리자] 게시글 등록 */
@@ -54,7 +54,13 @@ export function uploadImagesAPI(data: FormData) {
     .then((response) => response.data);
 }
 
-export function deleteImagesAPI(data: string) {
+export function deletePreviewImagesAPI(data: string) {
+  return axiosInstance
+    .delete(`/posts/images/preview/${data}`)
+    .then((response) => response.data);
+}
+
+export function deleteImageAPI(data: string) {
   return axiosInstance
     .delete(`/posts/images/${data}`)
     .then((response) => response.data);

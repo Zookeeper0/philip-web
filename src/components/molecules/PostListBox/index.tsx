@@ -18,7 +18,7 @@ export const PostListBox = () => {
     ["getPostsListApi", currentCity, currentCategory, searchInput],
     getPostsListApi
   );
-  console.log("#####", postItem);
+
   return (
     <>
       <S.PostListBox>
