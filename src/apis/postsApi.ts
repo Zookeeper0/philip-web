@@ -31,18 +31,21 @@ export function getPromtionListApi({ queryKey }: any) {
     .then((response) => response.data);
 }
 
+/** DELETE 게시글 삭제 */
 export function deletePost(oid: string) {
   return axiosInstance
     .delete(`/posts/${oid}`)
     .then((response) => response.data);
 }
 
+/** GET 관리자 페이지 업체관리 리스트 불러오기 */
 export function getAdminStorePosts({ queryKey }: any) {
   return axiosInstance
     .get(`/posts/store?search=${queryKey[1]}`)
     .then((response) => response.data);
 }
 
+/** POST 이미지 업로드 */
 export function uploadImagesAPI(data: FormData) {
   const config = {
     headers: {
@@ -53,15 +56,22 @@ export function uploadImagesAPI(data: FormData) {
     .post("/posts/images", data, config)
     .then((response) => response.data);
 }
-
+/** DELETE DB에 올라가지 않은 프리뷰 이미지 삭제 */
 export function deletePreviewImagesAPI(data: string) {
   return axiosInstance
     .delete(`/posts/images/preview/${data}`)
     .then((response) => response.data);
 }
 
+/** DELETE DB 이미지 삭제, 업체 수정 시 이미지 삭제 */
 export function deleteImageAPI(data: string) {
   return axiosInstance
     .delete(`/posts/images/${data}`)
+    .then((response) => response.data);
+}
+
+export function editPostAPI(data: Object) {
+  return axiosInstance
+    .put("/posts/store/edit", data)
     .then((response) => response.data);
 }

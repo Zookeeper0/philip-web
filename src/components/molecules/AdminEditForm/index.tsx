@@ -1,4 +1,10 @@
-import { addPostApi, deleteImageAPI, uploadImagesAPI } from "@/apis/postsApi";
+import {
+  deleteImageAPI,
+  deletePreviewImagesAPI,
+  editPostAPI,
+  getOnePostInfoApi,
+  uploadImagesAPI,
+} from "@/apis/postsApi";
 import { InputText } from "@/components/atoms/Input/InputText";
 import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -14,24 +20,39 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
 import Image from "next/image";
+import * as _ from "lodash";
 
-export const AdminEditForm = ({ initialState }: any) => {
-  const [cityOptions, setCityOptions] = useState([]);
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const queryClient = useQueryClient();
-  const [loading, setLoading] = useState(false);
-  const [imagePaths, setImagePaths] = useState(initialState);
+export const AdminEditForm = () => {
   const router = useRouter();
 
-  const mutation = useMutation("posts", addPostApi, {
+  /** 업체 상세정보 불러오기 */
+  const queryFn = () => getOnePostInfoApi(router.query.id);
+  const { data: detailItem, isError } = useQuery(
+    ["detailItem", router.query.id],
+    queryFn
+  );
+
+  const [cityOptions, setCityOptions] = useState<any>();
+  const [categoryOptions, setCategoryOptions] = useState<any>();
+
+  const [imagePaths, setImagePaths] = useState<string[]>([]);
+
+  const [newThumbImages, setNewThumbImages] = useState<any>([]);
+  const [newDetailImages, setNewDetailImages] = useState<any>([]);
+  const [newMenuImages, setNewMenuImages] = useState<any>([]);
+
+  const [thumbImages, setThumbImages] = useState<string[]>(detailItem?.thumb);
+  const [detailImages, setDetailImages] = useState<string[]>(
+    detailItem?.detail
+  );
+  const [menuImages, setMenuImages] = useState<string[]>(detailItem?.menu);
+
+  /** 수정 저장 api */
+  const mutation = useMutation("editPostAPI", editPostAPI, {
     onSuccess() {
       reset();
       setImagePaths([]);
-      queryClient.refetchQueries("posts");
       document.location.href = "/admin/store";
-    },
-    onSettled() {
-      setLoading(false);
     },
   });
 
@@ -40,7 +61,6 @@ export const AdminEditForm = ({ initialState }: any) => {
     "getCategoryNavApi",
     getCategoryNavApi
   );
-
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
 
@@ -58,18 +78,17 @@ export const AdminEditForm = ({ initialState }: any) => {
     .required();
 
   const { handleSubmit, register, reset } = useForm({
-    defaultValues: initialState,
+    defaultValues: detailItem,
     resolver: yupResolver(schema),
   });
 
+  /** 수정 저장  */
   const onSubmit = (data: any) => {
-    console.log("data", data);
-    // data.views = 0;
-    // const datas = {
-    //   files: imagePaths,
-    //   content: data,
-    // };
-    // mutation.mutate(datas);
+    const datas = {
+      files: imagePaths,
+      content: data,
+    };
+    mutation.mutate(datas);
   };
 
   /** 이미지 id값에 따라 label 저장 */
@@ -79,28 +98,81 @@ export const AdminEditForm = ({ initialState }: any) => {
     [].forEach.call(e.target.files, (f: any) => {
       imageFormData.append("files", f);
     });
-    // uploadImagesAPI(imageFormData).then((result) => {
-    //   // taeget.id 따라 label 구분해서 서버로 전송
-    //   result.map((data: any) => (data.label = e.target.id));
-    //   setImagePaths((prev) => prev.concat(result));
-    // });
+    uploadImagesAPI(imageFormData).then((result) => {
+      // taeget.id 따라 label 구분해서 서버로 전송
+      result.map((data: any) => (data.label = e.target.id));
+      if (e.target.id === "thumb") {
+        setNewThumbImages((prev: any) => prev.concat(result));
+        setImagePaths((prev) => prev.concat(result));
+      } else if (e.target.id === "detail") {
+        setNewDetailImages((prev: any) => prev.concat(result));
+        setImagePaths((prev) => prev.concat(result));
+      } else {
+        setNewMenuImages((prev: any) => prev.concat(result));
+        setImagePaths((prev) => prev.concat(result));
+      }
+    });
   };
 
-  /** preview 이미지 삭제 */
+  /** Thumb 이미지 삭제 */
+  const onRemoveThumb = useCallback((v: any, e: any) => {
+    e.preventDefault();
+    deleteImageAPI(v.oid).then((result) => {
+      setThumbImages((imges) => {
+        return imges.filter((img: any) => img.oid !== v.oid);
+      });
+    });
+  }, []);
+
+  /** Detail 이미지 삭제 */
+  const onRemoveDetail = useCallback((v: any, e: any) => {
+    e.preventDefault();
+    deleteImageAPI(v.oid).then((result) => {
+      setDetailImages((imges) => {
+        return imges.filter((img: any) => img.oid !== v.oid);
+      });
+    });
+  }, []);
+
+  /** Menu 이미지 삭제 */
+  const onRemoveMenu = useCallback((v: any, e: any) => {
+    e.preventDefault();
+    deleteImageAPI(v.oid).then((result) => {
+      setMenuImages((imges) => {
+        return imges.filter((img: any) => img.oid !== v.oid);
+      });
+    });
+  }, []);
+
+  /** 새로운 이미지 추가 된후 삭제버튼 preview 이미지 삭제 */
   const onRemoveImage = useCallback((v: any, index: number, e: any) => {
-    // e.preventDefault();
-    // deleteImageAPI(v.oid).then((result) => {
-    //   console.log(result);
-    // });
-    console.log("onRemoveImage imagePaths", imagePaths);
+    e.preventDefault();
+    deletePreviewImagesAPI(v.filename).then((result) => {
+      if (v.label === "thumb") {
+        setNewThumbImages((imges: any) => {
+          return imges.filter((img: any) => img.filename !== v.filename);
+        });
+      } else if (v.label === "detail") {
+        setNewDetailImages((imges: any) => {
+          return imges.filter((img: any) => img.filename !== v.filename);
+        });
+      } else {
+        setNewMenuImages((imges: any) => {
+          return imges.filter((img: any) => img.filename !== v.filename);
+        });
+      }
+    });
   }, []);
 
   useEffect(() => {
     setCategoryOptions(categoryItem);
     setCityOptions(cityItem);
-    reset(initialState);
-    setImagePaths(initialState);
-  }, [categoryItem, cityItem, initialState]);
+    reset(detailItem);
+
+    setThumbImages(detailItem?.thumb);
+    setDetailImages(detailItem?.detail);
+    setMenuImages(detailItem?.menu);
+  }, [categoryItem, cityItem, detailItem]);
 
   return (
     <S.PostFormBox
@@ -121,50 +193,10 @@ export const AdminEditForm = ({ initialState }: any) => {
               onChange={onChangeImages}
             />
           </label>
-
-          {/* 이미지 미리보기 */}
+          {/* 새로운 썸네일 추가 시 이미지 미리보기 */}
           <div>
-            {imagePaths &&
-              imagePaths?.thumb.map(
-                (v: any, i: number) => (
-                  console.log("v", v),
-                  (
-                    <div key={v?.filename} style={{ display: "inline-block" }}>
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                        alt={v}
-                        width={200}
-                        height={120}
-                      />
-                      <div>
-                        <button onClick={(e) => onRemoveImage(v, i, e)}>
-                          제거
-                        </button>
-                      </div>
-                    </div>
-                  )
-                )
-              )}
-          </div>
-        </S.PostFormImgInput>
-        <S.PostFormBoxTit>상세이미지 등록</S.PostFormBoxTit>
-        {/* 상세이미지 등록 */}
-        <S.PostFormImgInput>
-          <label htmlFor="thumb">
-            이미지 업로드
-            <input
-              type="file"
-              id="thumb"
-              multiple
-              hidden
-              onChange={onChangeImages}
-            />
-          </label>
-
-          {/* 이미지 미리보기 */}
-          <div>
-            {imagePaths &&
-              imagePaths?.detail.map((v: any, i: number) => (
+            {newThumbImages &&
+              newThumbImages.map((v: any, i: number) => (
                 <div key={v?.filename} style={{ display: "inline-block" }}>
                   <Image
                     src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
@@ -180,24 +212,42 @@ export const AdminEditForm = ({ initialState }: any) => {
                 </div>
               ))}
           </div>
+          {/* 썸네일 이미지 미리보기 from server */}
+          <div>
+            {thumbImages &&
+              thumbImages.map((v: any, i: number) => (
+                <div key={v?.filename} style={{ display: "inline-block" }}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                    alt={v}
+                    width={200}
+                    height={120}
+                  />
+                  <div>
+                    <button onClick={(e) => onRemoveThumb(v, e)}>제거</button>
+                  </div>
+                </div>
+              ))}
+          </div>
         </S.PostFormImgInput>
-        <S.PostFormBoxTit>메뉴이미지 등록</S.PostFormBoxTit>
-        {/* 메뉴이미지 등록 */}
+        <S.PostFormBoxTit>상세이미지 등록</S.PostFormBoxTit>
+        {/* 상세이미지 등록 */}
         <S.PostFormImgInput>
-          <label htmlFor="thumb">
+          <label htmlFor="detail">
             이미지 업로드
             <input
               type="file"
-              id="thumb"
+              id="detail"
               multiple
               hidden
               onChange={onChangeImages}
             />
           </label>
-          {/* 이미지 미리보기 */}
+
+          {/* 새로운 상세이미지 추가 시 미리보기 */}
           <div>
-            {imagePaths &&
-              imagePaths?.menu.map((v: any, i: number) => (
+            {newDetailImages &&
+              newDetailImages?.map((v: any, i: number) => (
                 <div key={v?.filename} style={{ display: "inline-block" }}>
                   <Image
                     src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
@@ -209,6 +259,73 @@ export const AdminEditForm = ({ initialState }: any) => {
                     <button onClick={(e) => onRemoveImage(v, i, e)}>
                       제거
                     </button>
+                  </div>
+                </div>
+              ))}
+          </div>
+          {/* 상세이미지 from server */}
+          <div>
+            {detailImages &&
+              detailImages?.map((v: any, i: number) => (
+                <div key={v?.filename} style={{ display: "inline-block" }}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                    alt={v}
+                    width={200}
+                    height={120}
+                  />
+                  <div>
+                    <button onClick={(e) => onRemoveDetail(v, e)}>제거</button>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </S.PostFormImgInput>
+        <S.PostFormBoxTit>메뉴이미지 등록</S.PostFormBoxTit>
+        {/* 메뉴이미지 등록 */}
+        <S.PostFormImgInput>
+          <label htmlFor="menu">
+            이미지 업로드
+            <input
+              type="file"
+              id="menu"
+              multiple
+              hidden
+              onChange={onChangeImages}
+            />
+          </label>
+          {/*새로운 메뉴 이미지 추가 시 미리보기*/}
+          <div>
+            {newMenuImages &&
+              newMenuImages?.map((v: any, i: number) => (
+                <div key={v?.filename} style={{ display: "inline-block" }}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                    alt={v}
+                    width={200}
+                    height={120}
+                  />
+                  <div>
+                    <button onClick={(e) => onRemoveImage(v, i, e)}>
+                      제거
+                    </button>
+                  </div>
+                </div>
+              ))}
+          </div>
+          {/* 메뉴 이미지 미리보기 from server */}
+          <div>
+            {menuImages &&
+              menuImages?.map((v: any, i: number) => (
+                <div key={v?.filename} style={{ display: "inline-block" }}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                    alt={v}
+                    width={200}
+                    height={120}
+                  />
+                  <div>
+                    <button onClick={(e) => onRemoveMenu(v, e)}>제거</button>
                   </div>
                 </div>
               ))}

@@ -110,7 +110,10 @@ export const AdminPostForm = () => {
     deletePreviewImagesAPI(v.filename).then((result) => {
       console.log(result);
       setImagePaths((prev) => {
-        return prev.filter((v, i) => i !== index);
+        return prev.filter((v, i) => {
+          console.log("i, index, v", i, index, v);
+          i !== index;
+        });
       });
     });
   }, []);

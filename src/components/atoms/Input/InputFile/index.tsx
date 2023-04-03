@@ -1,4 +1,4 @@
-import { deleteImagesAPI, uploadImagesAPI } from "@/apis/postsApi";
+import { uploadImagesAPI } from "@/apis/postsApi";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "../../Button";
@@ -11,6 +11,7 @@ interface InputFile {
   setImagePaths?: React.Dispatch<React.SetStateAction<string>>;
 }
 
+// AdminAdsBox에 종속되어버림, 해결필요
 export const InputFile = ({ label, multiple, id, setImagePaths }: any) => {
   const [fileName, setFileName] = useState("");
   const [imgPreview, setImgPreview] = useState<string[]>([]);
@@ -30,44 +31,6 @@ export const InputFile = ({ label, multiple, id, setImagePaths }: any) => {
       setImagePaths((prev: any) => prev.concat(result));
     });
   };
-
-  /** 이미지 미리보기 설정 */
-  const handleAddImgs = (e: any) => {
-    const imgList = e.target;
-    console.log("imgList :", imgList);
-    let imgUrlLists: any = [...imgPreview];
-
-    console.log("e", e.target);
-    const imageFormData = new FormData();
-    [].forEach.call(e.target.files, (f: any) => {
-      imageFormData.append("files", f);
-    });
-    // uploadImagesAPI(imageFormData).then((result) => {
-    //   result.map((data: any) => (data.label = "thumb"));
-    //   setImagePaths((prev) => prev.concat(result));
-    // });
-
-    // for (let i = 0; i < imgList.length; i++) {
-    //   const currentImgUrl = URL.createObjectURL(imgList[i]);
-    //   imgUrlLists.push(currentImgUrl);
-    // }
-
-    // if (imgUrlLists.length > 5) {
-    //   imgUrlLists = imgUrlLists.slice(0, 5);
-    // }
-
-    // setImgPreview(imgUrlLists);
-  };
-
-  const onRemoveImage = useCallback((v: any, index: number, e: any) => {
-    e.preventDefault();
-    deleteImagesAPI(v.filename).then((result) => {
-      console.log(result);
-      setImgPreview((prev) => {
-        return prev.filter((v, i) => i !== index);
-      });
-    });
-  }, []);
 
   return (
     <S.InputFile>
@@ -96,7 +59,8 @@ export const InputFile = ({ label, multiple, id, setImagePaths }: any) => {
               />
             </S.ImgPreviewItem>
             <div>
-              <button onClick={(e) => onRemoveImage(img, id, e)}>제거</button>
+              {/* <button onClick={(e) => onRemoveImage(img, id, e)}>제거</button> */}
+              <button>제거</button>
             </div>
           </>
         ))}
