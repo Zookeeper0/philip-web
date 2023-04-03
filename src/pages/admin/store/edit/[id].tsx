@@ -1,7 +1,7 @@
-import { AdminPostPage } from "@/components/templates/AdminPostPage";
+import { AdminPostEditPage } from "@/components/templates/AdminPostEditPage";
 
 const AdminPost = () => {
-  return <AdminPostPage />;
+  return <AdminPostEditPage />;
 };
 
 export default AdminPost;

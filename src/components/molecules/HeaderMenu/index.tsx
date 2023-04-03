@@ -7,7 +7,6 @@ import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { Button } from "@/components/atoms/Button";
 import { cityState } from "@/recoil/city";
 import { userTokenState } from "@/recoil/userToken";
-import { signOut, useSession } from "next-auth/react";
 import * as S from "./headerMenu.style";
 import IconUser from "public/assets/svg/icon-user.svg";
 

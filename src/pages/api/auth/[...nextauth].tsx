@@ -1,7 +1,6 @@
 import { logInAPI } from "@/apis/adminApi";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import KakaoProvider from "next-auth/providers/kakao";
 
 const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,

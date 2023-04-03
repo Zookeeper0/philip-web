@@ -124,26 +124,27 @@ export const AdminEditForm = ({ initialState }: any) => {
 
           {/* 이미지 미리보기 */}
           <div>
-            {imagePaths?.thumb.map(
-              (v: any, i: number) => (
-                console.log("v", v),
-                (
-                  <div key={v?.filename} style={{ display: "inline-block" }}>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                      alt={v}
-                      width={200}
-                      height={120}
-                    />
-                    <div>
-                      <button onClick={(e) => onRemoveImage(v, i, e)}>
-                        제거
-                      </button>
+            {imagePaths &&
+              imagePaths?.thumb.map(
+                (v: any, i: number) => (
+                  console.log("v", v),
+                  (
+                    <div key={v?.filename} style={{ display: "inline-block" }}>
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                        alt={v}
+                        width={200}
+                        height={120}
+                      />
+                      <div>
+                        <button onClick={(e) => onRemoveImage(v, i, e)}>
+                          제거
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )
                 )
-              )
-            )}
+              )}
           </div>
         </S.PostFormImgInput>
         <S.PostFormBoxTit>상세이미지 등록</S.PostFormBoxTit>
@@ -162,19 +163,22 @@ export const AdminEditForm = ({ initialState }: any) => {
 
           {/* 이미지 미리보기 */}
           <div>
-            {imagePaths?.detail.map((v: any, i: number) => (
-              <div key={v?.filename} style={{ display: "inline-block" }}>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                  alt={v}
-                  width={200}
-                  height={120}
-                />
-                <div>
-                  <button onClick={(e) => onRemoveImage(v, i, e)}>제거</button>
+            {imagePaths &&
+              imagePaths?.detail.map((v: any, i: number) => (
+                <div key={v?.filename} style={{ display: "inline-block" }}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                    alt={v}
+                    width={200}
+                    height={120}
+                  />
+                  <div>
+                    <button onClick={(e) => onRemoveImage(v, i, e)}>
+                      제거
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </S.PostFormImgInput>
         <S.PostFormBoxTit>메뉴이미지 등록</S.PostFormBoxTit>
@@ -192,19 +196,22 @@ export const AdminEditForm = ({ initialState }: any) => {
           </label>
           {/* 이미지 미리보기 */}
           <div>
-            {imagePaths?.menu.map((v: any, i: number) => (
-              <div key={v?.filename} style={{ display: "inline-block" }}>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                  alt={v}
-                  width={200}
-                  height={120}
-                />
-                <div>
-                  <button onClick={(e) => onRemoveImage(v, i, e)}>제거</button>
+            {imagePaths &&
+              imagePaths?.menu.map((v: any, i: number) => (
+                <div key={v?.filename} style={{ display: "inline-block" }}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
+                    alt={v}
+                    width={200}
+                    height={120}
+                  />
+                  <div>
+                    <button onClick={(e) => onRemoveImage(v, i, e)}>
+                      제거
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </S.PostFormImgInput>
       </S.PostFormImgBox>

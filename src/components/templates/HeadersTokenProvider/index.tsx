@@ -11,7 +11,7 @@ const HeadersTokenProvider: React.FC<React.PropsWithChildren> = ({
   const router = useRouter();
 
   useEffect(() => {
-    if (admin === null) {
+    if (router.pathname.includes("admin") && admin === null) {
       window.location.href = "/admin/login";
     }
   }, [router]);
