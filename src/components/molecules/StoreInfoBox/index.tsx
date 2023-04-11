@@ -5,7 +5,6 @@ import IconPhone from "public/assets/svg/icon-phone.svg";
 import IconView from "public/assets/svg/icon-view.svg";
 
 export const StoreInfoBox = ({ post, randomImg }: any) => {
-  console.log("post : ", post);
   return (
     <S.StoreInfoBox>
       <ImageSlide items={post?.detail} />

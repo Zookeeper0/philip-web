@@ -21,8 +21,6 @@ export const PostSection = () => {
     queryFn
   );
 
-  console.log("detailItem", detailItem);
-
   // post delete
   const mutation = useMutation("posts", deletePost);
   const postDelete = () => {

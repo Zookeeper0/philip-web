@@ -24,7 +24,6 @@ export const ImageSlide = ({ items }: any) => {
     }
   };
 
-  console.log("items: ", items);
   return (
     <S.ImageSlide>
       <S.ImageSelected>
@@ -66,17 +65,14 @@ export const ImageSlide = ({ items }: any) => {
       <S.ImageSlideList>
         {items?.map((item: any, idx: number) => {
           return (
-            console.log("item", item),
-            (
-              <S.ImageSlideItem key={idx} onClick={() => onSelectImage(idx)}>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/${item?.filename}`}
-                  width={85}
-                  height={62}
-                  alt="업체 이미지"
-                />
-              </S.ImageSlideItem>
-            )
+            <S.ImageSlideItem key={idx} onClick={() => onSelectImage(idx)}>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}/${item?.filename}`}
+                width={85}
+                height={62}
+                alt="업체 이미지"
+              />
+            </S.ImageSlideItem>
           );
         })}
       </S.ImageSlideList>

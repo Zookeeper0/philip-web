@@ -13,3 +13,7 @@ export function getAdsData() {
 export function deleteAllAdsApi() {
   return axiosInstance.delete("/admin/ads");
 }
+
+export function deleteOneAdsApi(id: string) {
+  return axiosInstance.delete(`/admin/ads/${id}`);
+}

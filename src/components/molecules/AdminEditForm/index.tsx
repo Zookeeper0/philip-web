@@ -21,6 +21,7 @@ import { useSession } from "next-auth/react";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
 import Image from "next/image";
 import * as _ from "lodash";
+import { InputFile } from "@/components/atoms/Input/InputFile";
 
 export const AdminEditForm = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ export const AdminEditForm = () => {
     onSuccess() {
       reset();
       setImagePaths([]);
-      document.location.href = "/admin/store";
+      router.replace("/admin/store");
     },
   });
 
@@ -183,169 +184,42 @@ export const AdminEditForm = () => {
         <S.PostFormBoxTit>대표이미지 등록</S.PostFormBoxTit>
         {/* 메인페이지 대표 이미지 등록 */}
         <S.PostFormImgInput>
-          <label htmlFor="thumb">
-            이미지 업로드
-            <input
-              type="file"
-              id="thumb"
-              multiple
-              hidden
-              onChange={onChangeImages}
-            />
-          </label>
-          {/* 새로운 썸네일 추가 시 이미지 미리보기 */}
-          <div>
-            {newThumbImages &&
-              newThumbImages.map((v: any, i: number) => (
-                <div key={v?.filename} style={{ display: "inline-block" }}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                    alt={v}
-                    width={200}
-                    height={120}
-                  />
-                  <div>
-                    <button onClick={(e) => onRemoveImage(v, i, e)}>
-                      제거
-                    </button>
-                  </div>
-                </div>
-              ))}
-          </div>
-          {/* 썸네일 이미지 미리보기 from server */}
-          <div>
-            {thumbImages &&
-              thumbImages.map((v: any, i: number) => (
-                <div key={v?.filename} style={{ display: "inline-block" }}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                    alt={v}
-                    width={200}
-                    height={120}
-                  />
-                  <div>
-                    <button onClick={(e) => onRemoveThumb(v, e)}>제거</button>
-                  </div>
-                </div>
-              ))}
-          </div>
+          <InputFile
+            id="thumb"
+            onChangeImages={onChangeImages}
+            onRemoveImage={onRemoveImage}
+            onRemoveServerImage={onRemoveThumb}
+            imgPreview={newThumbImages}
+            imageFromDB={thumbImages}
+          />
         </S.PostFormImgInput>
         <S.PostFormBoxTit>상세이미지 등록</S.PostFormBoxTit>
         {/* 상세이미지 등록 */}
         <S.PostFormImgInput>
-          <label htmlFor="detail">
-            이미지 업로드
-            <input
-              type="file"
-              id="detail"
-              multiple
-              hidden
-              onChange={onChangeImages}
-            />
-          </label>
-
-          {/* 새로운 상세이미지 추가 시 미리보기 */}
-          <div>
-            {newDetailImages &&
-              newDetailImages?.map((v: any, i: number) => (
-                <div key={v?.filename} style={{ display: "inline-block" }}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                    alt={v}
-                    width={200}
-                    height={120}
-                  />
-                  <div>
-                    <button onClick={(e) => onRemoveImage(v, i, e)}>
-                      제거
-                    </button>
-                  </div>
-                </div>
-              ))}
-          </div>
-          {/* 상세이미지 from server */}
-          <div>
-            {detailImages &&
-              detailImages?.map((v: any, i: number) => (
-                <div key={v?.filename} style={{ display: "inline-block" }}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                    alt={v}
-                    width={200}
-                    height={120}
-                  />
-                  <div>
-                    <button onClick={(e) => onRemoveDetail(v, e)}>제거</button>
-                  </div>
-                </div>
-              ))}
-          </div>
+          <InputFile
+            id="detail"
+            onChangeImages={onChangeImages}
+            onRemoveImage={onRemoveImage}
+            onRemoveServerImage={onRemoveDetail}
+            imgPreview={newDetailImages}
+            imageFromDB={detailImages}
+          />
         </S.PostFormImgInput>
         <S.PostFormBoxTit>메뉴이미지 등록</S.PostFormBoxTit>
         {/* 메뉴이미지 등록 */}
         <S.PostFormImgInput>
-          <label htmlFor="menu">
-            이미지 업로드
-            <input
-              type="file"
-              id="menu"
-              multiple
-              hidden
-              onChange={onChangeImages}
-            />
-          </label>
-          {/*새로운 메뉴 이미지 추가 시 미리보기*/}
-          <div>
-            {newMenuImages &&
-              newMenuImages?.map((v: any, i: number) => (
-                <div key={v?.filename} style={{ display: "inline-block" }}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                    alt={v}
-                    width={200}
-                    height={120}
-                  />
-                  <div>
-                    <button onClick={(e) => onRemoveImage(v, i, e)}>
-                      제거
-                    </button>
-                  </div>
-                </div>
-              ))}
-          </div>
-          {/* 메뉴 이미지 미리보기 from server */}
-          <div>
-            {menuImages &&
-              menuImages?.map((v: any, i: number) => (
-                <div key={v?.filename} style={{ display: "inline-block" }}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/${v?.filename}`}
-                    alt={v}
-                    width={200}
-                    height={120}
-                  />
-                  <div>
-                    <button onClick={(e) => onRemoveMenu(v, e)}>제거</button>
-                  </div>
-                </div>
-              ))}
-          </div>
+          <InputFile
+            id="menu"
+            onChangeImages={onChangeImages}
+            onRemoveImage={onRemoveImage}
+            onRemoveServerImage={onRemoveMenu}
+            imgPreview={newMenuImages}
+            imageFromDB={menuImages}
+          />
         </S.PostFormImgInput>
       </S.PostFormImgBox>
       <S.PostFormInfoBox>
         <S.PostFormBoxTit>업체정보 등록</S.PostFormBoxTit>
-        {/* 임시 상세이미지 버튼 (feat. 동주) */}
-        <label htmlFor="detail">
-          이미지 업로드
-          <input
-            type="file"
-            id="detail"
-            multiple
-            hidden
-            onChange={onChangeImages}
-          />
-        </label>
-
         <AdminInputSelect
           label="지역선택"
           layout="column"
@@ -407,19 +281,6 @@ export const AdminEditForm = () => {
           placeholder="내용을 입력해 주세요."
           register={register("contents")}
         />
-        {/* 요금 및 메뉴설명에 대한 이미지 등록 */}
-        <S.PostFormImgInput>
-          <label htmlFor="menu">
-            이미지 업로드
-            <input
-              type="file"
-              id="menu"
-              multiple
-              hidden
-              onChange={onChangeImages}
-            />
-          </label>
-        </S.PostFormImgInput>
         <InputText
           label="비고"
           layout="column"

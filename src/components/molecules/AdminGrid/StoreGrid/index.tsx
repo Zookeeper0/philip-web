@@ -24,7 +24,6 @@ export const StoreGrid = ({ storeSearchKeyword }: Props) => {
   );
 
   const openStoreModal = (data: any) => {
-    console.log("data: ", data);
     setStore(data);
     setStoreModal(!storeModal);
   };

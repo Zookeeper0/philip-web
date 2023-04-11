@@ -1,48 +1,110 @@
-import { addAdsApi, deleteAllAdsApi } from "@/apis/adsApi";
+import { addAdsApi, deleteAllAdsApi, deleteOneAdsApi } from "@/apis/adsApi";
+import { deletePreviewImagesAPI, uploadImagesAPI } from "@/apis/postsApi";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
+import { InputAdsFile } from "@/components/atoms/Input/InputAdsFile";
 import { InputFile } from "@/components/atoms/Input/InputFile";
+import { adsState } from "@/recoil/ads";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import { useRecoilValue } from "recoil";
 import * as S from "./adminAdsBox.style";
 
-export const AmdinAdsBox = () => {
-  const [imagePaths, setImagePaths] = useState<string[]>([]);
-
-  console.log("imagePaths  :", imagePaths);
+export const AmdinAdsBox = ({ setImgPreview, imgPreview }: any) => {
   const addAdsMutation = useMutation("addAdsApi", addAdsApi);
-  const deleteAllAdsMutaion = useMutation("deleteAllAdsApi", deleteAllAdsApi);
+  const adsList = useRecoilValue(adsState);
+  const queryClient = useQueryClient();
 
-  const onSubmit = () => {
-    addAdsMutation.mutate(imagePaths);
+  /** 이미지 전체 삭제 */
+  const deleteAllAdsMutaion = useMutation("deleteAllAdsApi", deleteAllAdsApi, {
+    onSuccess: () => {
+      // ✋ 삭제가 성공하면 리스트를 다시 get
+      queryClient.invalidateQueries(["getAdsData"]);
+    },
+  });
+  /** 이미지 개별 삭제 */
+  const deleteOneAdsMutation = useMutation("deleteOneAdsApi", deleteOneAdsApi, {
+    onSuccess: () => {
+      // ✋ 삭제가 성공하면 리스트를 다시 get
+      queryClient.invalidateQueries(["getAdsData"]);
+    },
+  });
+
+  /** 이미지 id값에 따라 label 저장 */
+  const onChangeImages = (e: any) => {
+    e.preventDefault();
+    const imageFormData = new FormData();
+    [].forEach.call(e.target.files, (f: any) => {
+      imageFormData.append("files", f);
+    });
+    uploadImagesAPI(imageFormData).then((result) => {
+      // taeget.id 따라 label 구분해서 서버로 전송
+      result.map((data: any) => (data.label = e.target.id));
+      setImgPreview((prev: any) => prev.concat(result));
+    });
   };
 
-  const onDelete = () => {
+  /** 광고 저장  */
+  const onSubmit = () => {
+    addAdsMutation.mutate(imgPreview);
+  };
+
+  /** 전체삭제 */
+  const onDeleteAll = () => {
     deleteAllAdsMutaion.mutate();
   };
+
+  /** 개별 삭제 */
+  const onDeleteOne = (id: string) => {
+    deleteOneAdsMutation.mutate(id);
+  };
+
+  const onRemovePreviewImage = (isAds: any) => {
+    deletePreviewImagesAPI(isAds.filename).then((result) => {
+      setImgPreview([
+        (prev: any) => {
+          prev.filter((item: any) => item.label !== isAds.label);
+        },
+      ]);
+    });
+  };
+
+  console.log("imgPreview", imgPreview);
 
   return (
     <S.AdminAdsBox>
       <S.AdminAdsTit>배너 등록하기</S.AdminAdsTit>
       <S.AdminAdsInput>
-        <InputFile
+        <InputAdsFile
           label="상단배너 등록"
           id="topAds"
-          setImagePaths={setImagePaths}
+          onChangeImages={onChangeImages}
+          isAds={adsList[0]?.topAds}
+          onDelete={onDeleteOne}
+          onRemovePreviewImage={onRemovePreviewImage}
         />
-        <InputFile
+        <InputAdsFile
           label="하단배너-1 등록"
           id="bottom1"
-          setImagePaths={setImagePaths}
+          onChangeImages={onChangeImages}
+          isAds={adsList[0]?.bottom1}
+          onDelete={onDeleteOne}
+          onRemovePreviewImage={onRemovePreviewImage}
         />
-        <InputFile
+        <InputAdsFile
           label="하단배너-2 등록"
           id="bottom2"
-          setImagePaths={setImagePaths}
+          onChangeImages={onChangeImages}
+          isAds={adsList[0]?.bottom2}
+          onDelete={onDeleteOne}
+          onRemovePreviewImage={onRemovePreviewImage}
         />
-        <InputFile
+        <InputAdsFile
           label="하단배너-3 등록"
           id="bottom3"
-          setImagePaths={setImagePaths}
+          onChangeImages={onChangeImages}
+          isAds={adsList[0]?.bottom3}
+          onDelete={onDeleteOne}
+          onRemovePreviewImage={onRemovePreviewImage}
         />
         <ButtonGroup>
           <Button
@@ -61,7 +123,7 @@ export const AmdinAdsBox = () => {
             width="90px"
             height={38}
             label="전체삭제"
-            onClick={onDelete}
+            onClick={onDeleteAll}
           />
         </ButtonGroup>
       </S.AdminAdsInput>

@@ -28,7 +28,6 @@ export const PostItem = ({ item }: any) => {
 
   /** 게시물 클릭시 handler */
   const countViews = () => {
-    console.log("check", item.oid);
     mutation.mutate(item.oid);
   };
 

@@ -22,7 +22,6 @@ const Kakao = () => {
     },
     onError: (error: any) => {
       const { response } = error;
-      console.log(response);
     },
   });
 
