@@ -25,11 +25,15 @@ export const UserGrid = () => {
     <>
       <S.AdminGrid>
         <DataGrid dataSource={dataSource} keyExpr="kakao_id">
-          <Column caption="No." dataField="id" />
-          <Column caption="이름" dataField="storeName" />
+          <Column
+            caption="No."
+            cellRender={(e) => e.row.loadIndex + 1}
+            width={30}
+          />
+          <Column caption="이름" dataField="name" />
           <Column caption="카카오ID" dataField="kakao_id" />
-          <Column caption="연락처" />
-          <Column caption="회원등급" />
+          <Column caption="연락처" dataField="phone_number" />
+          <Column caption="회원등급" dataField="role" />
           <Column
             caption="상세보기"
             width={90}

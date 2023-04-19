@@ -75,3 +75,7 @@ export function editPostAPI(data: Object) {
     .put("/posts/store/edit", data)
     .then((response) => response.data);
 }
+
+export function promotionAPI(oid: string) {
+  return axiosInstance.patch(`/posts/promotion/${oid}`);
+}

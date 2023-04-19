@@ -25,9 +25,9 @@ export const StoreInfoBox = ({ post, randomImg }: any) => {
         <S.PhoneBox>
           <span>
             <IconPhone />
-            {post?.phone_number}
+            {post?.phoneNumber}
           </span>
-          <CopyButton label="번호복사" text={post?.phone_number} />
+          <CopyButton label="번호복사" text={post?.phoneNumber} />
         </S.PhoneBox>
       </S.StoreInfo>
     </S.StoreInfoBox>

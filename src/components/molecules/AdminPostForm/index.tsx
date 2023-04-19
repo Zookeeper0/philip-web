@@ -20,6 +20,7 @@ import { useSession } from "next-auth/react";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
 import Image from "next/image";
 import { InputFile } from "@/components/atoms/Input/InputFile";
+import useImage from "@/lib/hooks/useImage";
 
 export const AdminPostForm = () => {
   const [cityOptions, setCityOptions] = useState([]);
@@ -29,10 +30,11 @@ export const AdminPostForm = () => {
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const router = useRouter();
 
-  const [newThumbImages, setNewThumbImages] = useState<any>([]);
-  const [newDetailImages, setNewDetailImages] = useState<any>([]);
-  const [newMenuImages, setNewMenuImages] = useState<any>([]);
+  const [newThumbImages, setNewThumbImages, onRemoveThumb] = useImage([]);
+  const [newDetailImages, setNewDetailImages, onRemoveDetail] = useImage([]);
+  const [newMenuImages, setNewMenuImages, onRemoveMenu] = useImage([]);
 
+  console.log("imagePaths", imagePaths);
   const mutation = useMutation("posts", addPostApi, {
     onSuccess() {
       reset();
@@ -50,10 +52,10 @@ export const AdminPostForm = () => {
     "getCategoryNavApi",
     getCategoryNavApi
   );
-
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
 
+  /** useForm 유효성 */
   const schema = yup
     .object({
       storeName: yup.string().nullable().required("제목을 입력해 선택해주세요"),
@@ -79,17 +81,13 @@ export const AdminPostForm = () => {
   });
 
   const onSubmit = (data: any) => {
-    // const formData = new FormData();
-    // imagePaths.forEach((p) => {
-    //   formData.append("files", p); // req.body.files
-    // });
     //방문자수 0 초기화
     data.views = 0;
     const datas = {
       files: imagePaths,
       content: data,
     };
-    // formData.append("content", JSON.stringify(data));
+
     mutation.mutate(datas);
   };
 
@@ -115,51 +113,6 @@ export const AdminPostForm = () => {
       }
     });
   };
-  // const onChangeImages = (e: any) => {
-  //   e.preventDefault();
-  //   console.log("e.target : ", e.target.id);
-  //   const imageFormData = new FormData();
-  //   [].forEach.call(e.target.files, (f: any) => {
-  //     imageFormData.append("files", f);
-  //   });
-  //   uploadImagesAPI(imageFormData).then((result) => {
-  //     // taeget.id 따라 label 구분해서 서버로 전송
-  //     result.map((data: any) => (data.label = e.target.id));
-  //     setImagePaths((prev) => prev.concat(result));
-  //   });
-  // };
-
-  /** Thumb 이미지 삭제 */
-  const onRemoveThumb = useCallback((v: any, e: any) => {
-    e.preventDefault();
-    deleteImageAPI(v.oid).then((result) => {
-      setNewThumbImages((imges: any) => {
-        return imges.filter((img: any) => img.filename !== v.filename);
-      });
-    });
-  }, []);
-
-  /** Detail 이미지 삭제 */
-  const onRemoveDetail = useCallback((v: any, e: any) => {
-    e.preventDefault();
-    deleteImageAPI(v.oid).then((result) => {
-      setNewDetailImages((imges: any) => {
-        return imges.filter((img: any) => img.filename !== v.filename);
-      });
-    });
-  }, []);
-
-  /** Menu 이미지 삭제 */
-  const onRemoveMenu = useCallback((v: any, e: any) => {
-    e.preventDefault();
-    deleteImageAPI(v.oid).then((result) => {
-      setNewMenuImages((imges: any) => {
-        return imges.filter((img: any) => {
-          img.filename !== v.filename;
-        });
-      });
-    });
-  }, []);
 
   /** preview 이미지 삭제 */
   const onRemoveImage = useCallback((v: any, e: any) => {
@@ -177,11 +130,8 @@ export const AdminPostForm = () => {
       default:
         break;
     }
-
-    deletePreviewImagesAPI(v.filename).then((result) => {
-      setImagePaths((prev) => {
-        return prev.filter((item: any) => item.filename !== v.filename);
-      });
+    setImagePaths((prev) => {
+      return prev.filter((item: any) => item.filename !== v.filename);
     });
   }, []);
 

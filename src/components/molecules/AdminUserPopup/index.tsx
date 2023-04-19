@@ -7,7 +7,8 @@ import * as S from "./adminUserBox.style";
 export const AdminUserPopup = () => {
   const router = useRouter();
   const signOutHandler = () => {
-    signOut({ redirect: true, callbackUrl: "/admin/login" });
+    signOut();
+    router.replace("/admin/login");
   };
   return (
     <S.AdminUserPopup>

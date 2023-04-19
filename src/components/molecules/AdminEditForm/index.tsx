@@ -19,8 +19,7 @@ import { AdminInputSelect } from "@/components/atoms/Input/AdminInputSelect";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
-import Image from "next/image";
-import * as _ from "lodash";
+
 import { InputFile } from "@/components/atoms/Input/InputFile";
 
 export const AdminEditForm = () => {

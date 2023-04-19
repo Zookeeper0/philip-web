@@ -9,7 +9,6 @@ import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
 import { useMutation, useQuery } from "react-query";
 import { deletePost, getOnePostInfoApi } from "@/apis/postsApi";
-import { signOut } from "next-auth/react";
 
 export const PostSection = () => {
   const router = useRouter();
@@ -18,7 +17,17 @@ export const PostSection = () => {
   const queryFn = () => getOnePostInfoApi(router.query.id);
   const { data: detailItem, isError } = useQuery(
     ["detailItem", router.query.id],
-    queryFn
+    queryFn,
+    {
+      retry: 1,
+      onError(err: any) {
+        if (err.response.status === 401) {
+          localStorage.removeItem("kakaoSignKey");
+          router.replace("/main");
+          alert("로그인 기간이 만료되어 로그아웃 되었습니다.");
+        }
+      },
+    }
   );
 
   // post delete
