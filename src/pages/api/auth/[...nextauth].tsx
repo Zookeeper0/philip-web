@@ -23,7 +23,6 @@ const authOptions: NextAuthOptions = {
             password: password,
           });
 
-          console.log("user", user);
           return user;
         } catch (error) {
           const { response } = error as unknown as any;

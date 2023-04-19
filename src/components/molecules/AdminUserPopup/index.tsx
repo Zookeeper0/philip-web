@@ -5,11 +5,6 @@ import { useRouter } from "next/router";
 import * as S from "./adminUserBox.style";
 
 export const AdminUserPopup = () => {
-  const router = useRouter();
-  const signOutHandler = () => {
-    signOut();
-    router.replace("/admin/login");
-  };
   return (
     <S.AdminUserPopup>
       <UserPopupItem>
@@ -18,7 +13,7 @@ export const AdminUserPopup = () => {
         </Link>
       </UserPopupItem>
       <UserPopupItem>
-        <span onClick={signOutHandler}>로그아웃</span>
+        <span onClick={() => signOut()}>로그아웃</span>
       </UserPopupItem>
     </S.AdminUserPopup>
   );

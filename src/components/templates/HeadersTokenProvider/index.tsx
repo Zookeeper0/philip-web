@@ -11,10 +11,14 @@ const HeadersTokenProvider: React.FC<React.PropsWithChildren> = ({
   const router = useRouter();
 
   useEffect(() => {
-    if (router.pathname.includes("admin") && admin === null) {
-      window.location.href = "/admin/login";
+    if (
+      !router.pathname.includes("/admin/login") &&
+      router.pathname.includes("admin") &&
+      admin === undefined
+    ) {
+      router.replace("/admin/login");
     }
-  }, [router]);
+  }, []);
 
   if (status === "loading") {
     return <Loading type="page" text="페이지를 불러오는 중입니다..." />;

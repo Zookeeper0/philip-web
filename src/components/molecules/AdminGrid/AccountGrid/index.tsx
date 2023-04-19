@@ -7,6 +7,7 @@ import { Button } from "@/components/atoms/Button";
 import { AccountModal } from "../../AdminModal/AccountModal";
 import { useQuery } from "react-query";
 import { getAdminList } from "@/apis/adminApi";
+import useApiError from "@/lib/hooks/useApiError";
 
 type Props = {
   adminSearchKeyword: string;
@@ -15,13 +16,18 @@ type Props = {
 export const AccountGrid = ({ adminSearchKeyword }: Props) => {
   const [accountModal, setAccountModal] = useState(false);
   const [account, setAccount] = useState();
-
-  const accounts = Data.Post;
+  const { handleError } = useApiError();
 
   /** 관리자 목록 불러오기 */
   const { data: dataSource } = useQuery(
     ["getAdminList", adminSearchKeyword],
-    getAdminList
+    getAdminList,
+    {
+      retry: 1,
+      onError(error: any) {
+        handleError(error);
+      },
+    }
   );
 
   const openAccountModal = (data: any) => {

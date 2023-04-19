@@ -7,20 +7,26 @@ import { useState } from "react";
 import { UserModal } from "../../AdminModal/UserModal";
 import { useQuery } from "react-query";
 import { getKakaoUsers } from "@/apis/kakaoApi";
+import useApiError from "@/lib/hooks/useApiError";
 
 export const UserGrid = () => {
+  const { handleError } = useApiError();
   const [userModal, setUserModal] = useState(false);
   const [user, setUser] = useState();
 
   /** 회원목록 불러오기 */
-  const { data: dataSource } = useQuery(["getKakaoUsers"], getKakaoUsers);
+  const { data: dataSource } = useQuery(["getKakaoUsers"], getKakaoUsers, {
+    retry: 1,
+    onError(error: any) {
+      handleError(error);
+    },
+  });
 
   const openUserModal = (data: any) => {
     setUser(data);
     setUserModal(!userModal);
   };
 
-  console.log(dataSource);
   return (
     <>
       <S.AdminGrid>

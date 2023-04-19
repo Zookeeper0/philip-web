@@ -12,19 +12,27 @@ import {
   promotionAPI,
 } from "@/apis/postsApi";
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
+import useApiError from "@/lib/hooks/useApiError";
 
 type Props = {
   storeSearchKeyword: string;
 };
 
 export const StoreGrid = ({ storeSearchKeyword }: Props) => {
+  const { handleError } = useApiError();
   const [storeModal, setStoreModal] = useState(false);
   const [store, setStore] = useState();
   const queryClient = useQueryClient();
   /** 업체 목록 불러오기 */
   const { data: dataSource } = useQuery(
     ["getAdminStorePosts", storeSearchKeyword],
-    getAdminStorePosts
+    getAdminStorePosts,
+    {
+      retry: 1,
+      onError(error: any) {
+        handleError(error);
+      },
+    }
   );
 
   const promotionMutation = useMutation("promotionAPI", promotionAPI, {

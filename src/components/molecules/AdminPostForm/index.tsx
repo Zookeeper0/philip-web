@@ -34,7 +34,6 @@ export const AdminPostForm = () => {
   const [newDetailImages, setNewDetailImages, onRemoveDetail] = useImage([]);
   const [newMenuImages, setNewMenuImages, onRemoveMenu] = useImage([]);
 
-  console.log("imagePaths", imagePaths);
   const mutation = useMutation("posts", addPostApi, {
     onSuccess() {
       reset();
