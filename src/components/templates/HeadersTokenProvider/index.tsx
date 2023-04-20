@@ -7,8 +7,7 @@ import Loading from "../Loading";
 const HeadersTokenProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }: React.PropsWithChildren) => {
-  const { status, data: admin } = useSession<any>();
-  const router = useRouter();
+  // const { status, data: admin } = useSession<any>();
 
   // useEffect(() => {
   //   console.log(admin);
@@ -17,11 +16,11 @@ const HeadersTokenProvider: React.FC<React.PropsWithChildren> = ({
   //   }
   // }, [admin]);
 
-  if (status === "loading") {
-    return <Loading type="page" text="페이지를 불러오는 중입니다..." />;
-  }
+  // if (status === "loading") {
+  //   return <Loading type="page" text="페이지를 불러오는 중입니다..." />;
+  // }
 
-  setToken(admin?.user.accessToken);
+  // setToken(admin?.user.accessToken);
   return (
     <>
       <Suspense

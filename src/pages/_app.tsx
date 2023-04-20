@@ -14,7 +14,7 @@ import { GlobalStyle } from "@/styles/global-style";
 import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
 
-import { SessionProvider } from "next-auth/react";
+// import { SessionProvider } from "next-auth/react";
 import HeadersTokenProvider from "@/components/templates/HeadersTokenProvider";
 import "devextreme/dist/css/dx.light.compact.css";
 
@@ -48,29 +48,29 @@ export default function App({ Component, pageProps }: AppProps) {
             onLoad={kakaoInit}
           />
           <ThemeProvider theme={theme}>
-            <SessionProvider>
-              <HeadersTokenProvider>
-                {router.pathname.includes("main") ||
-                router.pathname.includes("auth") ? (
-                  <>
-                    {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
-                    <Nav />
-                    <Component {...pageProps} />
-                    <Footer />
-                  </>
-                ) : router.pathname.includes("admin") ? (
-                  <>
-                    <Component {...pageProps} />
-                  </>
-                ) : (
-                  <>
-                    {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
-                    {/* <Nav /> */}
-                    <Component {...pageProps} />
-                  </>
-                )}
-              </HeadersTokenProvider>
-            </SessionProvider>
+            {/* <SessionProvider> */}
+            <HeadersTokenProvider>
+              {router.pathname.includes("main") ||
+              router.pathname.includes("auth") ? (
+                <>
+                  {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
+                  <Nav />
+                  <Component {...pageProps} />
+                  <Footer />
+                </>
+              ) : router.pathname.includes("admin") ? (
+                <>
+                  <Component {...pageProps} />
+                </>
+              ) : (
+                <>
+                  {isWindowWidth < 769 ? <MobileHeader /> : <Header />}
+                  {/* <Nav /> */}
+                  <Component {...pageProps} />
+                </>
+              )}
+            </HeadersTokenProvider>
+            {/* </SessionProvider> */}
           </ThemeProvider>
         </QueryClientProvider>
       </RecoilRoot>
