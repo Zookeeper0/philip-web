@@ -4,10 +4,10 @@ import { ContentSection } from "@/components/organisms/ContentSection";
 
 import * as S from "./mainPage.style";
 import { useQuery } from "react-query";
-import { cookieAPI } from "@/apis/visitApi";
+import { checkTodayVisit } from "@/apis/visitApi";
 
 export const MainPage = () => {
-  const { data: cookie } = useQuery("cookieAPI", cookieAPI);
+  const { data: cookie } = useQuery("checkTodayVisit", checkTodayVisit);
 
   return (
     <S.MainLayout>

@@ -1,67 +1,112 @@
 import { Button } from "@/components/atoms/Button";
 import * as S from "./adminLoginBox.style";
-import IconKakao from "public/assets/svg/icon-kakao.svg";
 import { InputText } from "@/components/atoms/Input/InputText";
-import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { useForm } from "react-hook-form";
-import { logInAPI } from "@/apis/adminApi";
-import { useRecoilState } from "recoil";
-import { adminTokenState } from "@/recoil/adminToken";
+import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 
 export const AdminLoginBox = () => {
-  const isWindowWidth = useWindowWidth();
   const router = useRouter();
-  const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
+  const [errorMessage, setErrorMessage] = useState("");
+  // 아이디 저장 체크박스 체크 유무
+  const [isRemember, setIsRemember] = useState(false);
+  // id, pw 상태저장
+  const [userInfo, setUserInfo] = useState({ adminId: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-  } = useForm();
+  /** 로그인 submit 버튼 */
+  const onSubmitForm = async (e: any) => {
+    // validate your userinfo
+    e.preventDefault();
+    setIsLoading(true);
+    // redirect : true => callbackUrl 설정할려면
+    const response = await signIn("credentials", {
+      adminId: userInfo.adminId,
+      password: userInfo.password,
+      redirect: false,
+    });
 
-  const mutation = useMutation("logInAPI", logInAPI, {
-    onSuccess: (token) => {
-      localStorage.setItem("adminSignKey", token);
-      setAdminToken(token);
-      document.location.href = "/main";
-    },
-    onError: (error: any) => {
-      console.log(error);
-      const { response } = error;
-      alert(response.data.message);
-    },
-  });
+    // 로그인 에러 메세지
+    if (response?.error) {
+      setErrorMessage(response?.error);
+      setIsLoading(false);
+    }
 
-  const onSubmitForm = useCallback(
-    (data: any) => {
-      const { adminId, password } = data;
-      mutation.mutate({ adminId, password });
-    },
-    [mutation]
-  );
+    // 로그인 성공시 관리자 페이지로 이동
+    if (response?.ok === true) {
+      router.push("/admin/store");
+      setIsLoading(false);
+    }
+    // id저장 버튼 클릭됬다면 id 로컬스토리지에 저장
+    if (isRemember) {
+      localStorage.setItem("rememberUserId", userInfo.adminId);
+    }
+  };
+
+  /** InputCheckbox checked 상태 변경 함수 */
+  const handleOnChange = (e: any) => {
+    setIsRemember(e.target.checked);
+    if (!e.target.checked) {
+      localStorage.removeItem("rememberUserId");
+    }
+  };
+
+  /*페이지가 최초 렌더링 될 경우*/
+  useEffect(() => {
+    /*저장된 로컬값이 있으면, CheckBox TRUE 및 adminId에 값 셋팅*/
+    if (localStorage.getItem("rememberUserId") !== null) {
+      setUserInfo({
+        ...userInfo,
+        adminId: localStorage.getItem("rememberUserId")!,
+      });
+      setIsRemember(true);
+    }
+  }, []);
 
   return (
-    <S.LoginBox onSubmit={handleSubmit(onSubmitForm)}>
+    <S.AdminLoginBox onSubmit={onSubmitForm}>
       <S.LoginTit>Login</S.LoginTit>
-      <InputText
-        label={isWindowWidth < 769 ? "아이디" : "아이디"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
-        width="100%"
-        placeholder={isWindowWidth < 769 ? "아이디 입력" : "아이디 입력"}
-        register={register("adminId")}
-      />
-      <InputText
-        label={isWindowWidth < 769 ? "비밀번호" : "비밀번호"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
-        width="100%"
-        placeholder={isWindowWidth < 769 ? "비밀번호 입력" : "비밀번호 입력"}
-        register={register("password")}
-      />
+      <S.LoginInputBox>
+        <InputText
+          label="아이디"
+          layout="column"
+          themeType="admin"
+          size="lg"
+          width="100%"
+          type={"text"}
+          placeholder="아이디 입력"
+          value={userInfo.adminId}
+          onChange={({ target }: any) =>
+            setUserInfo({ ...userInfo, adminId: target.value })
+          }
+        />
+        <InputText
+          label="비밀번호"
+          layout="column"
+          themeType="admin"
+          size="lg"
+          width="100%"
+          type={"password"}
+          placeholder="비밀번호 입력"
+          value={userInfo.password}
+          onChange={({ target }: any) =>
+            setUserInfo({ ...userInfo, password: target.value })
+          }
+        />
+        <InputCheckbox
+          value="1"
+          themeType="admin"
+          layout="row"
+          displayValue="아이디 저장"
+          checked={isRemember}
+          onChange={(e: Event) => {
+            handleOnChange(e);
+          }}
+        />
+        {errorMessage && <span style={{ color: "red" }}>{errorMessage}</span>}
+      </S.LoginInputBox>
+
       <Button
         type="submit"
         width="100%"
@@ -69,8 +114,9 @@ export const AdminLoginBox = () => {
         color="primary"
         layout="solid"
         label="로그인하기"
+        className={`${isLoading && "spinner spinner-white spinner-right"}`}
       />
-      <Button
+      {/* <Button
         type="button"
         width="100%"
         height={56}
@@ -80,7 +126,7 @@ export const AdminLoginBox = () => {
         onClick={() => {
           router.replace("/admin/signup");
         }}
-      />
-    </S.LoginBox>
+      /> */}
+    </S.AdminLoginBox>
   );
 };

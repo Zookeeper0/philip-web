@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-export const LoginBox = styled.form`
+export const AdminLoginBox = styled.form`
   display: flex;
   width: 420px;
   max-height: 490px;
   padding: 70px 80px;
-  background: ${(props) => props.theme.colors.searchBarBg};
+  background: ${(props) => props.theme.colors.white};
+  box-shadow: ${(props) => props.theme.shadow.admin};
   align-items: center;
   flex-direction: column;
   gap: 40px;
@@ -22,4 +23,12 @@ export const LoginTit = styled.div`
   font-size: 3rem;
   font-weight: 500;
   font-family: "Roboto";
+  color: ${(props) => props.theme.colors.adminMainTxt};
+`;
+
+export const LoginInputBox = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 10px;
 `;

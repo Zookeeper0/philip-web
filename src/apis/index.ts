@@ -5,15 +5,13 @@ const AxiosInstance = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-    Authorization:
-      "Bearer " +
-      `${
-        typeof window !== "undefined"
-          ? window.localStorage.getItem("kakaoSignKey") ||
-            window.localStorage.getItem("adminSignKey")
-          : null
-      }`,
   },
 });
+
+export const setToken = (token: any) => {
+  AxiosInstance.defaults.headers.common["Authorization"] = `Bearer ${
+    token || localStorage.getItem("kakaoSignKey")
+  }`;
+};
 
 export default AxiosInstance;

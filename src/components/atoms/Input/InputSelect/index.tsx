@@ -7,8 +7,9 @@ import * as S from "../Input.style";
 interface SelectProps {
   width?: string;
   size: string;
-  themeType: string;
+  layout: string;
   label?: string;
+  themeType?: string;
   placeholder?: string;
   options: any;
   register?: UseFormRegisterReturn;
@@ -18,10 +19,11 @@ interface SelectProps {
 
 export const InputSelect: React.FC<SelectProps> = ({
   width,
-  themeType,
+  layout,
   size,
   options,
   label,
+  themeType,
   placeholder,
   register,
   onChange,
@@ -34,11 +36,13 @@ export const InputSelect: React.FC<SelectProps> = ({
     setName(value);
   }, [value]);
 
-  console.log("options :", options);
-  console.log("value :", value);
-
   return (
-    <S.InputCommon themeType={themeType} size={size} width={width}>
+    <S.InputCommon
+      themeType={themeType}
+      layout={layout}
+      size={size}
+      width={width}
+    >
       <label>
         {label && label}
         <select {...register} onChange={onChange} value={value || name}>
