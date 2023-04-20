@@ -1,26 +1,34 @@
-import { DataGrid } from "devextreme-react";
+import { DataGrid, Lookup } from "devextreme-react";
 import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
-import { Column } from "devextreme-react/data-grid";
+import { Column, Editing } from "devextreme-react/data-grid";
 import { Button } from "@/components/atoms/Button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { UserModal } from "../../AdminModal/UserModal";
 import { useQuery } from "react-query";
-import { getKakaoUsers } from "@/apis/kakaoApi";
+import { getKakaoUserList } from "@/apis/kakaoApi";
 import useApiError from "@/lib/hooks/useApiError";
 
-export const UserGrid = () => {
+interface UserGridProps {
+  userSearchKeyword: string;
+}
+
+export const UserGrid = ({ userSearchKeyword }: UserGridProps) => {
   const { handleError } = useApiError();
   const [userModal, setUserModal] = useState(false);
   const [user, setUser] = useState();
 
   /** 회원목록 불러오기 */
-  const { data: dataSource } = useQuery(["getKakaoUsers"], getKakaoUsers, {
-    retry: 1,
-    onError(error: any) {
-      handleError(error);
-    },
-  });
+  const { data: dataSource } = useQuery(
+    ["getKakaoUsers", userSearchKeyword],
+    getKakaoUserList,
+    {
+      retry: 1,
+      onError(error: any) {
+        handleError(error);
+      },
+    }
+  );
 
   const openUserModal = (data: any) => {
     setUser(data);
@@ -31,6 +39,7 @@ export const UserGrid = () => {
     <>
       <S.AdminGrid>
         <DataGrid dataSource={dataSource} keyExpr="kakao_id">
+          <Editing mode="batch" startEditAction="dblClick" />
           <Column
             caption="No."
             cellRender={(e) => e.row.loadIndex + 1}

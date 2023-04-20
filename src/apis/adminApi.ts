@@ -28,3 +28,9 @@ export function getAdminList({ queryKey }: any) {
 export function todayVisitAPI() {
   return axiosInstance.get("/admin/visit").then((response) => response.data);
 }
+
+export function changeAdminRoleAPI(data: Object) {
+  return axiosInstance
+    .put("/admin/role", data)
+    .then((response) => response.data);
+}

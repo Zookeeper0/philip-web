@@ -24,7 +24,7 @@ export const Logo: React.FC<LogoProps> = ({ footer, main, mobile, admin }) => {
   };
   return (
     <S.Logo main={main} mobile={mobile} admin={admin}>
-      <Link href={`${admin ? "/admin" : "/main"}`} onClick={onClick}>
+      <Link href={`${admin ? "/admin/store" : "/main"}`} onClick={onClick}>
         <Image
           src={
             main ? LogoMain : footer ? LogoMain : admin ? LogoAdmin : LogoSub

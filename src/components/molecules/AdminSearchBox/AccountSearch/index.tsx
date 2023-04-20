@@ -2,11 +2,13 @@ import { Button } from "@/components/atoms/Button";
 import { InputText } from "@/components/atoms/Input/InputText";
 import * as S from "../adminSearchBox.style";
 
-type Props = {
+interface AccountSearchProps {
   setAdminSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
-};
+}
 
-export const AccountSearch = ({ setAdminSearchKeyword }: Props) => {
+export const AccountSearch = ({
+  setAdminSearchKeyword,
+}: AccountSearchProps) => {
   return (
     <S.AdminSearchBox>
       <S.AdminSearchTit>관리자 검색</S.AdminSearchTit>

@@ -22,7 +22,7 @@ export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
           <Image
             src={
               post
-                ? `${process.env.NEXT_PUBLIC_API_URL}/${post?.menu[0].filename}`
+                ? `${process.env.NEXT_PUBLIC_API_URL}/${post?.menu[0]?.filename}`
                 : ""
             }
             alt="선택된 업체 이미지"

@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { v1 } from "uuid";
 
 type Ads = {
   topAds: string;
@@ -10,6 +11,6 @@ type Ads = {
 type AdsList = Ads[];
 
 export const adsState = atom<AdsList>({
-  key: "adsState",
+  key: `adsState/${v1()}`,
   default: [],
 });

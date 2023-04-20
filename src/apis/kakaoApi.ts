@@ -6,6 +6,14 @@ export function kakaoLoginAPI(code: any) {
     .then((response) => response.data);
 }
 
-export function getKakaoUsers() {
-  return axiosInstance.get("/user/kakao").then((response) => response.data);
+export function getKakaoUserList({ queryKey }: any) {
+  return axiosInstance
+    .get(`/user/kakao?search=${queryKey[1]}`)
+    .then((response) => response.data);
+}
+
+export function changeUserRoleAPI(data: Object) {
+  return axiosInstance
+    .put("/user/role", data)
+    .then((response) => response.data);
 }

@@ -9,11 +9,11 @@ import { useQuery } from "react-query";
 import { getAdminList } from "@/apis/adminApi";
 import useApiError from "@/lib/hooks/useApiError";
 
-type Props = {
+interface AccountGridProps {
   adminSearchKeyword: string;
-};
+}
 
-export const AccountGrid = ({ adminSearchKeyword }: Props) => {
+export const AccountGrid = ({ adminSearchKeyword }: AccountGridProps) => {
   const [accountModal, setAccountModal] = useState(false);
   const [account, setAccount] = useState();
   const { handleError } = useApiError();

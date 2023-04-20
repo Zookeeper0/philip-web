@@ -11,6 +11,7 @@ import * as S from "./adminAdsBox.style";
 
 export const AmdinAdsBox = ({ setImgPreview, imgPreview }: any) => {
   const addAdsMutation = useMutation("addAdsApi", addAdsApi);
+
   const adsList = useRecoilValue(adsState);
   const queryClient = useQueryClient();
 
@@ -44,7 +45,10 @@ export const AmdinAdsBox = ({ setImgPreview, imgPreview }: any) => {
   };
 
   /** 광고 저장  */
-  const onSubmit = () => {
+  const onSubmit = (e: Event) => {
+    e.preventDefault();
+    alert("저장이 완료되었습니다.");
+
     addAdsMutation.mutate(imgPreview);
   };
 
@@ -114,7 +118,7 @@ export const AmdinAdsBox = ({ setImgPreview, imgPreview }: any) => {
             width="90px"
             height={38}
             label="저장"
-            onClick={onSubmit}
+            onClick={(e: Event) => onSubmit(e)}
           />
           <Button
             type="submit"
