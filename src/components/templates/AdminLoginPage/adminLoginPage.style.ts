@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const LoginPage = styled.section`
   display: flex;
+  width: 100vw;
+  height: 100vh;
   padding: 120px 0;
+  background: ${(props) => props.theme.colors.adminBg};
   align-items: center;
   justify-content: center;
 

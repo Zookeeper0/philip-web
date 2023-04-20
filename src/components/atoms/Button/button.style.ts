@@ -29,6 +29,7 @@ export const ButtonGroup = styled.div<ButtonGroupProps>`
   margin-top: ${(props) => (props.marginTop ? props.marginTop + "px" : "0")};
   margin-bottom: ${(props) =>
     props.marginBottom ? props.marginBottom + "px" : "0"};
+  gap: 10px;
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -36,9 +37,17 @@ export const Button = styled.button<ButtonProps>`
   width: ${(props) => (props.width ? props.width : "auto")};
   height: ${(props) => (props.height ? props.height + "px" : "initial")};
   color: ${(props) =>
-    props.color === "kakaoBg" ? props.theme.colors.kakaoTxt : "white"};
+    props.color === "kakaoBg"
+      ? props.theme.colors.kakaoTxt
+      : props.color === "adminClear"
+      ? props.theme.colors.adminMainTxt
+      : "white"};
   font-size: ${(props) =>
-    props.height && props.height >= 32 ? "1.6rem" : "1.2rem"};
+    props.height && props.height >= 38
+      ? "1.6rem"
+      : props.height && props.height >= 32
+      ? "1.4rem"
+      : "1.2rem"};
   border: none;
   border-radius: ${(props) => (props.layout === "icon" ? "2px" : "0")};
   align-items: center;
@@ -47,7 +56,11 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   transition: background 0.1s ease-in-out;
   background: ${(props) =>
-    props.color === "clear" ? "none" : props.theme.colors[props.color]};
+    props.color === "clear"
+      ? "none"
+      : props.color === "adminClear"
+      ? "none"
+      : props.theme.colors[props.color]};
   transform: ${(props) => (props.rotate ? `rotate(180deg)` : "")};
 
   ${(props) =>
@@ -83,10 +96,22 @@ export const Button = styled.button<ButtonProps>`
       font-weight: 500;
     `}
 
+    ${(props) =>
+    props.color === "adminClear" &&
+    css`
+      svg {
+        path {
+          fill: ${(props) => props.theme.colors.primary};
+        }
+      }
+    `}
+
   &:hover {
     background: ${(props) =>
       props.color === "clear"
         ? props.theme.colors.darkHover
+        : props.color === "adminClear"
+        ? props.theme.colors.whiteHover
         : props.theme.colors[props.color + "Hover"]};
 
     ${(props) =>

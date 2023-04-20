@@ -13,11 +13,13 @@ import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 import { useForm } from "react-hook-form";
 import { addPostApi } from "@/apis/postsApi";
 import { categoryState } from "@/recoil/category";
+import { cityState } from "@/recoil/city";
 
 export const SearchBox = () => {
   const isWindowWidth = useWindowWidth();
   const [searchInput, setSearchInput] = useRecoilState(searchState);
   const [categoryInput, setCategoryInput] = useRecoilState(categoryState);
+  const [city, setCityState] = useRecoilState<any>(cityState);
 
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -34,20 +36,16 @@ export const SearchBox = () => {
     setSearchInput(e.target.value);
   };
 
+  /** 시티 목록 선택시 세팅 */
   const getCityOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
+    setCityState(e.target.value);
+    // 새로 고침 시 선택 city 유지
+    localStorage.setItem("city", e.target.value);
   };
 
   const getCategoryOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoryInput(e.target.value);
   };
-
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    reset,
-  } = useForm();
 
   useEffect(() => {
     setCategoryOptions(categoryItem);
@@ -60,38 +58,39 @@ export const SearchBox = () => {
         {isWindowWidth < 769 && (
           <S.SearchMobileInput>
             <InputSelect
-              themeType="row"
-              size="lg"
+              layout="row"
+              size="xlg"
               width="calc(50vw - 20px)"
-              placeholder="지역 검색"
               options={cityOptions}
               onChange={getCityOption}
+              value={city}
             />
             <InputSelect
-              themeType="row"
-              size="lg"
+              layout="row"
+              size="xlg"
               width="calc(50vw - 20px)"
               options={categoryItem}
               onChange={getCategoryOption}
+              value={categoryInput}
             />
           </S.SearchMobileInput>
         )}
         <InputText
           label={isWindowWidth < 769 ? "" : "키워드 검색"}
-          themeType={isWindowWidth < 769 ? "row" : "column"}
-          size={isWindowWidth < 769 ? "lg" : "md"}
+          layout={isWindowWidth < 769 ? "row" : "column"}
+          size={isWindowWidth < 769 ? "xlg" : "md"}
           width="100%"
           placeholder={isWindowWidth < 769 ? "키워드 검색..." : "입력..."}
           onChange={getValue}
         />
         {/* <InputText
           label="기타 검색"
-          themeType="column"
+          layout="column"
           size="md"
           width="100%"
         />
-        <InputCheckbox value="1" themeType="row" displayValue="기타 검색옵션" />
-        <InputCheckbox value="2" themeType="row" displayValue="기타 검색옵션" /> */}
+        <InputCheckbox value="1" layout="row" displayValue="기타 검색옵션" />
+        <InputCheckbox value="2" layout="row" displayValue="기타 검색옵션" /> */}
       </S.SearchForm>
       {isWindowWidth >= 769 && (
         <Button

@@ -7,39 +7,76 @@ import { LocationBox } from "@/components/molecules/LocationBox";
 import Data from "@/data/dummy";
 import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { detailPostApi } from "@/apis/postsApi";
+import { useMutation, useQuery } from "react-query";
+import { deletePost, getOnePostInfoApi } from "@/apis/postsApi";
 
 export const PostSection = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const queryFn = () => detailPostApi(router.query.id);
-  const { data: detailItem, isLoading } = useQuery(
+  const queryFn = () => getOnePostInfoApi(router.query.id);
+  const { data: detailItem, isError } = useQuery(
     ["detailItem", router.query.id],
-    queryFn
+    queryFn,
+    {
+      retry: 1,
+      onError(err: any) {
+        if (err.response.status === 401) {
+          localStorage.removeItem("kakaoSignKey");
+          router.replace("/main");
+          alert("로그인 기간이 만료되어 로그아웃 되었습니다.");
+        }
+      },
+    }
   );
+
+  // post delete
+  const mutation = useMutation("posts", deletePost);
+  const postDelete = () => {
+    mutation.mutate(detailItem.oid);
+    router.back();
+  };
 
   const openHandler = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
 
-  //랜덤이미지 dummy
-  const postId = Math.floor(Math.random() * 13);
-  const randomImg = Data.Post[postId];
+  // 임시 랜덤이미지 dummy
+  let randomImg = null;
+  if (router.query.id === "220975c0-c869-11ed-af91-e93afefe558a") {
+    randomImg = Data.SampleDetail[0];
+  } else {
+    const postId = Math.floor(Math.random() * 13);
+    randomImg = Data.Post[postId];
+  }
+
   return (
     <S.PostSection>
-      <Button
-        type="button"
-        height={36}
-        color="clear"
-        layout="icon"
-        label="목록으로"
-        onClick={() => router.back()}
-      >
-        <IconBack />
-      </Button>
+      <div style={{ justifyContent: "space-between", display: "flex" }}>
+        <Button
+          type="button"
+          height={36}
+          color="clear"
+          layout="icon"
+          label="목록으로"
+          onClick={() => router.back()}
+        >
+          <IconBack />
+        </Button>
+        {/* {detailItem?.admin_oid === adminInfo ? (
+          <Button
+            type="button"
+            height={36}
+            color="clear"
+            layout="icon"
+            label="삭제"
+            onClick={() => postDelete()}
+          ></Button>
+        ) : (
+          ""
+        )} */}
+      </div>
+
       <StoreInfoBox post={detailItem} randomImg={randomImg} />
       <PriceInfoBox
         post={detailItem}

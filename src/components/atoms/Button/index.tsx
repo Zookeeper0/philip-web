@@ -23,6 +23,7 @@ interface ButtonProps {
   children?: any;
   disabled?: boolean;
   rotate?: string;
+  className?: any;
 }
 
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
@@ -34,7 +35,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
 
 export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
   return (
-    <S.Button {...props}>
+    <S.Button {...props} className={props.className}>
       {children && children}
       {props.label && props.label}
     </S.Button>

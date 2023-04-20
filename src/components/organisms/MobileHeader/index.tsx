@@ -7,13 +7,11 @@ import Logo from "@/components/atoms/Logo";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userTokenState } from "@/recoil/userToken";
 import { useState } from "react";
-import { adminTokenState } from "@/recoil/adminToken";
 
 export const MobileHeader = () => {
   const router = useRouter();
+  /** 사용자 로그인 체크 */
   const [userToken, setUserToken] = useRecoilState(userTokenState);
-  /** 관리자 로그인 체크 */
-  const [adminToken, setAdminToken] = useRecoilState(adminTokenState);
   const [popup, setPopup] = useState(false);
 
   const goBack = () => {
@@ -62,9 +60,7 @@ export const MobileHeader = () => {
               label="로그아웃"
               onClick={() => {
                 localStorage.removeItem("kakaoSignKey");
-                localStorage.removeItem("adminSignKey");
                 setUserToken(null);
-                setAdminToken(null);
                 document.location.href = "/main";
               }}
             ></Button>
