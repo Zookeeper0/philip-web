@@ -14,7 +14,7 @@ export const PostItem = ({ item }: any) => {
   /** 고객 토큰관리 */
   const userToken = useRecoilValue(userTokenState);
   /** 관리자 세션 관리 */
-  const { data: admin } = useSession();
+  // const { data: admin } = useSession();
 
   /** 게시물 클릭시 해당 게시물 조회수 count api */
   const mutation = useMutation("posts", fetchCountViews);
