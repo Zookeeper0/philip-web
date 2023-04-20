@@ -30,10 +30,6 @@ const authOptions: NextAuthOptions = {
         }
       },
     }),
-    // KakaoProvider({
-    //   clientId: process.env.NEXT_PUBLIC_KAKAO_REST_API!,
-    //   clientSecret: process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET!,
-    // }),
   ],
   callbacks: {
     async jwt({ token, user }: any) {

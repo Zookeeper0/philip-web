@@ -16,32 +16,40 @@ export const AdminLoginBox = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   /** 로그인 submit 버튼 */
-  const onSubmitForm = async (e: any) => {
-    // validate your userinfo
+  // const onSubmitForm = async (e: any) => {
+  //   // validate your userinfo
+  //   e.preventDefault();
+  //   setIsLoading(true);
+
+  //   // redirect : true => callbackUrl 설정할려면
+  //   const response = await signIn("credentials", {
+  //     adminId: userInfo.adminId,
+  //     password: userInfo.password,
+  //     redirect: false,
+  //   });
+
+  //   // 로그인 에러 메세지
+  //   if (response?.error) {
+  //     setErrorMessage(response?.error);
+  //     setIsLoading(false);
+  //   }
+
+  //   // 로그인 성공시 관리자 페이지로 이동
+  //   if (response?.ok === true) {
+  //     router.push("/admin/store");
+  //     setIsLoading(false);
+  //   }
+  //   // id저장 버튼 클릭됬다면 id 로컬스토리지에 저장
+  //   if (isRemember) {
+  //     localStorage.setItem("rememberUserId", userInfo.adminId);
+  //   }
+  // };
+
+  const onSubmitForm = (e: any) => {
     e.preventDefault();
     setIsLoading(true);
-    // redirect : true => callbackUrl 설정할려면
-    const response = await signIn("credentials", {
-      adminId: userInfo.adminId,
-      password: userInfo.password,
-      redirect: false,
-    });
-
-    // 로그인 에러 메세지
-    if (response?.error) {
-      setErrorMessage(response?.error);
-      setIsLoading(false);
-    }
-
-    // 로그인 성공시 관리자 페이지로 이동
-    if (response?.ok === true) {
-      router.push("/admin/store");
-      setIsLoading(false);
-    }
-    // id저장 버튼 클릭됬다면 id 로컬스토리지에 저장
-    if (isRemember) {
-      localStorage.setItem("rememberUserId", userInfo.adminId);
-    }
+    router.push("/admin/store");
+    setIsLoading(false);
   };
 
   /** InputCheckbox checked 상태 변경 함수 */
