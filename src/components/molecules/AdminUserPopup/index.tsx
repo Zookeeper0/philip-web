@@ -5,7 +5,7 @@ import * as S from "./adminUserBox.style";
 
 export const AdminUserPopup = () => {
   const onSignOut = async () => {
-    await signOut({ redirect: false });
+    localStorage.removeItem("admin");
     window.location.href = "/admin/login";
   };
 
