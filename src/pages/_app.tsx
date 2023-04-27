@@ -14,7 +14,6 @@ import { GlobalStyle } from "@/styles/global-style";
 import { theme } from "@/styles/theme";
 import "@/styles/globals.css";
 
-// import { SessionProvider } from "next-auth/react";
 import HeadersTokenProvider from "@/components/templates/HeadersTokenProvider";
 import "devextreme/dist/css/dx.light.compact.css";
 
@@ -48,7 +47,6 @@ export default function App({ Component, pageProps }: AppProps) {
             onLoad={kakaoInit}
           />
           <ThemeProvider theme={theme}>
-            {/* <SessionProvider> */}
             <HeadersTokenProvider>
               {router.pathname.includes("main") ||
               router.pathname.includes("auth") ? (
@@ -70,7 +68,6 @@ export default function App({ Component, pageProps }: AppProps) {
                 </>
               )}
             </HeadersTokenProvider>
-            {/* </SessionProvider> */}
           </ThemeProvider>
         </QueryClientProvider>
       </RecoilRoot>

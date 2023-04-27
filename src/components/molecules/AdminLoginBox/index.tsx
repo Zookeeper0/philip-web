@@ -5,6 +5,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
+import { useMutation } from "react-query";
+import { logInAPI } from "@/apis/adminApi";
+import Error from "next/error";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { adminState } from "@/recoil/adminToken";
+import { setToken } from "@/apis";
 
 export const AdminLoginBox = () => {
   const router = useRouter();
@@ -14,42 +20,35 @@ export const AdminLoginBox = () => {
   // id, pw 상태저장
   const [userInfo, setUserInfo] = useState({ adminId: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const [admin, setAdmin] = useRecoilState(adminState);
 
   /** 로그인 submit 버튼 */
-  // const onSubmitForm = async (e: any) => {
-  //   // validate your userinfo
-  //   e.preventDefault();
-  //   setIsLoading(true);
-
-  //   // redirect : true => callbackUrl 설정할려면
-  //   const response = await signIn("credentials", {
-  //     adminId: userInfo.adminId,
-  //     password: userInfo.password,
-  //     redirect: false,
-  //   });
-
-  //   // 로그인 에러 메세지
-  //   if (response?.error) {
-  //     setErrorMessage(response?.error);
-  //     setIsLoading(false);
-  //   }
-
-  //   // 로그인 성공시 관리자 페이지로 이동
-  //   if (response?.ok === true) {
-  //     router.push("/admin/store");
-  //     setIsLoading(false);
-  //   }
-  //   // id저장 버튼 클릭됬다면 id 로컬스토리지에 저장
-  //   if (isRemember) {
-  //     localStorage.setItem("rememberUserId", userInfo.adminId);
-  //   }
-  // };
-
-  const onSubmitForm = (e: any) => {
+  const onSubmitForm = async (e: any) => {
+    // validate your userinfo
     e.preventDefault();
     setIsLoading(true);
-    router.push("/admin/store");
-    setIsLoading(false);
+    try {
+      const user: any = await logInAPI({
+        adminId: userInfo.adminId,
+        password: userInfo.password,
+      });
+
+      localStorage.setItem("admin", JSON.stringify(user));
+      setAdmin(user);
+      setToken(user?.accessToken);
+
+      router.replace("/admin/store");
+    } catch (error) {
+      const { response } = error as unknown as any;
+
+      setErrorMessage(response?.data.message);
+      setIsLoading(false);
+    }
+
+    // id저장 버튼 클릭됬다면 id 로컬스토리지에 저장
+    if (isRemember) {
+      localStorage.setItem("rememberUserId", userInfo.adminId);
+    }
   };
 
   /** InputCheckbox checked 상태 변경 함수 */

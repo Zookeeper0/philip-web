@@ -1,6 +1,8 @@
 import * as S from "./adminStorePage.style";
 import { AdminLayout } from "@/components/organisms/AdminLayout";
 import { AdminStoreBox } from "@/components/organisms/AdminStoreBox";
+import { adminState } from "@/recoil/adminToken";
+import { useRecoilState } from "recoil";
 
 export const AdminStorePage = () => {
   return (

@@ -3,33 +3,34 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Suspense, useEffect } from "react";
 import Loading from "../Loading";
+import { useRecoilState } from "recoil";
+import { adminState } from "@/recoil/adminToken";
+
+// export interface adminType {
+//   accessToken: string;
+//   adminId: string;
+//   oid: string;
+//   role: string;
+// }
 
 const HeadersTokenProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }: React.PropsWithChildren) => {
-  // const { status, data: admin } = useSession<any>();
+  const [admin, setAdmin] = useRecoilState(adminState);
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   console.log(admin);
-  //   if (router.pathname.includes("admin") && admin === undefined) {
-  //     router.replace("/admin/login");
-  //   }
-  // }, [admin]);
+  useEffect(() => {
+    const adminInfo: any = localStorage.getItem("admin");
+    const admin = JSON.parse(adminInfo);
 
-  // if (status === "loading") {
-  //   return <Loading type="page" text="페이지를 불러오는 중입니다..." />;
-  // }
+    setAdmin(admin);
+    setToken(admin?.accessToken);
+    if (router.pathname.includes("admin") && admin === null) {
+      router.replace("/admin/login");
+    }
+  }, []);
 
-  // setToken(admin?.user.accessToken);
-  return (
-    <>
-      <Suspense
-        fallback={<Loading type="page" text="페이지를 불러오는 중입니다..." />}
-      >
-        {children}
-      </Suspense>
-    </>
-  );
+  return <>{children}</>;
 };
 
 export default HeadersTokenProvider;

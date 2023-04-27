@@ -72,8 +72,6 @@ export const AmdinAdsBox = ({ setImgPreview, imgPreview }: any) => {
     });
   };
 
-  console.log("imgPreview", imgPreview);
-
   return (
     <S.AdminAdsBox>
       <S.AdminAdsTit>배너 등록하기</S.AdminAdsTit>

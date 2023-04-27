@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "..";
 import IconCopy from "public/assets/svg/icon-copy.svg";
 
@@ -8,13 +8,19 @@ interface CopyProps {
 }
 
 export const CopyButton: React.FC<CopyProps> = ({ label, text }) => {
+  const [copyMessage, setCopyMessage] = useState("번호복사");
+
   const handleCopy = useCallback(
     (e: string) => {
       if (navigator.clipboard) {
         navigator.clipboard
           .writeText(e)
           .then(() => {
-            alert("클립보드에 복사되었습니다.");
+            setCopyMessage("Copyed!!");
+            const tick = setTimeout(() => {
+              setCopyMessage("번호복사");
+            }, 1500);
+            return () => clearTimeout(tick);
           })
           .catch(() => {
             alert("복사를 다시 시도해주세요.");
@@ -35,7 +41,11 @@ export const CopyButton: React.FC<CopyProps> = ({ label, text }) => {
         textarea.select();
         document.body.removeChild(textarea);
 
-        alert("클립보드에 복사되었습니다.");
+        setCopyMessage("Copyed!!");
+        const tick = setTimeout(() => {
+          setCopyMessage("번호복사");
+        }, 1500);
+        return () => clearTimeout(tick);
       }
     },
     [text]
@@ -48,7 +58,7 @@ export const CopyButton: React.FC<CopyProps> = ({ label, text }) => {
       height={30}
       color="func"
       layout="icon"
-      label={label}
+      label={copyMessage}
       onClick={() => handleCopy(text)}
     >
       <IconCopy />
