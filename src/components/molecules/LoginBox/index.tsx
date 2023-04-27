@@ -5,7 +5,7 @@ import IconKakao from "public/assets/svg/icon-kakao.svg";
 export const LoginBox = () => {
   const kakaoLogin = () => {
     window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL,
+      redirectUri: "http://*.philip69.com/kakao",
     });
   };
 
