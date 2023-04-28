@@ -12,7 +12,7 @@ const useApiError = () => {
 
   const handleError = useCallback((axiosError: AxiosError) => {
     const errorResponse = axiosError.response?.data as any;
-    const status = errorResponse.statusCode;
+    const status = errorResponse?.statusCode;
 
     switch (status) {
       // 관리자 인증 에러

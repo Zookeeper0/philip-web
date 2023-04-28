@@ -31,7 +31,7 @@ export const PostSection = () => {
   );
 
   // post delete
-  const mutation = useMutation("posts", deletePost);
+  const mutation = useMutation("deletePost", deletePost);
   const postDelete = () => {
     mutation.mutate(detailItem.oid);
     router.back();

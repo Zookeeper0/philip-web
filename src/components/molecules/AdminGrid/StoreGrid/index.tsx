@@ -1,43 +1,49 @@
-import { CheckBox, DataGrid } from "devextreme-react";
-import { Column, Scrolling } from "devextreme-react/data-grid";
+import { CheckBox, DataGrid, LoadPanel } from "devextreme-react";
+import { Column, Editing, Scrolling } from "devextreme-react/data-grid";
 import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
 import { Button } from "@/components/atoms/Button";
-import { useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import { StoreModal } from "../../AdminModal/StoreModal";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryClient, useMutation, useQueryClient } from "react-query";
 import {
   getAdminStorePosts,
-  getPostsListApi,
   promotionAPI,
+  promotionRoleAPI,
 } from "@/apis/postsApi";
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 import useApiError from "@/lib/hooks/useApiError";
+import { InputSelect } from "@/components/atoms/Input/InputSelect";
 
 type Props = {
   storeSearchKeyword: string;
+  dataSource: any;
+  isLoading: boolean;
 };
 
-export const StoreGrid = ({ storeSearchKeyword }: Props) => {
-  const { handleError } = useApiError();
+const position = { of: ".datagrid-wrap" };
+
+export const StoreGrid = ({
+  storeSearchKeyword,
+  dataSource,
+  isLoading,
+}: Props) => {
   const [storeModal, setStoreModal] = useState(false);
   const [store, setStore] = useState();
-  const queryClient = useQueryClient();
-  /** 업체 목록 불러오기 */
-  const { data: dataSource } = useQuery(
-    ["getAdminStorePosts", storeSearchKeyword],
-    getAdminStorePosts,
-    {
-      retry: 1,
-      onError(error: any) {
-        handleError(error);
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: Infinity,
       },
-    }
-  );
+    },
+  });
 
   const promotionMutation = useMutation("promotionAPI", promotionAPI, {
-    onSuccess() {
-      queryClient.refetchQueries("getAdminStorePosts");
+    onSuccess: async () => {
+      await queryClient.refetchQueries(["getAdminStorePosts"], {
+        active: true,
+      });
     },
   });
 
@@ -46,14 +52,38 @@ export const StoreGrid = ({ storeSearchKeyword }: Props) => {
     setStoreModal(!storeModal);
   };
 
-  const promotionHandler = (e: any, data: any) => {
+  const promotionHandler = (data: any) => {
     promotionMutation.mutate(data.data.oid);
+  };
+
+  const changePromotionOrderMutation = useMutation(
+    "promotionRoleAPI",
+    promotionRoleAPI,
+    {
+      onSuccess: async () => {
+        await queryClient.refetchQueries(["getAdminStorePosts"], {
+          active: true,
+        });
+      },
+    }
+  );
+
+  const onChangeOrder = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    data: any
+  ) => {
+    const datas = {
+      oid: data.data.oid,
+      order: e.target.value,
+    };
+    changePromotionOrderMutation.mutate(datas);
   };
 
   return (
     <>
       <S.AdminGrid>
         <DataGrid
+          className={"datagrid-wrap"}
           height={700}
           dataSource={dataSource}
           showRowLines={true}
@@ -62,6 +92,11 @@ export const StoreGrid = ({ storeSearchKeyword }: Props) => {
           focusedRowEnabled={true}
           keyExpr="oid"
         >
+          <LoadPanel
+            shadingColor="rgba(101, 101, 101, 0.4)"
+            visible={isLoading}
+            position={position}
+          />
           <Scrolling mode="virtual" />
           <Column
             caption="No."
@@ -84,9 +119,46 @@ export const StoreGrid = ({ storeSearchKeyword }: Props) => {
                 checked={data.data.promotion}
                 themeType="admin"
                 layout="row"
-                onChange={(e: Event) => {
-                  promotionHandler(e, data);
+                onChange={() => {
+                  promotionHandler(data);
                 }}
+              />
+            )}
+          />
+          <Column
+            caption="순서"
+            dataField="role"
+            width={70}
+            cellRender={(data) => (
+              <InputSelect
+                options={[
+                  {
+                    name: "0",
+                  },
+                  {
+                    name: "1",
+                  },
+                  {
+                    name: "2",
+                  },
+                  {
+                    name: "3",
+                  },
+                  ,
+                  {
+                    name: "4",
+                  },
+                  ,
+                  {
+                    name: "5",
+                  },
+                ]}
+                layout="colums"
+                size="sm"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  onChangeOrder(e, data);
+                }}
+                value={data.data.order}
               />
             )}
           />

@@ -34,11 +34,11 @@ export const AdminPostForm = () => {
   const [newDetailImages, setNewDetailImages, onRemoveDetail] = useImage([]);
   const [newMenuImages, setNewMenuImages, onRemoveMenu] = useImage([]);
 
-  const mutation = useMutation("posts", addPostApi, {
+  const mutation = useMutation("addPostApi", addPostApi, {
     onSuccess() {
       reset();
       setImagePaths([]);
-      queryClient.refetchQueries("posts");
+      queryClient.refetchQueries("getAdminStorePosts");
       router.replace("/admin/store");
     },
     onSettled() {

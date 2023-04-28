@@ -22,7 +22,6 @@ export const UserModal = ({ onClose, user }: any) => {
     }
   );
 
-  console.log(user);
   const onChangeRole = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRole(e.target.value);
     const data = {

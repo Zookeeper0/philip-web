@@ -41,7 +41,7 @@ export function deletePost(oid: string) {
 /** GET 관리자 페이지 업체관리 리스트 불러오기 */
 export function getAdminStorePosts({ queryKey }: any) {
   return axiosInstance
-    .get(`/posts/store?search=${queryKey[1]}`)
+    .get(`/posts/store?search=${queryKey[1]}&category=${queryKey[2]}`)
     .then((response) => response.data);
 }
 
@@ -70,12 +70,21 @@ export function deleteImageAPI(data: string) {
     .then((response) => response.data);
 }
 
+/** 게시글 수정 */
 export function editPostAPI(data: Object) {
   return axiosInstance
     .put("/posts/store/edit", data)
     .then((response) => response.data);
 }
 
+/** 프로모션 체크 */
 export function promotionAPI(oid: string) {
   return axiosInstance.patch(`/posts/promotion/${oid}`);
+}
+
+export function promotionRoleAPI(data: any) {
+  console.log(data);
+  return axiosInstance
+    .put(`/posts/promotion/role/${data.oid}`, data)
+    .then((response) => response.data);
 }

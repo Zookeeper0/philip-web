@@ -46,7 +46,17 @@ export const AccountGrid = ({ adminSearchKeyword }: AccountGridProps) => {
           />
           <Column caption="ID" dataField="admin_id" />
           <Column caption="이름" dataField="name" />
+          <Column caption="담당부서" dataField="department" />
+          <Column caption="담당지역" dataField="region" />
           <Column caption="관리자 권한등급" dataField="role" />
+          <Column caption="비고" dataField="note" />
+          <Column
+            caption="계정생성일"
+            dataField="created_at"
+            dataType="date"
+            format="yyyy-MM-dd"
+            width={90}
+          />
           <Column
             caption="상세보기"
             width={90}

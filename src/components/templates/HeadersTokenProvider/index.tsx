@@ -24,6 +24,7 @@ const HeadersTokenProvider: React.FC<React.PropsWithChildren> = ({
     const admin = JSON.parse(adminInfo);
 
     setAdmin(admin);
+    console.log("admin?.accessToken", admin?.accessToken);
     setToken(admin?.accessToken);
     if (router.pathname.includes("admin") && admin === null) {
       router.replace("/admin/login");

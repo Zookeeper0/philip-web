@@ -16,5 +16,7 @@ export const AdminSearchTit = styled.div`
 export const AdminSearch = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 90%;
   gap: 10px;
 `;
