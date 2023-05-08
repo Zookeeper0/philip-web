@@ -54,7 +54,6 @@ export const StoreGrid = ({ dataSource, isLoading }: Props) => {
       onError(error: any) {
         const { response } = error;
         setError(response.data.message);
-        queryClient.resetQueries("getAdminStorePosts");
       },
     }
   );
@@ -74,7 +73,7 @@ export const StoreGrid = ({ dataSource, isLoading }: Props) => {
   const h = 10;
   const w = 10;
   const orderOptions = Array(h * w)
-    .fill()
+    .fill(0)
     .map((arr, i) => {
       // (arr: 현재값, i:인덱스)
       return { name: i };

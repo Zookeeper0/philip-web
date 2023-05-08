@@ -35,8 +35,7 @@ export const AdminLoginBox = () => {
 
       localStorage.setItem("admin", JSON.stringify(user));
       setAdmin(user);
-      setToken(user?.accessToken);
-
+      setToken();
       router.replace("/admin/store");
     } catch (error) {
       const { response } = error as unknown as any;

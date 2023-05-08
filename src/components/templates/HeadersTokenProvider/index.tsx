@@ -23,7 +23,7 @@ const HeadersTokenProvider: React.FC<React.PropsWithChildren> = ({
     const adminInfo: any = localStorage.getItem("admin");
     const admin = JSON.parse(adminInfo);
 
-    setToken(admin?.accessToken);
+    setToken();
     setAdmin(admin);
 
     if (router.pathname.includes("admin") && admin === null) {

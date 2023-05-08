@@ -18,7 +18,6 @@ export const HeaderMenu = () => {
   const [cityOptions, setCityOptions] = useState([]);
   const [city, setCityState] = useRecoilState<any>(cityState);
 
-  console.log(admin);
   /** 시티 select 목록 불러오기 */
   const { data: cityItem } = useQuery("getCityListApi", getCityListApi);
 

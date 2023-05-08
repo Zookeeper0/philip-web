@@ -83,7 +83,6 @@ export function promotionAPI(oid: string) {
 }
 
 export function promotionRoleAPI(data: any) {
-  console.log(data);
   return axiosInstance
     .put(`/posts/promotion/role/${data.oid}`, data)
     .then((response) => response.data);
