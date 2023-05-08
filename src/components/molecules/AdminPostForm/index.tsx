@@ -38,7 +38,7 @@ export const AdminPostForm = () => {
     onSuccess() {
       reset();
       setImagePaths([]);
-      queryClient.refetchQueries("getAdminStorePosts");
+      queryClient.refetchQueries("addPostApi");
       router.replace("/admin/store");
     },
     onSettled() {

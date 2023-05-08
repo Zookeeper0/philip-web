@@ -50,6 +50,7 @@ export const theme: DefaultTheme = {
 
     black: "#000000",
     white: "#ffffff",
+    red: "#ff5f5f",
     whiteHover: "#F6F7FA",
   },
 };

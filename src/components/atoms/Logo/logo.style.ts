@@ -7,6 +7,7 @@ interface LogoType {
 }
 
 export const Logo = styled.div<LogoType>`
+  cursor: pointer;
   width: ${(props) =>
     props.mobile
       ? "auto"

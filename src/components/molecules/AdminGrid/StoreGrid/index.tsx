@@ -3,9 +3,9 @@ import { Column, Editing, Scrolling } from "devextreme-react/data-grid";
 import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
 import { Button } from "@/components/atoms/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StoreModal } from "../../AdminModal/StoreModal";
-import { QueryClient, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   getAdminStorePosts,
   promotionAPI,
@@ -16,34 +16,21 @@ import useApiError from "@/lib/hooks/useApiError";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
 
 type Props = {
-  storeSearchKeyword: string;
   dataSource: any;
   isLoading: boolean;
 };
 
 const position = { of: ".datagrid-wrap" };
 
-export const StoreGrid = ({
-  storeSearchKeyword,
-  dataSource,
-  isLoading,
-}: Props) => {
+export const StoreGrid = ({ dataSource, isLoading }: Props) => {
   const [storeModal, setStoreModal] = useState(false);
   const [store, setStore] = useState();
+  const [error, setError] = useState();
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: Infinity,
-      },
-    },
-  });
-
+  const queryClient = useQueryClient();
   const promotionMutation = useMutation("promotionAPI", promotionAPI, {
-    onSuccess: async () => {
-      await queryClient.refetchQueries(["getAdminStorePosts"], {
-        active: true,
-      });
+    onSuccess() {
+      queryClient.refetchQueries("getAdminStorePosts");
     },
   });
 
@@ -60,10 +47,14 @@ export const StoreGrid = ({
     "promotionRoleAPI",
     promotionRoleAPI,
     {
-      onSuccess: async () => {
-        await queryClient.refetchQueries(["getAdminStorePosts"], {
-          active: true,
-        });
+      onSuccess() {
+        queryClient.refetchQueries("getAdminStorePosts");
+        setError(undefined);
+      },
+      onError(error: any) {
+        const { response } = error;
+        setError(response.data.message);
+        queryClient.resetQueries("getAdminStorePosts");
       },
     }
   );
@@ -72,6 +63,7 @@ export const StoreGrid = ({
     e: React.ChangeEvent<HTMLSelectElement>,
     data: any
   ) => {
+    setError(undefined);
     const datas = {
       oid: data.data.oid,
       order: e.target.value,
@@ -79,9 +71,19 @@ export const StoreGrid = ({
     changePromotionOrderMutation.mutate(datas);
   };
 
+  const h = 10;
+  const w = 10;
+  const orderOptions = Array(h * w)
+    .fill()
+    .map((arr, i) => {
+      // (arr: 현재값, i:인덱스)
+      return { name: i };
+    });
   return (
     <>
       <S.AdminGrid>
+        <S.ErrorMsg>{error}</S.ErrorMsg>
+
         <DataGrid
           className={"datagrid-wrap"}
           height={700}
@@ -127,32 +129,11 @@ export const StoreGrid = ({
           />
           <Column
             caption="순서"
-            dataField="role"
+            dataField="order"
             width={70}
             cellRender={(data) => (
               <InputSelect
-                options={[
-                  {
-                    name: "0",
-                  },
-                  {
-                    name: "1",
-                  },
-                  {
-                    name: "2",
-                  },
-                  {
-                    name: "3",
-                  },
-                  ,
-                  {
-                    name: "4",
-                  },
-                  ,
-                  {
-                    name: "5",
-                  },
-                ]}
+                options={orderOptions}
                 layout="colums"
                 size="sm"
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
