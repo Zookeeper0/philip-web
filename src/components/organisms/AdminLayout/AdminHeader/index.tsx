@@ -17,7 +17,7 @@ export const AdminHeader = () => {
       <S.AdminHeader>
         <Button
           type="button"
-          color="adminClear"
+          color="white"
           layout="icon"
           size="md"
           label="관리자 님"
