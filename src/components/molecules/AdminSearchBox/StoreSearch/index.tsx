@@ -7,6 +7,7 @@ import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { categoryState } from "@/recoil/category";
 import { useQuery } from "react-query";
 import { getCategoryNavApi } from "@/apis/categoryApi";
+import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 
 type Props = {
   setStoreSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
@@ -25,44 +26,41 @@ export const StoreSearch = ({ setStoreSearchKeyword }: Props) => {
   );
 
   return (
-    <S.AdminSearchBox>
-      <S.AdminSearchTit>업체검색</S.AdminSearchTit>
-      <S.AdminSearch>
-        <div style={{ display: "flex" }}>
-          <InputText
-            layout="adminRow"
-            size="sm"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setStoreSearchKeyword(e.target.value)
-            }
-          />
-          <Button
-            type="submit"
-            width="60px"
-            height={22}
-            layout="solid"
-            color="func"
-            label="검색"
-          />
+    <>
+      <S.AdminSearchBox>
+        <S.AdminsearchItemBox>
+          <S.AdminSearchTit>카테고리</S.AdminSearchTit>
           <InputSelect
             layout="columns"
             size="sm"
-            width="60px"
+            width="110px"
+            themeType="admin"
             options={categoryItem}
             onChange={getCategoryOption}
             value={categoryInput}
           />
-        </div>
+        </S.AdminsearchItemBox>
 
-        <Button
-          type="button"
-          width="60px"
-          height={22}
-          layout="solid"
-          color="func"
-          label="저장"
-        />
-      </S.AdminSearch>
-    </S.AdminSearchBox>
+        <S.AdminsearchItemBox>
+          <S.AdminSearchTit>업체명</S.AdminSearchTit>
+          <InputText
+            layout="adminRow"
+            size="sm"
+            themeType="admin"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setStoreSearchKeyword(e.target.value)
+            }
+          />
+        </S.AdminsearchItemBox>
+
+        <S.AdminsearchItemBox>
+          <InputCheckbox
+            layout="row"
+            themeType="admin"
+            displayValue="프로모션만 보기"
+          />
+        </S.AdminsearchItemBox>
+      </S.AdminSearchBox>
+    </>
   );
 };
