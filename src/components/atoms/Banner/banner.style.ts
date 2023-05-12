@@ -6,6 +6,7 @@ import BannerEmptySMMobile from "public/assets/images/img-banner-empty-sm-mobile
 
 interface BannerProps {
   order: string;
+  admin?: boolean;
 }
 
 export const Banner = styled.div<BannerProps>`
@@ -30,6 +31,12 @@ export const Banner = styled.div<BannerProps>`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  ${(props) =>
+    props.admin &&
+    css`
+      height: ${props.order === "LG" ? "89px" : "58px"} !important;
+    `}
 
   //모바일 화면 설정
   @media screen and (max-width: 768px) {

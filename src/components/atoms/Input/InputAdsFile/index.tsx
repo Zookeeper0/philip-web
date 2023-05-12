@@ -1,4 +1,4 @@
-import * as S from "./inputFile.style";
+import * as S from "./inputAdsFile.style";
 
 export const InputAdsFile = ({
   id,
@@ -7,11 +7,17 @@ export const InputAdsFile = ({
   isAds,
   onDelete,
   onRemovePreviewImage,
+  file,
 }: any) => {
+  console.log(file);
   return (
     <S.InputFile>
       <S.FileLabelBox>
-        {label && label}
+        <S.FileTitBox>{label && label}</S.FileTitBox>
+
+        <S.FileNameBox>
+          <span>{file?.originalname}</span>
+        </S.FileNameBox>
         {isAds ? (
           <label htmlFor={id || "input-img"}>
             삭제
