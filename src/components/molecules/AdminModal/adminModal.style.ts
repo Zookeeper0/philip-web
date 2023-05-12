@@ -14,7 +14,7 @@ export const AdminModalBG = styled.div`
 
 export const AdminModal = styled.div`
   display: flex;
-  width: 240px;
+  width: 280px;
   background: ${(props) => props.theme.colors.white};
   border-radius: 3px;
   box-shadow: ${(props) => props.theme.shadow.admin};
@@ -30,7 +30,7 @@ export const ModalBody = styled.form`
   display: flex;
   padding: 20px;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 `;
 
 export const ModalItemBox = styled.div`
