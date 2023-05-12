@@ -180,7 +180,10 @@ export const AdminEditForm = () => {
       encType="multipart/form-data"
     >
       <S.PostFormImgBox>
-        <S.PostFormBoxTit>대표이미지 등록</S.PostFormBoxTit>
+        <S.PostFormBoxTit>
+          대표이미지 등록
+          <span>(최대 1장 등록)</span>
+        </S.PostFormBoxTit>
         {/* 메인페이지 대표 이미지 등록 */}
         <S.PostFormImgInput>
           <InputFile
@@ -192,7 +195,10 @@ export const AdminEditForm = () => {
             imageFromDB={thumbImages}
           />
         </S.PostFormImgInput>
-        <S.PostFormBoxTit>상세이미지 등록</S.PostFormBoxTit>
+        <S.PostFormBoxTit>
+          상세이미지 등록
+          <span>(최대 5장 등록)</span>
+        </S.PostFormBoxTit>
         {/* 상세이미지 등록 */}
         <S.PostFormImgInput>
           <InputFile
@@ -204,7 +210,10 @@ export const AdminEditForm = () => {
             imageFromDB={detailImages}
           />
         </S.PostFormImgInput>
-        <S.PostFormBoxTit>메뉴이미지 등록</S.PostFormBoxTit>
+        <S.PostFormBoxTit>
+          메뉴이미지 등록
+          <span>(최대 1장 등록)</span>
+        </S.PostFormBoxTit>
         {/* 메뉴이미지 등록 */}
         <S.PostFormImgInput>
           <InputFile

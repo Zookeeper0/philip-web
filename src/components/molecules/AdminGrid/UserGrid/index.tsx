@@ -43,15 +43,36 @@ export const UserGrid = ({ userSearchKeyword }: UserGridProps) => {
           <Column
             caption="No."
             cellRender={(e) => e.row.loadIndex + 1}
-            width={30}
+            width={40}
+            alignment="center"
           />
-          <Column caption="이름" dataField="name" />
-          <Column caption="카카오ID" dataField="kakao_id" />
-          <Column caption="연락처" dataField="phone_number" />
-          <Column caption="회원등급" dataField="role" />
+          <Column
+            caption="이름"
+            dataField="name"
+            width={100}
+            alignment="center"
+          />
+          <Column
+            caption="카카오ID"
+            dataField="kakao_id"
+            width={100}
+            alignment="center"
+          />
+          <Column
+            caption="연락처"
+            dataField="phone_number"
+            alignment="center"
+          />
+          <Column
+            caption="회원등급"
+            dataField="role"
+            width={100}
+            alignment="center"
+          />
           <Column
             caption="상세보기"
-            width={90}
+            width={70}
+            alignment="center"
             cellRender={(e) => (
               <Button
                 type="button"

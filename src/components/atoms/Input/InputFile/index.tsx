@@ -26,7 +26,9 @@ export const InputFile = ({
         </label>
       </S.FileLabelBox>
       <S.ImgPreviewList>
-        {imgPreview.length === 0 && (
+        {imgPreview?.length > 0 || imageFromDB?.length > 0 ? (
+          ""
+        ) : (
           <span className="empty-txt">등록된 이미지가 없습니다.</span>
         )}
         {imgPreview?.map((v: any, i: number) => (

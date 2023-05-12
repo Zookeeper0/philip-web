@@ -1,5 +1,5 @@
 import { CheckBox, DataGrid, LoadPanel } from "devextreme-react";
-import { Column, Editing, Scrolling } from "devextreme-react/data-grid";
+import { Column, Paging, Scrolling } from "devextreme-react/data-grid";
 import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
 import { Button } from "@/components/atoms/Button";
@@ -14,6 +14,7 @@ import {
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 import useApiError from "@/lib/hooks/useApiError";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
+import { useRouter } from "next/router";
 
 type Props = {
   dataSource: any;
@@ -23,6 +24,7 @@ type Props = {
 const position = { of: ".datagrid-wrap" };
 
 export const StoreGrid = ({ dataSource, isLoading }: Props) => {
+  const router = useRouter();
   const [storeModal, setStoreModal] = useState(false);
   const [store, setStore] = useState();
   const [error, setError] = useState();
@@ -34,9 +36,16 @@ export const StoreGrid = ({ dataSource, isLoading }: Props) => {
     },
   });
 
-  const openStoreModal = (data: any) => {
-    setStore(data);
-    setStoreModal(!storeModal);
+  // const openStoreModal = (data: any) => {
+  //   setStore(data);
+  //   setStoreModal(!storeModal);
+  // };
+
+  /** 상세보기 클릭 시 업체정보 수정창 바로가기 */
+  const goEdit = (e: any) => {
+    // if (userToken || admin?.user) router.push(`/main/post/${item.oid}`);
+    // else alert("로그인이 필요한 서비스 입니다.");
+    router.push(`/admin/store/edit/${e.oid}`);
   };
 
   const promotionHandler = (data: any) => {
@@ -81,11 +90,10 @@ export const StoreGrid = ({ dataSource, isLoading }: Props) => {
   return (
     <>
       <S.AdminGrid>
-        <S.ErrorMsg>{error}</S.ErrorMsg>
+        {error && <S.ErrorMsg>[errored] {error}</S.ErrorMsg>}
 
         <DataGrid
           className={"datagrid-wrap"}
-          height={700}
           dataSource={dataSource}
           showRowLines={true}
           hoverStateEnabled={true}
@@ -98,43 +106,81 @@ export const StoreGrid = ({ dataSource, isLoading }: Props) => {
             visible={isLoading}
             position={position}
           />
-          <Scrolling mode="virtual" />
+          <Paging defaultPageSize={10} />
+          <Scrolling mode="virtual" useNative={false} />
           <Column
             caption="No."
             cellRender={(e) => e.row.loadIndex + 1}
-            width={30}
+            width={40}
+            alignment="center"
           />
-          <Column caption="업체명" dataField="store_name" width={120} />
-          <Column caption="업종" dataField="category" width={80} />
-          <Column caption="대표자명" dataField="owner_name" width={80} />
-          <Column caption="전화번호" dataField="phone_number" width={120} />
-          <Column caption="지역" dataField="city" width={80} />
-          <Column caption="주소" dataField="address" minWidth={80} />
+          <Column
+            caption="업체명"
+            dataField="store_name"
+            width={140}
+            alignment="center"
+          />
+          <Column
+            caption="업종"
+            dataField="category"
+            width={100}
+            alignment="center"
+          />
+          <Column
+            caption="대표자명"
+            dataField="owner_name"
+            width={100}
+            alignment="center"
+          />
+          <Column
+            caption="전화번호"
+            dataField="phone_number"
+            width={140}
+            alignment="center"
+          />
+          <Column
+            caption="지역"
+            dataField="city"
+            width={80}
+            alignment="center"
+          />
+          <Column
+            caption="주소"
+            dataField="address"
+            minWidth={80}
+            hidingPriority={2}
+          />
           <Column
             caption="프로모션"
             dataField="promotion"
-            width={60}
+            width={64}
+            alignment="center"
             cellRender={(data) => (
-              <InputCheckbox
-                value="1"
-                checked={data.data.promotion}
-                themeType="admin"
-                layout="row"
-                onChange={() => {
-                  promotionHandler(data);
-                }}
-              />
+              <S.AdminCellBox>
+                <InputCheckbox
+                  value="1"
+                  checked={data.data.promotion}
+                  themeType="admin"
+                  layout="row"
+                  onChange={() => {
+                    promotionHandler(data);
+                  }}
+                />
+              </S.AdminCellBox>
             )}
           />
           <Column
             caption="순서"
             dataField="order"
-            width={70}
+            width={60}
+            alignment="center"
             cellRender={(data) => (
               <InputSelect
                 options={orderOptions}
                 layout="colums"
                 size="sm"
+                width="50px"
+                themeType="admin"
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   onChangeOrder(e, data);
                 }}
@@ -148,10 +194,13 @@ export const StoreGrid = ({ dataSource, isLoading }: Props) => {
             dataType="date"
             format="yyyy-MM-dd"
             width={90}
+            alignment="center"
+            hidingPriority={1}
           />
           <Column
             caption="상세보기"
-            width={90}
+            width={70}
+            alignment="center"
             cellRender={(e) => (
               <Button
                 type="button"
@@ -160,13 +209,13 @@ export const StoreGrid = ({ dataSource, isLoading }: Props) => {
                 width="60px"
                 height={24}
                 label="보기"
-                onClick={() => openStoreModal(e.data)}
+                onClick={() => goEdit(e.data)}
               />
             )}
           />
         </DataGrid>
       </S.AdminGrid>
-      {storeModal && <StoreModal onClose={openStoreModal} store={store} />}
+      {/* {storeModal && <StoreModal onClose={openStoreModal} store={store} />} */}
     </>
   );
 };
