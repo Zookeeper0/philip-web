@@ -44,20 +44,18 @@ export const HeaderMenu = () => {
     <S.HeaderMenu>
       {/* 관리자 페이지 이동 버튼 */}
       {/* 관리자 페이지 이동버튼이 보일 필요가 있을까 */}
-      {admin && (
-        <>
-          <Button
-            type="button"
-            color="clear"
-            layout="icon"
-            size="sm"
-            label="관리자 페이지"
-            onClick={() => {
-              router.replace("/admin/store");
-            }}
-          ></Button>
-        </>
-      )}
+      {/* {admin && (
+        <Button
+          type="button"
+          color="clear"
+          layout="icon"
+          size="sm"
+          label="관리자 페이지"
+          onClick={() => {
+            router.replace("/admin/store");
+          }}
+        />
+      )} */}
       {userToken ? (
         <>
           <Button
