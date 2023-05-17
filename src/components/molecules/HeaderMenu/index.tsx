@@ -43,7 +43,7 @@ export const HeaderMenu = () => {
   return (
     <S.HeaderMenu>
       {/* 관리자 페이지 이동 버튼 */}
-      {/* 관리자 페이지 이동버튼이 보일 필요가 있을까 */}
+      {/* 관리자 페이지 이동버튼 -> 관리자 로그인 시 표기되도록 수정 필요 */}
       {/* {admin && (
         <Button
           type="button"
