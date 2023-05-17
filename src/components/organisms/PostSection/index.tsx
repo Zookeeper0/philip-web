@@ -24,7 +24,7 @@ export const PostSection = () => {
         if (err.response.status === 401) {
           localStorage.removeItem("kakaoSignKey");
           router.replace("/main");
-          alert("로그인 기간이 만료되어 로그아웃 되었습니다.");
+          alert("로그인 회원만 사용 가능합니다.");
         }
       },
     }
