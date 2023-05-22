@@ -10,6 +10,8 @@ interface TextProps {
   placeholder?: string;
   register?: UseFormRegisterReturn;
   onChange?: any;
+  errors?: any;
+  name?: string;
 }
 
 export const InputTextarea: React.FC<TextProps> = ({
@@ -21,6 +23,8 @@ export const InputTextarea: React.FC<TextProps> = ({
   placeholder,
   register,
   onChange,
+  errors,
+  name,
 }) => {
   return (
     <S.InputCommon
@@ -32,6 +36,7 @@ export const InputTextarea: React.FC<TextProps> = ({
       <label>
         {label && label}
         <textarea placeholder={placeholder} {...register} onChange={onChange} />
+        {errors ? <p className="err-message">{errors[name!]?.message}</p> : ""}
       </label>
     </S.InputCommon>
   );

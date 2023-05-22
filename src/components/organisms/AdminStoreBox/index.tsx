@@ -9,12 +9,14 @@ import { useRecoilValue } from "recoil";
 import { categoryState } from "@/recoil/category";
 
 export const AdminStoreBox = () => {
+  const [promotion, setPromotion] = useState(false);
   const { handleError } = useApiError();
   const [storeSearchKeyword, setStoreSearchKeyword] = useState("");
   const currentCategory = useRecoilValue(categoryState);
+
   /** 업체 목록 불러오기 */
   const { data: dataSource, isLoading } = useQuery(
-    ["getAdminStorePosts", storeSearchKeyword, currentCategory],
+    ["getAdminStorePosts", storeSearchKeyword, currentCategory, promotion],
     getAdminStorePosts,
     {
       onError(error: any) {
@@ -23,10 +25,12 @@ export const AdminStoreBox = () => {
     }
   );
 
-  const queryClient = useQueryClient();
   return (
     <S.AdminStoreBox>
-      <StoreSearch setStoreSearchKeyword={setStoreSearchKeyword} />
+      <StoreSearch
+        setStoreSearchKeyword={setStoreSearchKeyword}
+        setPromotion={setPromotion}
+      />
       <StoreGrid dataSource={dataSource} isLoading={isLoading} />
     </S.AdminStoreBox>
   );

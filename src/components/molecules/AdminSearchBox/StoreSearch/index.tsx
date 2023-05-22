@@ -11,9 +11,10 @@ import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 
 type Props = {
   setStoreSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setPromotion: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const StoreSearch = ({ setStoreSearchKeyword }: Props) => {
+export const StoreSearch = ({ setStoreSearchKeyword, setPromotion }: Props) => {
   const [categoryInput, setCategoryInput] = useRecoilState(categoryState);
 
   const getCategoryOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -58,6 +59,9 @@ export const StoreSearch = ({ setStoreSearchKeyword }: Props) => {
             layout="row"
             themeType="admin"
             displayValue="프로모션만 보기"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPromotion(e.target.checked)
+            }
           />
         </S.AdminsearchItemBox>
       </S.AdminSearchBox>

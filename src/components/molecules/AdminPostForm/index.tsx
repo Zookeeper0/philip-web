@@ -195,6 +195,8 @@ export const AdminPostForm = () => {
           size="md"
           options={cityOptions}
           register={register("cityOid")}
+          errors={errors}
+          name="cityOid"
         />
         <AdminInputSelect
           label="카테고리 선택"
@@ -203,6 +205,8 @@ export const AdminPostForm = () => {
           size="md"
           options={categoryOptions}
           register={register("categoryOid")}
+          errors={errors}
+          name="categoryOid"
         />
         <InputText
           label="상호명"
@@ -212,6 +216,8 @@ export const AdminPostForm = () => {
           width="100%"
           placeholder="입력..."
           register={register("storeName")}
+          errors={errors}
+          name="storeName"
         />
         <InputText
           label="대표자명"
@@ -221,6 +227,8 @@ export const AdminPostForm = () => {
           width="100%"
           placeholder="입력..."
           register={register("ownerName")}
+          errors={errors}
+          name="ownerName"
         />
         <InputText
           label="주소"
@@ -230,6 +238,8 @@ export const AdminPostForm = () => {
           width="100%"
           placeholder="입력..."
           register={register("address")}
+          errors={errors}
+          name="address"
         />
         <InputText
           label="대표 전화번호"
@@ -239,6 +249,8 @@ export const AdminPostForm = () => {
           width="100%"
           placeholder="입력..."
           register={register("phoneNumber")}
+          errors={errors}
+          name="phoneNumber"
         />
         <InputTextarea
           label="요금 및 메뉴설명"
@@ -248,6 +260,8 @@ export const AdminPostForm = () => {
           width="100%"
           placeholder="내용을 입력해 주세요."
           register={register("contents")}
+          errors={errors}
+          name="contents"
         />
         <InputText
           label="비고"
@@ -257,6 +271,8 @@ export const AdminPostForm = () => {
           width="100%"
           placeholder="입력..."
           register={register("remark")}
+          errors={errors}
+          name="remark"
         />
       </S.PostFormInfoBox>
 

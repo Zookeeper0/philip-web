@@ -41,7 +41,9 @@ export function deletePost(oid: string) {
 /** GET 관리자 페이지 업체관리 리스트 불러오기 */
 export function getAdminStorePosts({ queryKey }: any) {
   return axiosInstance
-    .get(`/posts/store?search=${queryKey[1]}&category=${queryKey[2]}`)
+    .get(
+      `/posts/store?search=${queryKey[1]}&category=${queryKey[2]}&promotion=${queryKey[3]}`
+    )
     .then((response) => response.data);
 }
 
