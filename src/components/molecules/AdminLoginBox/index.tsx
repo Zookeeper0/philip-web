@@ -67,7 +67,7 @@ export const AdminLoginBox = ({
         label="로그인하기"
         className={`${isLoading && "spinner spinner-white spinner-right"}`}
       />
-      <Button
+      {/* <Button
         type="button"
         width="100%"
         height={56}
@@ -77,7 +77,7 @@ export const AdminLoginBox = ({
         onClick={() => {
           router.replace("/admin/signup");
         }}
-      />
+      /> */}
     </S.AdminLoginBox>
   );
 };
