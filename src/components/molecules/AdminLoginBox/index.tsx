@@ -3,6 +3,7 @@ import * as S from "./adminLoginBox.style";
 import { InputText } from "@/components/atoms/Input/InputText";
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 import { AdminLoginPageProps } from "@/components/templates/AdminLoginPage";
+import { useRouter } from "next/router";
 
 export const AdminLoginBox = ({
   onSubmitForm,
@@ -13,6 +14,7 @@ export const AdminLoginBox = ({
   errorMessage,
   isLoading,
 }: AdminLoginPageProps) => {
+  const router = useRouter();
   return (
     <S.AdminLoginBox onSubmit={onSubmitForm}>
       <S.LoginTit>Login</S.LoginTit>
@@ -65,7 +67,7 @@ export const AdminLoginBox = ({
         label="로그인하기"
         className={`${isLoading && "spinner spinner-white spinner-right"}`}
       />
-      {/* <Button
+      <Button
         type="button"
         width="100%"
         height={56}
@@ -75,7 +77,7 @@ export const AdminLoginBox = ({
         onClick={() => {
           router.replace("/admin/signup");
         }}
-      /> */}
+      />
     </S.AdminLoginBox>
   );
 };

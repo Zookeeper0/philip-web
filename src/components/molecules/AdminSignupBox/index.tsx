@@ -4,11 +4,14 @@ import { InputText } from "@/components/atoms/Input/InputText";
 import { InputDate } from "@/components/atoms/Input/InputDate";
 import useWindowWidth from "@/lib/hooks/useWindowWidth";
 import { AdminSignupPageProps } from "@/components/templates/AdminSignupPage";
+import { error } from "console";
 
 export const AdminSignupBox = ({
   handleSubmit,
   Submit,
   register,
+  errors,
+  onDuplicateCheck,
 }: AdminSignupPageProps) => {
   const isWindowWidth = useWindowWidth();
 
@@ -17,12 +20,14 @@ export const AdminSignupBox = ({
       <S.LoginTit>간편회원가입</S.LoginTit>
       <S.IdCheckWrapper>
         <InputText
-          label={isWindowWidth < 769 ? "아이디" : "아아디"}
+          label={isWindowWidth < 769 ? "아이디" : "아이디"}
           layout={isWindowWidth < 769 ? "column" : "column"}
           size={isWindowWidth < 769 ? "xlg" : "md"}
           width="145px"
           placeholder={isWindowWidth < 769 ? "아이디 입력" : "아이디 입력"}
           register={register("adminId")}
+          errors={errors}
+          name="adminId"
         />
         <Button
           type="button"
@@ -31,6 +36,7 @@ export const AdminSignupBox = ({
           color="mainBg"
           layout="solid"
           label="ID확인"
+          onClick={onDuplicateCheck}
         />
       </S.IdCheckWrapper>
 
@@ -42,6 +48,8 @@ export const AdminSignupBox = ({
         type={"password"}
         placeholder={isWindowWidth < 769 ? "비밀번호 입력" : "비밀번호 입력"}
         register={register("password")}
+        errors={errors}
+        name="password"
       />
       <InputText
         label={isWindowWidth < 769 ? "비밀번호확인" : "비밀번호확인"}
@@ -51,6 +59,8 @@ export const AdminSignupBox = ({
         type={"password"}
         placeholder={isWindowWidth < 769 ? "비밀번호확인" : "비밀번호확인"}
         register={register("passwordCheck")}
+        errors={errors}
+        name="passwordCheck"
       />
       <InputText
         label={isWindowWidth < 769 ? "이름" : "이름"}
@@ -59,6 +69,8 @@ export const AdminSignupBox = ({
         width="100%"
         placeholder={isWindowWidth < 769 ? "이름 입력" : "이름 입력"}
         register={register("name")}
+        errors={errors}
+        name="name"
       />
       <InputDate
         label={isWindowWidth < 769 ? "생년월일" : "생년월일"}
@@ -67,6 +79,8 @@ export const AdminSignupBox = ({
         width="190px"
         placeholder={isWindowWidth < 769 ? "생년월일 입력" : "생년월일 입력"}
         register={register("birth")}
+        errors={errors}
+        name="birth"
       />
       <Button
         type="submit"

@@ -46,7 +46,16 @@ export const InputText: React.FC<TextProps> = ({
           onChange={onChange}
           value={value}
         />
-        {errors ? <p className="err-message">{errors[name!]?.message}</p> : ""}
+        {errors && errors[name!]?.type !== "true" ? (
+          <p className="err-message">{errors[name!]?.message}</p>
+        ) : (
+          ""
+        )}
+        {errors && errors[name!]?.type === "true" ? (
+          <p className="message">{errors[name!]?.message}</p>
+        ) : (
+          ""
+        )}
       </label>
     </S.InputCommon>
   );

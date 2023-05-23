@@ -34,3 +34,10 @@ export function changeAdminRoleAPI(data: Object) {
     .put("/admin/role", data)
     .then((response) => response.data);
 }
+
+export function checkDuplicateId(data: Object) {
+  console.log(data);
+  return axiosInstance
+    .post("/admin/check", data)
+    .then((response) => response.data);
+}
