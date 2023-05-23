@@ -8,13 +8,17 @@ import { categoryState } from "@/recoil/category";
 import { useQuery } from "react-query";
 import { getCategoryNavApi } from "@/apis/categoryApi";
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
+import { AdminStorePageProps } from "@/components/templates/AdminStorePage";
 
-type Props = {
+interface StoreSearchProps {
   setStoreSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
   setPromotion: React.Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
-export const StoreSearch = ({ setStoreSearchKeyword, setPromotion }: Props) => {
+export const StoreSearch = ({
+  setStoreSearchKeyword,
+  setPromotion,
+}: StoreSearchProps) => {
   const [categoryInput, setCategoryInput] = useRecoilState(categoryState);
 
   const getCategoryOption = (e: React.ChangeEvent<HTMLSelectElement>) => {

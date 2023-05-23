@@ -15,78 +15,29 @@ import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
 import useApiError from "@/lib/hooks/useApiError";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { useRouter } from "next/router";
-
-type Props = {
-  dataSource: any;
-  isLoading: boolean;
-};
+import { AdminStorePageProps } from "@/components/templates/AdminStorePage";
 
 const position = { of: ".datagrid-wrap" };
 
-export const StoreGrid = ({ dataSource, isLoading }: Props) => {
-  const router = useRouter();
-  const [storeModal, setStoreModal] = useState(false);
-  const [store, setStore] = useState();
-  const [error, setError] = useState();
+interface StoreGridProps {
+  dataSource: [];
+  isLoading: boolean;
+  error: string;
+  promotionHandler: (data: any) => void;
+  orderOptions: any[];
+  onChangeOrder: (e: React.ChangeEvent<HTMLSelectElement>, data: any) => void;
+  goEdit: (e: any) => void;
+}
 
-  const queryClient = useQueryClient();
-  const promotionMutation = useMutation("promotionAPI", promotionAPI, {
-    onSuccess() {
-      queryClient.refetchQueries("getAdminStorePosts");
-    },
-  });
-
-  // const openStoreModal = (data: any) => {
-  //   setStore(data);
-  //   setStoreModal(!storeModal);
-  // };
-
-  /** 상세보기 클릭 시 업체정보 수정창 바로가기 */
-  const goEdit = (e: any) => {
-    // if (userToken || admin?.user) router.push(`/main/post/${item.oid}`);
-    // else alert("로그인이 필요한 서비스 입니다.");
-    router.push(`/admin/store/edit/${e.oid}`);
-  };
-
-  const promotionHandler = (data: any) => {
-    promotionMutation.mutate(data.data.oid);
-  };
-
-  const changePromotionOrderMutation = useMutation(
-    "promotionRoleAPI",
-    promotionRoleAPI,
-    {
-      onSuccess() {
-        queryClient.refetchQueries("getAdminStorePosts");
-        setError(undefined);
-      },
-      onError(error: any) {
-        const { response } = error;
-        setError(response.data.message);
-      },
-    }
-  );
-
-  const onChangeOrder = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    data: any
-  ) => {
-    setError(undefined);
-    const datas = {
-      oid: data.data.oid,
-      order: e.target.value,
-    };
-    changePromotionOrderMutation.mutate(datas);
-  };
-
-  const h = 10;
-  const w = 10;
-  const orderOptions = Array(h * w)
-    .fill(0)
-    .map((arr, i) => {
-      // (arr: 현재값, i:인덱스)
-      return { name: i };
-    });
+export const StoreGrid = ({
+  dataSource,
+  isLoading,
+  error,
+  promotionHandler,
+  orderOptions,
+  onChangeOrder,
+  goEdit,
+}: StoreGridProps) => {
   return (
     <>
       <S.AdminGrid>

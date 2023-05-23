@@ -1,10 +1,13 @@
 import { LoginBox } from "@/components/molecules/LoginBox";
 import * as S from "./loginPage.style";
 
-export const LoginPage = () => {
+interface LoginPageProp {
+  kakaoLogin: () => void;
+}
+export const LoginPage = ({ kakaoLogin }: LoginPageProp) => {
   return (
     <S.LoginPage>
-      <LoginBox />
+      <LoginBox kakaoLogin={kakaoLogin} />
     </S.LoginPage>
   );
 };

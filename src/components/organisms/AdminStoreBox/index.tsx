@@ -1,37 +1,35 @@
 import { StoreGrid } from "@/components/molecules/AdminGrid/StoreGrid";
 import { StoreSearch } from "@/components/molecules/AdminSearchBox/StoreSearch";
-import { useState } from "react";
+
 import * as S from "./AdminStoreGrid.style";
-import { getAdminStorePosts } from "@/apis/postsApi";
-import { useQuery, useQueryClient } from "react-query";
-import useApiError from "@/lib/hooks/useApiError";
-import { useRecoilValue } from "recoil";
-import { categoryState } from "@/recoil/category";
+import { AdminStorePageProps } from "@/components/templates/AdminStorePage";
 
-export const AdminStoreBox = () => {
-  const [promotion, setPromotion] = useState(false);
-  const { handleError } = useApiError();
-  const [storeSearchKeyword, setStoreSearchKeyword] = useState("");
-  const currentCategory = useRecoilValue(categoryState);
-
-  /** 업체 목록 불러오기 */
-  const { data: dataSource, isLoading } = useQuery(
-    ["getAdminStorePosts", storeSearchKeyword, currentCategory, promotion],
-    getAdminStorePosts,
-    {
-      onError(error: any) {
-        handleError(error);
-      },
-    }
-  );
-
+export const AdminStoreBox = ({
+  setStoreSearchKeyword,
+  setPromotion,
+  dataSource,
+  isLoading,
+  error,
+  promotionHandler,
+  orderOptions,
+  onChangeOrder,
+  goEdit,
+}: AdminStorePageProps) => {
   return (
     <S.AdminStoreBox>
       <StoreSearch
         setStoreSearchKeyword={setStoreSearchKeyword}
         setPromotion={setPromotion}
       />
-      <StoreGrid dataSource={dataSource} isLoading={isLoading} />
+      <StoreGrid
+        dataSource={dataSource}
+        isLoading={isLoading}
+        error={error}
+        promotionHandler={promotionHandler}
+        orderOptions={orderOptions}
+        onChangeOrder={onChangeOrder}
+        goEdit={goEdit}
+      />
     </S.AdminStoreBox>
   );
 };

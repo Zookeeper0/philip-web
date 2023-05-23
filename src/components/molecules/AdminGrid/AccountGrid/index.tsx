@@ -1,40 +1,26 @@
 import { DataGrid } from "devextreme-react";
 import { Column } from "devextreme-react/data-grid";
-import { useState } from "react";
+
 import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
 import { Button } from "@/components/atoms/Button";
 import { AccountModal } from "../../AdminModal/AccountModal";
-import { useQuery } from "react-query";
-import { getAdminList } from "@/apis/adminApi";
-import useApiError from "@/lib/hooks/useApiError";
 
 interface AccountGridProps {
   adminSearchKeyword: string;
+  dataSource: [];
+  openAccountModal: (data: any) => void;
+  accountModal: boolean;
+  account: any;
 }
 
-export const AccountGrid = ({ adminSearchKeyword }: AccountGridProps) => {
-  const [accountModal, setAccountModal] = useState(false);
-  const [account, setAccount] = useState();
-  const { handleError } = useApiError();
-
-  /** 관리자 목록 불러오기 */
-  const { data: dataSource } = useQuery(
-    ["getAdminList", adminSearchKeyword],
-    getAdminList,
-    {
-      retry: 1,
-      onError(error: any) {
-        handleError(error);
-      },
-    }
-  );
-
-  const openAccountModal = (data: any) => {
-    setAccount(data);
-    setAccountModal(!accountModal);
-  };
-
+export const AccountGrid = ({
+  adminSearchKeyword,
+  dataSource,
+  openAccountModal,
+  accountModal,
+  account,
+}: AccountGridProps) => {
   return (
     <>
       <S.AdminGrid>
