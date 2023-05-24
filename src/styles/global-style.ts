@@ -70,6 +70,14 @@ ul, li {
   left: auto;
   right: 1rem;
 }
+.err-message {
+  color: red;
+  font-size: 1.1rem;
+}
+
+.message {
+  font-size: 1.1rem;
+}
 
 @-webkit-keyframes animation-spinner {
   to {

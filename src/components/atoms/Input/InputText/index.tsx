@@ -12,6 +12,8 @@ interface TextProps {
   onChange?: any;
   value?: any;
   type?: string;
+  errors?: any;
+  name?: string;
 }
 
 export const InputText: React.FC<TextProps> = ({
@@ -25,6 +27,8 @@ export const InputText: React.FC<TextProps> = ({
   onChange,
   value,
   type,
+  errors,
+  name,
 }) => {
   return (
     <S.InputCommon
@@ -42,6 +46,16 @@ export const InputText: React.FC<TextProps> = ({
           onChange={onChange}
           value={value}
         />
+        {errors && errors[name!]?.type !== "true" ? (
+          <p className="err-message">{errors[name!]?.message}</p>
+        ) : (
+          ""
+        )}
+        {errors && errors[name!]?.type === "true" ? (
+          <p className="message">{errors[name!]?.message}</p>
+        ) : (
+          ""
+        )}
       </label>
     </S.InputCommon>
   );

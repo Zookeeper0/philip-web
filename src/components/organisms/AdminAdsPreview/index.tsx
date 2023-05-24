@@ -1,20 +1,19 @@
-import { getAdsData } from "@/apis/adsApi";
 import { Banner } from "@/components/atoms/Banner";
 import { adsState } from "@/recoil/ads";
 import { useEffect } from "react";
-import { useQuery } from "react-query";
+
 import { useRecoilState } from "recoil";
 import * as S from "./adminAdsPreview.style";
-import useApiError from "@/lib/hooks/useApiError";
 
-export const AdminAdsPreview = ({ imgPreview }: any) => {
-  const { handleError } = useApiError();
-  const { data: adsData } = useQuery("getAdsData", getAdsData, {
-    retry: 1,
-    onError(error: any) {
-      handleError(error);
-    },
-  });
+interface AdminAdsPreviewProps {
+  imgPreview: any;
+  adsData: [];
+}
+
+export const AdminAdsPreview = ({
+  imgPreview,
+  adsData,
+}: AdminAdsPreviewProps) => {
   const [todoAds, setAdsList] = useRecoilState(adsState);
 
   const topAds = adsData?.find((ads: any) => ads.label === "topAds");
@@ -42,10 +41,10 @@ export const AdminAdsPreview = ({ imgPreview }: any) => {
     <S.AdminAdsPreview>
       <S.AdminAdsPreviewTit>배너 미리보기</S.AdminAdsPreviewTit>
       <S.AdminAdsPreviewBox>
-        <Banner order="LG" ads={topAds || newTopAds} />
-        <Banner order="SM1" ads={btm1 || newBtm1} />
-        <Banner order="SM2" ads={btm2 || newBtm2} />
-        <Banner order="SM3" ads={btm3 || newBtm3} />
+        <Banner order="LG" ads={topAds || newTopAds} admin={true} />
+        <Banner order="SM1" ads={btm1 || newBtm1} admin={true} />
+        <Banner order="SM2" ads={btm2 || newBtm2} admin={true} />
+        <Banner order="SM3" ads={btm3 || newBtm3} admin={true} />
       </S.AdminAdsPreviewBox>
     </S.AdminAdsPreview>
   );

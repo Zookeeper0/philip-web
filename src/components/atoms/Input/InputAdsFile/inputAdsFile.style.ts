@@ -12,10 +12,10 @@ export const InputFile = styled.div`
 `;
 
 export const FileLabelBox = styled.div<InputFileProps>`
-  display: flex;
+  display: grid;
   font-size: 1.3rem;
-  align-items: center;
-  gap: 10px;
+  grid-template-columns: 80px 1fr 90px;
+  gap: 5px;
 
   ${(props) =>
     props.multiple &&
@@ -41,6 +41,33 @@ export const FileLabelBox = styled.div<InputFileProps>`
     &:hover {
       background: ${(props) => props.theme.colors.funcHover};
     }
+  }
+`;
+
+export const FileTitBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const FileNameBox = styled.div`
+  overflow: hidden;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding: 0 10px;
+  font-size: 1.3rem;
+  border: 1px solid ${(props) => props.theme.colors.adminInputBorder};
+  border-radius: 4px;
+  background: ${(props) => props.theme.colors.white};
+  align-items: center;
+
+  span {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    line-height: 30px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `;
 

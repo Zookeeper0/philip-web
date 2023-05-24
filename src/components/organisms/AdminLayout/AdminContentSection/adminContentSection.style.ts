@@ -11,7 +11,7 @@ export const AdminContentSection = styled.section`
 `;
 
 export const AdminContentBox = styled.div`
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   width: 100%;
   height: 100%;

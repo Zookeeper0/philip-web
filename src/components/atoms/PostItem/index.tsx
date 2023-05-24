@@ -15,7 +15,7 @@ export const PostItem = ({ item }: any) => {
   const userToken = useRecoilValue(userTokenState);
 
   /** 게시물 클릭시 해당 게시물 조회수 count api */
-  const mutation = useMutation("posts", fetchCountViews);
+  const mutation = useMutation(["fetchCountViews"], fetchCountViews);
 
   /** 게시물 클릭시 로그인 토큰 값(userToken) 이 없다면 알림 */
   const goDetail = (e: any) => {
@@ -28,9 +28,6 @@ export const PostItem = ({ item }: any) => {
   const countViews = () => {
     mutation.mutate(item.oid);
   };
-
-  //이미지 dummy
-  const ImageDum: any = Images.Category;
 
   return (
     <S.PostItem

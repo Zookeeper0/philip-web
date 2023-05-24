@@ -14,7 +14,7 @@ export const NavList = () => {
 
   /** Nav 카테고리 가져오기*/
   const { data: categoryItem, isLoading } = useQuery(
-    "getCategoryNavApi",
+    ["getCategoryNavApi"],
     getCategoryNavApi
   );
 

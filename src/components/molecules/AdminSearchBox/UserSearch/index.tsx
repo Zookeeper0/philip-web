@@ -9,24 +9,18 @@ interface UserSearchProps {
 export const UserSearch = ({ setUserSearchKeyword }: UserSearchProps) => {
   return (
     <S.AdminSearchBox>
-      <S.AdminSearchTit>회원검색</S.AdminSearchTit>
-      <S.AdminSearch>
+      <S.AdminsearchItemBox>
+        <S.AdminSearchTit>검색</S.AdminSearchTit>
         <InputText
           layout="adminRow"
           size="sm"
+          width="200px"
+          placeholder="이름/카카오ID/연락처"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setUserSearchKeyword(e.target.value)
           }
         />
-        <Button
-          type="submit"
-          width="60px"
-          height={22}
-          layout="solid"
-          color="func"
-          label="검색"
-        />
-      </S.AdminSearch>
+      </S.AdminsearchItemBox>
     </S.AdminSearchBox>
   );
 };

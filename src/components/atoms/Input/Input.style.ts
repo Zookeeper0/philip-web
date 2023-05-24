@@ -15,9 +15,9 @@ export const InputCommon = styled.div<InputProps>`
     width: ${(props) => (props.width ? props.width : "initial")};
     color: ${(props) =>
       props.themeType === "admin" ? props.theme.colors.adminLabelTxt : "white"};
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     align-items: center;
-    gap: 5px 10px;
+    gap: 6px 10px;
 
     .displayValue {
       font-size: 1.4rem;
@@ -90,6 +90,17 @@ export const InputCommon = styled.div<InputProps>`
           border: 1px solid ${(props) => props.theme.colors.adminInputBorder};
           border-radius: 3px;
         }
+      }
+    `}
+
+    ${(props) =>
+    props.themeType === "admin" &&
+    css`
+      input,
+      select,
+      textarea {
+        border: 1px solid ${props.theme.colors.adminInputBorder};
+        border-radius: 4px;
       }
     `}
 `;

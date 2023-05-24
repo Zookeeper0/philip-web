@@ -16,6 +16,7 @@ import "@/styles/globals.css";
 
 import HeadersTokenProvider from "@/components/templates/HeadersTokenProvider";
 import "devextreme/dist/css/dx.light.compact.css";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 declare global {
   // Kakao 함수를 전역에서 사용할 수 있도록 선언
@@ -27,7 +28,18 @@ declare global {
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isWindowWidth = useWindowWidth();
-  const queryClient = new QueryClient();
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+        staleTime: 1000 * 10,
+        cacheTime: Infinity,
+      },
+    },
+  });
 
   function kakaoInit() {
     // 페이지가 로드되면 실행
@@ -41,13 +53,13 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <GlobalStyle />
       <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <Script
-            src="https://developers.kakao.com/sdk/js/kakao.js"
-            onLoad={kakaoInit}
-          />
-          <ThemeProvider theme={theme}>
-            <HeadersTokenProvider>
+        <HeadersTokenProvider>
+          <QueryClientProvider client={queryClient}>
+            <Script
+              src="https://developers.kakao.com/sdk/js/kakao.js"
+              onLoad={kakaoInit}
+            />
+            <ThemeProvider theme={theme}>
               {router.pathname.includes("main") ||
               router.pathname.includes("auth") ? (
                 <>
@@ -67,9 +79,10 @@ export default function App({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </>
               )}
-            </HeadersTokenProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
+            </ThemeProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </HeadersTokenProvider>
       </RecoilRoot>
     </>
   );

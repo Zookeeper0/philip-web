@@ -9,12 +9,12 @@ export const AdminSearchBox = styled.form`
   gap: 30px;
 `;
 
-export const AdminSearchTit = styled.div`
-  font-size: 1.4rem;
-`;
-
-export const AdminSearch = styled.div`
+export const AdminsearchItemBox = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const AdminSearchTit = styled.div`
+  font-size: 1.4rem;
 `;

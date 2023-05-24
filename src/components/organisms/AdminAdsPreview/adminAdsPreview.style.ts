@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const AdminAdsPreview = styled.div`
   display: flex;
+  padding: 20px;
   flex-direction: column;
   gap: 10px;
 `;
@@ -15,6 +16,6 @@ export const AdminAdsPreviewBox = styled.div`
   grid-template-areas:
     "LG LG LG"
     "SM1 SM2 SM3";
-  grid-template-rows: 180px 120px;
-  grid-gap: 8px;
+  grid-template-rows: 89px 58px;
+  grid-gap: 4px;
 `;

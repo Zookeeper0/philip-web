@@ -5,7 +5,7 @@ import * as S from "./linkBox.style";
 export const LinkBox = () => {
   return (
     <S.LinkBox>
-      <VIPLink />
+      {/* <VIPLink /> */}
       <KakaoLink />
     </S.LinkBox>
   );

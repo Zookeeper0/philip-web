@@ -2,18 +2,8 @@ import Image from "next/image";
 import { Button, ButtonGroup } from "@/components/atoms/Button";
 import * as S from "./priceInfoBox.style";
 import IconDown from "public/assets/svg/icon-arrow-down.svg";
-import Menu from "public/assets/images/menu-test.jpg";
-import SampleInfo01 from "public/assets/images/sample_info01.png";
 
 export const PriceInfoBox = ({ post, title, openHandler, open }: any) => {
-  // 임시 샘플 이미지
-  let InfoImg = null;
-  if (post?.oid === "220975c0-c869-11ed-af91-e93afefe558a") {
-    InfoImg = SampleInfo01;
-  } else {
-    InfoImg = Menu;
-  }
-
   return (
     <>
       <S.PriceInfoBox isOpen={open}>

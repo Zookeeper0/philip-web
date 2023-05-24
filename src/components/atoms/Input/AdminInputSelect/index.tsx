@@ -14,6 +14,8 @@ interface SelectProps {
   options: any;
   register?: UseFormRegisterReturn;
   onChange?: any;
+  errors?: any;
+  name?: string;
 }
 
 export const AdminInputSelect: React.FC<SelectProps> = ({
@@ -26,6 +28,8 @@ export const AdminInputSelect: React.FC<SelectProps> = ({
   placeholder,
   register,
   onChange,
+  errors,
+  name,
 }) => {
   return (
     <S.InputCommon
@@ -46,6 +50,7 @@ export const AdminInputSelect: React.FC<SelectProps> = ({
             );
           })}
         </select>
+        {errors ? <p className="err-message">{errors[name!]?.message}</p> : ""}
       </label>
     </S.InputCommon>
   );

@@ -1,10 +1,14 @@
 import * as S from "./adminModal.style";
 
-export const AdminModal = ({ children }: any) => {
+export const AdminModal = ({ title, children }: any) => {
   return (
     <>
       <S.AdminModalBG>
-        <S.AdminModal>{children}</S.AdminModal>
+        <S.AdminModal>
+          {title && <S.ModalHead>{title}</S.ModalHead>}
+
+          {children}
+        </S.AdminModal>
       </S.AdminModalBG>
     </>
   );

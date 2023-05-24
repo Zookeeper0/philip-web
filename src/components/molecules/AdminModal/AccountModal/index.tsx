@@ -1,20 +1,21 @@
-import { Button } from "@/components/atoms/Button";
-import { AdminModal } from "..";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { AdminModal } from "..";
+import { Button, ButtonGroup } from "@/components/atoms/Button";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
 import { changeAdminRoleAPI } from "@/apis/adminApi";
+import * as S from "../adminModal.style";
 
 export const AccountModal = ({ onClose, account }: any) => {
   const [role, setRole] = useState<string>(account?.role);
   const queryClient = useQueryClient();
 
   const changeUserRoleMutation = useMutation(
-    "changeAdminRoleAPI",
+    ["changeAdminRoleAPI"],
     changeAdminRoleAPI,
     {
       onSuccess() {
-        queryClient.refetchQueries("getAdminList");
+        queryClient.refetchQueries(["getAdminList"]);
       },
     }
   );
@@ -29,35 +30,55 @@ export const AccountModal = ({ onClose, account }: any) => {
   };
 
   return (
-    <AdminModal>
-      {account?.name}
-      <InputSelect
-        label="지역선택"
-        options={[
-          {
-            name: "SUPER",
-          },
-          {
-            name: "ADMIN",
-          },
-          {
-            name: "SUB",
-          },
-        ]}
-        layout="row"
-        size="sm"
-        onChange={onChangeRole}
-        value={role}
-      />
-      <Button
-        type="button"
-        layout="solid"
-        width="60px"
-        height={36}
-        color="func"
-        label="닫기"
-        onClick={onClose}
-      />
+    <AdminModal title="관리자 등급설정">
+      <S.ModalBody>
+        <S.ModalItemBox>
+          <S.ItemTitBox>관리자명</S.ItemTitBox>
+          <span>{account?.name}</span>
+        </S.ModalItemBox>
+        <S.ModalItemBox>
+          <S.ItemTitBox>권한등급</S.ItemTitBox>
+          <InputSelect
+            options={[
+              {
+                name: "SUPER",
+              },
+              {
+                name: "ADMIN",
+              },
+              {
+                name: "SUB",
+              },
+            ]}
+            layout="column"
+            size="sm"
+            themeType="admin"
+            onChange={onChangeRole}
+            value={role}
+          />
+        </S.ModalItemBox>
+
+        <ButtonGroup marginTop={10}>
+          <Button
+            type="button"
+            layout="solid"
+            width="60px"
+            height={36}
+            color="func"
+            label="닫기"
+            onClick={onClose}
+          />
+          <Button
+            type="submit"
+            layout="solid"
+            width="60px"
+            height={36}
+            color="primary"
+            label="저장"
+            onClick={onClose}
+          />
+        </ButtonGroup>
+      </S.ModalBody>
     </AdminModal>
   );
 };

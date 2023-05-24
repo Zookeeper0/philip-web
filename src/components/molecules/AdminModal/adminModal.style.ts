@@ -14,10 +14,32 @@ export const AdminModalBG = styled.div`
 
 export const AdminModal = styled.div`
   display: flex;
-  padding: 20px;
+  width: 280px;
   background: ${(props) => props.theme.colors.white};
   border-radius: 3px;
   box-shadow: ${(props) => props.theme.shadow.admin};
   flex-direction: column;
-  gap: 20px;
+`;
+
+export const ModalHead = styled.div`
+  padding: 20px 20px 0;
+  font-size: 1.6rem;
+`;
+
+export const ModalBody = styled.form`
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+export const ModalItemBox = styled.div`
+  display: grid;
+  font-size: 1.3rem;
+  grid-template-columns: 80px 1fr;
+`;
+
+export const ItemTitBox = styled.div`
+  color: ${(props) => props.theme.colors.dark};
+  font-weight: 300;
 `;

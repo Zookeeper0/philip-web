@@ -1,14 +1,10 @@
 import { Button } from "@/components/atoms/Button";
 import * as S from "./loginBox.style";
 import IconKakao from "public/assets/svg/icon-kakao.svg";
-
-export const LoginBox = () => {
-  const kakaoLogin = () => {
-    window.Kakao.Auth.authorize({
-      redirectUri: "http://staging.philip69.com/kakao",
-    });
-  };
-
+interface LoginBoxProp {
+  kakaoLogin: () => void;
+}
+export const LoginBox = ({ kakaoLogin }: LoginBoxProp) => {
   return (
     <S.LoginBox>
       <S.LoginTit>간편 로그인</S.LoginTit>

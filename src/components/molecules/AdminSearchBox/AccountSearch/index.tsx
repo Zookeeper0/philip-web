@@ -11,8 +11,8 @@ export const AccountSearch = ({
 }: AccountSearchProps) => {
   return (
     <S.AdminSearchBox>
-      <S.AdminSearchTit>관리자 검색</S.AdminSearchTit>
-      <S.AdminSearch>
+      <S.AdminsearchItemBox>
+        <S.AdminSearchTit>관리자명</S.AdminSearchTit>
         <InputText
           layout="adminRow"
           size="sm"
@@ -20,15 +20,7 @@ export const AccountSearch = ({
             setAdminSearchKeyword(e.target.value)
           }
         />
-        <Button
-          type="submit"
-          width="60px"
-          height={22}
-          layout="solid"
-          color="func"
-          label="검색"
-        />
-      </S.AdminSearch>
+      </S.AdminsearchItemBox>
     </S.AdminSearchBox>
   );
 };
