@@ -8,7 +8,7 @@ interface CopyProps {
 }
 
 export const CopyButton: React.FC<CopyProps> = ({ label, text }) => {
-  const [copyMessage, setCopyMessage] = useState("번호복사");
+  const [copyMessage, setCopyMessage] = useState(label);
 
   const handleCopy = useCallback(
     (e: string) => {
@@ -18,7 +18,7 @@ export const CopyButton: React.FC<CopyProps> = ({ label, text }) => {
           .then(() => {
             setCopyMessage("Copyed!!");
             const tick = setTimeout(() => {
-              setCopyMessage("번호복사");
+              setCopyMessage(label);
             }, 1500);
             return () => clearTimeout(tick);
           })
@@ -43,7 +43,7 @@ export const CopyButton: React.FC<CopyProps> = ({ label, text }) => {
 
         setCopyMessage("Copyed!!");
         const tick = setTimeout(() => {
-          setCopyMessage("번호복사");
+          setCopyMessage(label);
         }, 1500);
         return () => clearTimeout(tick);
       }
