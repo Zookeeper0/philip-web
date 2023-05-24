@@ -13,7 +13,6 @@
     "@next/font": "^13.1.6",
     "@react-google-maps/api": "^2.18.1",
     "@svgr/webpack": "^6.5.1",
-    "react-query": "^4.24.9",
     "react-query-devtools": "^4.24.9",
     "@types/google-map-react": "^2.1.7",
     "@types/node": "18.11.18",
