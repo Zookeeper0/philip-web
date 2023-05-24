@@ -1,12 +1,13 @@
-import { getAdsData } from "@/apis/adsApi";
 import { Banner } from "@/components/atoms/Banner";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import * as S from "./bannerSection.style";
 
-export const BannerSection = () => {
-  const { data: adsData } = useQuery("getAdsData", getAdsData);
+interface BannerSectionProp {
+  adsData?: [];
+}
 
+export const BannerSection = ({ adsData }: BannerSectionProp) => {
   const topAds = adsData?.find((ads: any) => ads.label === "topAds");
   const btm1 = adsData?.find((ads: any) => ads.label === "bottom1");
   const btm2 = adsData?.find((ads: any) => ads.label === "bottom2");

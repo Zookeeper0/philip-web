@@ -28,12 +28,13 @@ declare global {
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isWindowWidth = useWindowWidth();
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         retry: 1,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
         staleTime: 1000 * 10,
         cacheTime: Infinity,
       },

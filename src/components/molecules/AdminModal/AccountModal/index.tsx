@@ -11,11 +11,11 @@ export const AccountModal = ({ onClose, account }: any) => {
   const queryClient = useQueryClient();
 
   const changeUserRoleMutation = useMutation(
-    "changeAdminRoleAPI",
+    ["changeAdminRoleAPI"],
     changeAdminRoleAPI,
     {
       onSuccess() {
-        queryClient.refetchQueries("getAdminList");
+        queryClient.refetchQueries(["getAdminList"]);
       },
     }
   );

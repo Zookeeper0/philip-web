@@ -4,7 +4,7 @@ import * as S from "./storeInfoBox.style";
 import IconPhone from "public/assets/svg/icon-phone.svg";
 import IconView from "public/assets/svg/icon-view.svg";
 
-export const StoreInfoBox = ({ post, randomImg }: any) => {
+export const StoreInfoBox = ({ post }: any) => {
   return (
     <S.StoreInfoBox>
       <ImageSlide items={post?.detail} />

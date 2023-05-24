@@ -1,5 +1,12 @@
 import { AdminStorePage } from "@/components/templates/AdminStorePage";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import {
+  QueryCache,
+  QueryClient,
+  dehydrate,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import useApiError from "@/lib/hooks/useApiError";
 import { useRecoilValue } from "recoil";
 import { categoryState } from "@/recoil/category";
@@ -13,8 +20,6 @@ import { useRouter } from "next/router";
 
 const AdminStore = () => {
   const router = useRouter();
-  const [storeModal, setStoreModal] = useState(false);
-  const [store, setStore] = useState();
   const [error, setError] = useState("");
 
   const queryClient = useQueryClient();
@@ -34,21 +39,14 @@ const AdminStore = () => {
     }
   );
 
-  const promotionMutation = useMutation("promotionAPI", promotionAPI, {
+  const promotionMutation = useMutation(["promotionAPI"], promotionAPI, {
     onSuccess() {
-      queryClient.refetchQueries("getAdminStorePosts");
+      queryClient.refetchQueries(["getAdminStorePosts"]);
     },
   });
 
-  // const openStoreModal = (data: any) => {
-  //   setStore(data);
-  //   setStoreModal(!storeModal);
-  // };
-
   /** 상세보기 클릭 시 업체정보 수정창 바로가기 */
   const goEdit = (e: any) => {
-    // if (userToken || admin?.user) router.push(`/main/post/${item.oid}`);
-    // else alert("로그인이 필요한 서비스 입니다.");
     router.push(`/admin/store/edit/${e.oid}`);
   };
 
@@ -57,11 +55,11 @@ const AdminStore = () => {
   };
 
   const changePromotionOrderMutation = useMutation(
-    "promotionRoleAPI",
+    ["promotionRoleAPI"],
     promotionRoleAPI,
     {
       onSuccess() {
-        queryClient.refetchQueries("getAdminStorePosts");
+        queryClient.refetchQueries(["getAdminStorePosts"]);
         setError("");
       },
       onError(error: any) {
@@ -83,8 +81,8 @@ const AdminStore = () => {
     changePromotionOrderMutation.mutate(datas);
   };
 
-  const h = 10;
-  const w = 10;
+  const h = 5;
+  const w = 5;
   const orderOptions = Array(h * w)
     .fill(0)
     .map((arr, i) => {
@@ -93,17 +91,19 @@ const AdminStore = () => {
     });
 
   return (
-    <AdminStorePage
-      setStoreSearchKeyword={setStoreSearchKeyword}
-      setPromotion={setPromotion}
-      dataSource={dataSource}
-      isLoading={isLoading}
-      error={error}
-      promotionHandler={promotionHandler}
-      orderOptions={orderOptions}
-      onChangeOrder={onChangeOrder}
-      goEdit={goEdit}
-    />
+    <>
+      <AdminStorePage
+        setStoreSearchKeyword={setStoreSearchKeyword}
+        setPromotion={setPromotion}
+        dataSource={dataSource}
+        isLoading={isLoading}
+        error={error}
+        promotionHandler={promotionHandler}
+        orderOptions={orderOptions}
+        onChangeOrder={onChangeOrder}
+        goEdit={goEdit}
+      />
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   deleteImageAPI,
+  deletePostAPI,
   deletePreviewImagesAPI,
   editPostAPI,
   getOnePostInfoApi,
@@ -49,6 +50,13 @@ const AdminPost = () => {
       router.replace("/admin/store");
     },
   });
+
+  /** 업체 삭제 api */
+  const deleteMutation = useMutation("deletePostAPI", deletePostAPI);
+  const postDelete = () => {
+    deleteMutation.mutate(detailItem.oid);
+    router.back();
+  };
 
   /** 카테고리 select 목록 불러오기 */
   const { data: categoryItem } = useQuery(
@@ -186,6 +194,7 @@ const AdminPost = () => {
       cityOptions={cityOptions}
       categoryOptions={categoryOptions}
       register={register}
+      postDelete={postDelete}
     />
   );
 };

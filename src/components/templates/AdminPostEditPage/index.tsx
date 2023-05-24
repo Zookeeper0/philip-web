@@ -27,6 +27,7 @@ export interface AdminPostEditPageProps {
   cityOptions: any;
   categoryOptions: any;
   register: UseFormRegister<any>;
+  postDelete: () => void;
 }
 
 export const AdminPostEditPage = ({
@@ -46,6 +47,7 @@ export const AdminPostEditPage = ({
   cityOptions,
   categoryOptions,
   register,
+  postDelete,
 }: AdminPostEditPageProps) => {
   return (
     <AdminLayout title="업체 정보수정">
@@ -67,6 +69,7 @@ export const AdminPostEditPage = ({
           cityOptions={cityOptions}
           categoryOptions={categoryOptions}
           register={register}
+          postDelete={postDelete}
         />
       </S.adminPostPage>
     </AdminLayout>

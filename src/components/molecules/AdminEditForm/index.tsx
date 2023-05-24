@@ -24,6 +24,7 @@ export const AdminEditForm = ({
   cityOptions,
   categoryOptions,
   register,
+  postDelete,
 }: AdminPostEditPageProps) => {
   const router = useRouter();
 
@@ -171,6 +172,15 @@ export const AdminEditForm = ({
             height={40}
             label="취소"
             onClick={() => router.back()}
+          />
+          <Button
+            type="button"
+            color="func"
+            layout="solid"
+            width="80px"
+            height={40}
+            label="삭제"
+            onClick={postDelete}
           />
         </ButtonGroup>
       </S.PostFormBtnBox>

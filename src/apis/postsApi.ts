@@ -32,7 +32,7 @@ export function getPromtionListApi({ queryKey }: any) {
 }
 
 /** DELETE 게시글 삭제 */
-export function deletePost(oid: string) {
+export function deletePostAPI(oid: string) {
   return axiosInstance
     .delete(`/posts/${oid}`)
     .then((response) => response.data);
@@ -84,6 +84,7 @@ export function promotionAPI(oid: string) {
   return axiosInstance.patch(`/posts/promotion/${oid}`);
 }
 
+/** 프로모션 롤 체크 */
 export function promotionRoleAPI(data: any) {
   return axiosInstance
     .put(`/posts/promotion/role/${data.oid}`, data)

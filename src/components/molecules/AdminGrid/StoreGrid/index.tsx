@@ -1,21 +1,10 @@
 import { CheckBox, DataGrid, LoadPanel } from "devextreme-react";
 import { Column, Paging, Scrolling } from "devextreme-react/data-grid";
-import Data from "@/data/dummy";
 import * as S from "../adminGrid.style";
 import { Button } from "@/components/atoms/Button";
-import { useEffect, useState } from "react";
-import { StoreModal } from "../../AdminModal/StoreModal";
-import { useMutation, useQueryClient } from "react-query";
-import {
-  getAdminStorePosts,
-  promotionAPI,
-  promotionRoleAPI,
-} from "@/apis/postsApi";
+
 import { InputCheckbox } from "@/components/atoms/Input/InputCheckbox";
-import useApiError from "@/lib/hooks/useApiError";
 import { InputSelect } from "@/components/atoms/Input/InputSelect";
-import { useRouter } from "next/router";
-import { AdminStorePageProps } from "@/components/templates/AdminStorePage";
 
 const position = { of: ".datagrid-wrap" };
 
