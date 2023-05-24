@@ -11,8 +11,6 @@ export const CategoryList = () => {
     getCategoryNavApi
   );
 
-  console.log(categoryItem);
-
   return (
     <S.CategoryList>
       {categoryItem?.map((item: any, idx: number) => {

@@ -4,16 +4,47 @@ import { ContentSection } from "@/components/organisms/ContentSection";
 
 import * as S from "./mainPage.style";
 import { useQuery } from "react-query";
-import { cookieAPI } from "@/apis/visitApi";
+import { checkTodayVisit } from "@/apis/visitApi";
+import { RecoilState } from "recoil";
 
-export const MainPage = () => {
-  const { data: cookie } = useQuery("cookieAPI", cookieAPI);
-
+interface MainPageProp {
+  postItem: [];
+  adsData: [];
+  count: any;
+  cityOptions: any[];
+  getCityOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  city: any;
+  categoryOptions: any[];
+  getCategoryOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  category: any;
+  getValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+export const MainPage = ({
+  postItem,
+  adsData,
+  count,
+  cityOptions,
+  getCityOption,
+  city,
+  categoryOptions,
+  getCategoryOption,
+  category,
+  getValue,
+}: MainPageProp) => {
   return (
     <S.MainLayout>
-      <BannerSection />
-      <AsideSection />
-      <ContentSection />
+      <BannerSection adsData={adsData} />
+      <AsideSection
+        count={count}
+        cityOptions={cityOptions}
+        getCityOption={getCityOption}
+        city={city}
+        categoryOptions={categoryOptions}
+        getCategoryOption={getCategoryOption}
+        category={category}
+        getValue={getValue}
+      />
+      <ContentSection postItem={postItem} />
     </S.MainLayout>
   );
 };

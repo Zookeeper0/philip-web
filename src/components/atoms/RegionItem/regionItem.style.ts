@@ -13,7 +13,7 @@ import ImgMob02Disabled from "public/assets/images/image-region-mob-disabled02.p
 import ImgMob03Disabled from "public/assets/images/image-region-mob-disabled03.png";
 
 interface ItemProps {
-  item: number;
+  item: string;
   disabled: boolean;
 }
 
@@ -32,30 +32,30 @@ export const RegionItem = styled.li<ItemProps>`
 
   ${(props) =>
     props.disabled === false &&
-    (props.item === 1
+    (props.item === "8d0fe970-c153-11ed-8fb3-59762efda8c3"
       ? css`
           background: url(${ImgWeb01?.src});
         `
-      : props.item === 2
+      : props.item === "8733aaf0-c153-11ed-8fb3-59762efda8c3"
       ? css`
           background: url(${ImgWeb02?.src});
         `
-      : props.item === 3 &&
+      : props.item === "8f487450-c153-11ed-8fb3-59762efda8c3" &&
         css`
           background: url(${ImgWeb03?.src});
         `)}
 
   ${(props) =>
     props.disabled === true &&
-    (props.item === 1
+    (props.item === "8d0fe970-c153-11ed-8fb3-59762efda8c3"
       ? css`
           background: url(${ImgWeb01Disabled?.src});
         `
-      : props.item === 2
+      : props.item === "8733aaf0-c153-11ed-8fb3-59762efda8c3"
       ? css`
           background: url(${ImgWeb02Disabled?.src});
         `
-      : props.item === 3 &&
+      : props.item === "8f487450-c153-11ed-8fb3-59762efda8c3" &&
         css`
           background: url(${ImgWeb03Disabled?.src});
         `)}
@@ -115,30 +115,30 @@ export const RegionItem = styled.li<ItemProps>`
 
     ${(props) =>
       props.disabled === false &&
-      (props.item === 1
+      (props.item === "8d0fe970-c153-11ed-8fb3-59762efda8c3"
         ? css`
             background: url(${ImgMob01?.src});
           `
-        : props.item === 2
+        : props.item === "8733aaf0-c153-11ed-8fb3-59762efda8c3"
         ? css`
             background: url(${ImgMob02?.src});
           `
-        : props.item === 3 &&
+        : props.item === "8f487450-c153-11ed-8fb3-59762efda8c3" &&
           css`
             background: url(${ImgMob03?.src});
           `)}
 
     ${(props) =>
       props.disabled === true &&
-      (props.item === 1
+      (props.item === "8d0fe970-c153-11ed-8fb3-59762efda8c3"
         ? css`
             background: url(${ImgMob01Disabled?.src});
           `
-        : props.item === 2
+        : props.item === "8733aaf0-c153-11ed-8fb3-59762efda8c3"
         ? css`
             background: url(${ImgMob02Disabled?.src});
           `
-        : props.item === 3 &&
+        : props.item === "8f487450-c153-11ed-8fb3-59762efda8c3" &&
           css`
             background: url(${ImgMob03Disabled?.src});
           `)}

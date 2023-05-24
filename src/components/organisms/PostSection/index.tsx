@@ -1,46 +1,40 @@
-import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/atoms/Button";
 import { StoreInfoBox } from "@/components/molecules/StoreInfoBox";
 import { PriceInfoBox } from "@/components/molecules/PriceInfoBox";
 import { LocationBox } from "@/components/molecules/LocationBox";
-import Data from "@/data/dummy";
 import * as S from "./postSection.style";
 import IconBack from "public/assets/svg/icon-arrow-back.svg";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { detailPostApi } from "@/apis/postsApi";
+import { useRouter } from "next/router";
 
-export const PostSection = () => {
+interface PostSectionProp {
+  detailItem: [];
+}
+
+export const PostSection = ({ detailItem }: PostSectionProp) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
-  const queryFn = () => detailPostApi(router.query.id);
-  const { data: detailItem, isLoading } = useQuery(
-    ["detailItem", router.query.id],
-    queryFn
-  );
 
   const openHandler = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
 
-  //랜덤이미지 dummy
-  const postId = Math.floor(Math.random() * 13);
-  const randomImg = Data.Post[postId];
   return (
     <S.PostSection>
-      <Button
-        type="button"
-        height={36}
-        color="clear"
-        layout="icon"
-        label="목록으로"
-        onClick={() => router.back()}
-      >
-        <IconBack />
-      </Button>
-      <StoreInfoBox post={detailItem} randomImg={randomImg} />
+      <div style={{ justifyContent: "space-between", display: "flex" }}>
+        <Button
+          type="button"
+          height={36}
+          color="clear"
+          layout="icon"
+          label="목록으로"
+          onClick={() => router.back()}
+        >
+          <IconBack />
+        </Button>
+      </div>
+
+      <StoreInfoBox post={detailItem} />
       <PriceInfoBox
         post={detailItem}
         openHandler={openHandler}

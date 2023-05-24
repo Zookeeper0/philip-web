@@ -3,12 +3,29 @@ import styled, { css } from "styled-components";
 interface LogoType {
   main?: boolean;
   mobile?: boolean;
+  admin?: boolean;
 }
 
 export const Logo = styled.div<LogoType>`
-  width: ${(props) => (props.mobile ? "auto" : props.main ? "120px" : "90px")};
-  height: ${(props) => (props.mobile ? "auto" : props.main ? "40px" : "30px")};
-  padding: ${(props) => (props.mobile ? "7px 10px;" : "0")};
+  cursor: pointer;
+  width: ${(props) =>
+    props.mobile
+      ? "auto"
+      : props.main
+      ? "120px"
+      : props.admin
+      ? "100%"
+      : "90px"};
+  height: ${(props) =>
+    props.mobile
+      ? "auto"
+      : props.main
+      ? "40px"
+      : props.admin
+      ? "100%"
+      : "30px"};
+  padding: ${(props) =>
+    props.mobile ? "7px 10px;" : props.admin ? "0 20px" : "0"};
 
   ${(props) =>
     props.mobile &&
@@ -18,6 +35,13 @@ export const Logo = styled.div<LogoType>`
       &:active {
         background: ${(props) => props.theme.colors.darkHover};
       }
+    `}
+
+  ${(props) =>
+    props.admin &&
+    css`
+      display: flex;
+      align-items: center;
     `}
 
   a {

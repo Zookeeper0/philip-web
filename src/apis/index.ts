@@ -1,3 +1,4 @@
+import { readAdminAccessToken } from "@/lib/accesToken";
 import axios from "axios";
 
 const AxiosInstance = axios.create({
@@ -5,15 +6,24 @@ const AxiosInstance = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-    Authorization:
-      "Bearer " +
-      `${
-        typeof window !== "undefined"
-          ? window.localStorage.getItem("kakaoSignKey") ||
-            window.localStorage.getItem("adminSignKey")
-          : null
-      }`,
   },
 });
+
+AxiosInstance.interceptors.request.use(
+  async (config) => {
+    const accessToken = await readAdminAccessToken();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken.accessToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+export const setToken = () => {
+  AxiosInstance.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${localStorage.getItem("kakaoSignKey")}`;
+};
 
 export default AxiosInstance;

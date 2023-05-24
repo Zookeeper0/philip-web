@@ -28,7 +28,11 @@ export const ImageSlide = ({ items }: any) => {
     <S.ImageSlide>
       <S.ImageSelected>
         <Image
-          src={items[selectedId].url}
+          src={
+            items
+              ? `${process.env.NEXT_PUBLIC_API_URL}/${items[selectedId]?.filename}`
+              : ""
+          }
           layout="fill"
           alt="선택된 업체 이미지"
         />
@@ -51,7 +55,7 @@ export const ImageSlide = ({ items }: any) => {
             color="func"
             layout="function"
             onClick={onNextImage}
-            disabled={selectedId === items.length - 1 ? true : false}
+            disabled={selectedId === items?.length - 1 ? true : false}
           >
             <IconArrowNext />
           </Button>
@@ -59,10 +63,15 @@ export const ImageSlide = ({ items }: any) => {
       </S.ImageSelected>
 
       <S.ImageSlideList>
-        {items.map((item: any, idx: number) => {
+        {items?.map((item: any, idx: number) => {
           return (
             <S.ImageSlideItem key={idx} onClick={() => onSelectImage(idx)}>
-              <Image src={item.url} width={85} height={62} alt="업체 이미지" />
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}/${item?.filename}`}
+                width={85}
+                height={62}
+                alt="업체 이미지"
+              />
             </S.ImageSlideItem>
           );
         })}

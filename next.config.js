@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   compiler: {
     styledComponents: true,
+  },
+  images: {
+    domains: ["philip-api.insystem.kr", "localhost"],
+    formats: ["image/avif", "image/webp"],
   },
   webpack: (config) => {
     config.module.rules.push({

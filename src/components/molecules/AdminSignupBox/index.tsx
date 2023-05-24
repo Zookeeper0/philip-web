@@ -1,71 +1,33 @@
 import { Button } from "@/components/atoms/Button";
 import * as S from "./adminSignupBox.style";
-
 import { InputText } from "@/components/atoms/Input/InputText";
-import useWindowWidth from "@/lib/hooks/useWindowWidth";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { useCallback, useState } from "react";
-import { signUpAPI } from "@/apis/adminApi";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { InputDate } from "@/components/atoms/Input/InputDate";
+import useWindowWidth from "@/lib/hooks/useWindowWidth";
+import { AdminSignupPageProps } from "@/components/templates/AdminSignupPage";
+import { error } from "console";
 
-export const AdminSignupBox = () => {
-  const [loading, setLoading] = useState(false);
+export const AdminSignupBox = ({
+  handleSubmit,
+  Submit,
+  register,
+  errors,
+  onDuplicateCheck,
+}: AdminSignupPageProps) => {
   const isWindowWidth = useWindowWidth();
-  const router = useRouter();
-  const [passwordError, setPasswordError] = useState(false);
-
-  const schema = yup
-    .object({
-      adminId: yup.string().nullable().required("구분을 선택해주세요"),
-      password: yup.string().nullable().required("관리명을 입력해주세요"),
-      passwordCheck: yup.string().nullable().required("파일을 등록해주세요"),
-      name: yup.string().nullable().required("등록일을 선택해주세요"),
-      birth: yup.string().nullable().required("사용여부를 선택해주세요"),
-    })
-    .required();
-
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const submit = (data: any) => {
-    const { adminId, password, passwordCheck, name, birth } = data;
-    if (password !== passwordCheck) {
-      alert("비밀번호가 다릅니다.");
-      return setPasswordError(true);
-    }
-
-    setLoading(true);
-    signUpAPI({ adminId, password, name, birth })
-      .then(() => {
-        router.replace("/admin/success");
-      })
-      .catch((error) => {
-        alert(error.response.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
 
   return (
-    <S.LoginBox onSubmit={handleSubmit(submit)}>
+    <S.LoginBox onSubmit={handleSubmit(Submit)}>
       <S.LoginTit>간편회원가입</S.LoginTit>
       <S.IdCheckWrapper>
         <InputText
-          label={isWindowWidth < 769 ? "아이디" : "아아디"}
-          themeType={isWindowWidth < 769 ? "column" : "column"}
-          size={isWindowWidth < 769 ? "lg" : "md"}
+          label={isWindowWidth < 769 ? "아이디" : "아이디"}
+          layout={isWindowWidth < 769 ? "column" : "column"}
+          size={isWindowWidth < 769 ? "xlg" : "md"}
           width="145px"
           placeholder={isWindowWidth < 769 ? "아이디 입력" : "아이디 입력"}
           register={register("adminId")}
+          errors={errors}
+          name="adminId"
         />
         <Button
           type="button"
@@ -74,40 +36,51 @@ export const AdminSignupBox = () => {
           color="mainBg"
           layout="solid"
           label="ID확인"
+          onClick={onDuplicateCheck}
         />
       </S.IdCheckWrapper>
 
       <InputText
         label={isWindowWidth < 769 ? "비밀번호" : "비밀번호"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
+        type={"password"}
         placeholder={isWindowWidth < 769 ? "비밀번호 입력" : "비밀번호 입력"}
         register={register("password")}
+        errors={errors}
+        name="password"
       />
       <InputText
         label={isWindowWidth < 769 ? "비밀번호확인" : "비밀번호확인"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
+        type={"password"}
         placeholder={isWindowWidth < 769 ? "비밀번호확인" : "비밀번호확인"}
         register={register("passwordCheck")}
+        errors={errors}
+        name="passwordCheck"
       />
       <InputText
         label={isWindowWidth < 769 ? "이름" : "이름"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="100%"
         placeholder={isWindowWidth < 769 ? "이름 입력" : "이름 입력"}
         register={register("name")}
+        errors={errors}
+        name="name"
       />
       <InputDate
         label={isWindowWidth < 769 ? "생년월일" : "생년월일"}
-        themeType={isWindowWidth < 769 ? "column" : "column"}
-        size={isWindowWidth < 769 ? "lg" : "md"}
+        layout={isWindowWidth < 769 ? "column" : "column"}
+        size={isWindowWidth < 769 ? "xlg" : "md"}
         width="190px"
         placeholder={isWindowWidth < 769 ? "생년월일 입력" : "생년월일 입력"}
         register={register("birth")}
+        errors={errors}
+        name="birth"
       />
       <Button
         type="submit"

@@ -71,3 +71,8 @@ export const PriceInfo = styled.div`
     font-size: 1.5rem;
   }
 `;
+
+export const InfoLine = styled.span`
+  font-size: 100%;
+  line-height: 25px;
+`;
