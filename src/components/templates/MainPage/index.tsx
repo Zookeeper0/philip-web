@@ -3,9 +3,6 @@ import { BannerSection } from "@/components/organisms/BannerSection";
 import { ContentSection } from "@/components/organisms/ContentSection";
 
 import * as S from "./mainPage.style";
-import { useQuery } from "react-query";
-import { checkTodayVisit } from "@/apis/visitApi";
-import { RecoilState } from "recoil";
 
 interface MainPageProp {
   postItem: [];
