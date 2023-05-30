@@ -8,7 +8,7 @@ import { cityState } from "@/recoil/city";
 import { useQuery } from "react-query";
 import { getPostsListApi, getPromtionListApi } from "@/apis/postsApi";
 import { getAdsData } from "@/apis/adsApi";
-import { getVisitCount } from "@/apis/visitApi";
+import { checkTodayVisit, getVisitCount } from "@/apis/visitApi";
 import { searchState } from "@/recoil/search";
 import { getCategoryNavApi, getCityListApi } from "@/apis/categoryApi";
 
@@ -25,6 +25,8 @@ const Main = () => {
 
   const [cityOptions, setCityOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
+
+  useQuery("checkTodayVisit", checkTodayVisit);
 
   const { data: todayCount } = useQuery("getVisitCount", getVisitCount);
   // 방문자수 state
